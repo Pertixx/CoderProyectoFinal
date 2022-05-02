@@ -14,13 +14,21 @@ import {
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
+import { AntDesign } from "@expo/vector-icons";
 import { checkForm } from "../../store/actions/auth.action";
 
-const AuthInput = ({ type = "default", secure = false, value, onChange }) => {
+const AuthInput = ({
+  type = "default",
+  secure = false,
+  value,
+  onChange,
+  listenTo = true,
+}) => {
   const [borderColor, setBorderColor] = useState(COLORS.gray);
   const dispatch = useDispatch();
   const notValid = useSelector((state) => state.auth.formValid);
   const animation = useSharedValue({ width: "100%" });
+  const warningAnimation = useSharedValue({ opacity: 0 });
   const animationStyle = useAnimatedStyle(() => {
     return {
       width: withTiming(animation.value.width, {
@@ -28,40 +36,66 @@ const AuthInput = ({ type = "default", secure = false, value, onChange }) => {
       }),
     };
   });
+  const warningAnimationStyle = useAnimatedStyle(() => {
+    return {
+      opacity: withTiming(warningAnimation.value.opacity, {
+        duration: 1000,
+      }),
+    };
+  });
 
   const onBlurHandler = () => {
-    dispatch(checkForm());
+    console.log(value);
     setBorderColor(COLORS.gray);
+    if (!listenTo) {
+      animation.value = { width: "90%" };
+      warningAnimation.value = { opacity: 1 };
+    } else {
+      warningAnimation.value = { opacity: 0 };
+      animation.value = { width: "100%" };
+    }
+  };
+
+  const handleOnChange = (text) => {
+    dispatch(onChange(text));
+    dispatch(checkForm());
+  };
+
+  const renderWarning = () => {
+    return (
+      <Animated.View style={[warningAnimationStyle, styles.warningContainer]}>
+        <AntDesign
+          name="exclamation"
+          size={SIZES.icon + 5}
+          color={COLORS.darkOrange}
+        />
+      </Animated.View>
+    );
   };
 
   return (
-    <Animated.View style={[animationStyle]}>
-      <TouchableOpacity
-        onPress={() => {
-          animation.value = { width: "90%" };
-        }}
-      >
-        <Text style={{ color: "white" }}>APRETAAAAAAAAA</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          animation.value = { width: "100%" };
-        }}
-      >
-        <Text style={{ color: "white" }}>APRETAAAAAAAAA</Text>
-      </TouchableOpacity>
-      <TextInput
-        style={[styles.input, { borderColor: borderColor }]}
-        keyboardType={type}
-        secureTextEntry={secure}
-        onFocus={() => setBorderColor(COLORS.orange)}
-        onBlur={onBlurHandler}
-        autoCapitalize="none"
-        value={value}
-        onChangeText={(text) => dispatch(onChange(text))}
-        placeholderTextColor={COLORS.gray}
-      />
-    </Animated.View>
+    <View
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+      }}
+    >
+      <Animated.View style={[animationStyle]}>
+        <TextInput
+          style={[styles.input, { borderColor: borderColor }]}
+          keyboardType={type}
+          secureTextEntry={secure}
+          onFocus={() => setBorderColor(COLORS.orange)}
+          onBlur={onBlurHandler}
+          autoCapitalize="none"
+          value={value}
+          onChangeText={(text) => handleOnChange(text)}
+          placeholderTextColor={COLORS.gray}
+        />
+      </Animated.View>
+      {renderWarning()}
+    </View>
   );
 };
 
@@ -76,6 +110,11 @@ const styles = StyleSheet.create({
     borderRadius: SIZES.padding - 5,
     color: COLORS.white,
     alignItems: "center",
-    //width: "90%",
+  },
+  warningContainer: {
+    width: SIZES.icon + 10,
+    height: SIZES.icon + 10,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

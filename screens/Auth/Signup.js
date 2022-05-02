@@ -31,19 +31,19 @@ const Signup = ({ navigation }) => {
   const formName = useSelector((state) => state.auth.formFields.formName);
   const formEmail = useSelector((state) => state.auth.formFields.formEmail);
   const formPass = useSelector((state) => state.auth.formFields.formPass);
+  const formValid = useSelector((state) => state.auth.formValid);
+  const formNameValid = useSelector(
+    (state) => state.auth.formFieldsValidation.formName
+  );
+  const formEmailValid = useSelector(
+    (state) => state.auth.formFieldsValidation.formEmail
+  );
+  const formPassValid = useSelector(
+    (state) => state.auth.formFieldsValidation.formPass
+  );
 
   const handleOnPress = () => {
-    if (formName != "" && formEmail != "" && formPass != "") {
-      let emailReg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
-      let passReg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-      if (emailReg.test(formEmail)) {
-        dispatch(signup(formName, formEmail, formPass));
-      } else {
-        console.log("EMAIL INVALIDO"); //mostrar toaster con mensaje
-      }
-    } else {
-      console.log("REVISA LOS CAMPOS"); //mostrar toaster con mensaje
-    }
+    if (formValid) dispatch(signup(formName, formEmail, formPass));
   };
 
   const renderHeader = () => {
@@ -86,7 +86,11 @@ const Signup = ({ navigation }) => {
         >
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Nombre</Text>
-            <AuthInput value={formName} onChange={updateName} />
+            <AuthInput
+              value={formName}
+              onChange={updateName}
+              listenTo={formNameValid}
+            />
           </View>
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Email</Text>
@@ -94,11 +98,17 @@ const Signup = ({ navigation }) => {
               type="email-address"
               value={formEmail}
               onChange={updateEmail}
+              listenTo={formEmailValid}
             />
           </View>
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Contraseña</Text>
-            <AuthInput secure value={formPass} onChange={updatePass} />
+            <AuthInput
+              secure
+              value={formPass}
+              onChange={updatePass}
+              listenTo={formPassValid}
+            />
           </View>
         </View>
         <View style={styles.footerContainer}>

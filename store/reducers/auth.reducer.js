@@ -11,7 +11,7 @@ const initialState = {
   token: null,
   userId: null,
   displayName: null,
-  formFields: { formName: null, formEmail: null, formPass: null },
+  formFields: { formName: "", formEmail: "", formPass: "" },
   formFieldsValidation: { formName: false, formEmail: false, formPass: false },
   formValid: null,
 };
@@ -41,6 +41,23 @@ const AuthReducer = (state = initialState, action) => {
         ...state,
       };
     case CHECK_FORM:
+      let emailReg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+      let passReg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+      if (state.formFields.formName.trim()) {
+        state.formFieldsValidation.formName = true;
+      } else {
+        state.formFieldsValidation.formName = false;
+      }
+      if (emailReg.test(state.formFields.formEmail)) {
+        state.formFieldsValidation.formEmail = true;
+      } else {
+        state.formFieldsValidation.formEmail = false;
+      }
+      if (passReg.test(state.formFields.formPass)) {
+        state.formFieldsValidation.formPass = true;
+      } else {
+        state.formFieldsValidation.formPass = false;
+      }
       for (const key in state.formFieldsValidation) {
         if (!state.formFieldsValidation[key]) {
           return { ...state, formValid: false };
