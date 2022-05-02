@@ -3,6 +3,7 @@ export const SET_RECIPE_NAME = "SET_RECIPE_NAME";
 export const SET_DESCRIPTION = "SET_DESCRIPTION";
 export const SET_CATEGORY = "SET_CATEGORY";
 export const SET_DURATION = "SET_DURATION";
+export const SET_AUTHOR = "SET_AUTHOR";
 export const CONFIRM_RECIPE = "CONFIRM_RECIPE";
 
 import { API_URL } from "../../constants/Database";
@@ -30,6 +31,11 @@ export const setCategory = (category) => ({
 export const setDuration = (duration) => ({
   type: SET_DURATION,
   payload: { duration: duration },
+});
+
+export const setAuthor = (authorName) => ({
+  type: SET_AUTHOR,
+  payload: { authorName: authorName },
 });
 
 export const confirmRecipe = (payload) => {

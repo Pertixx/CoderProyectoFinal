@@ -21,6 +21,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import {
+  setAuthor,
   setCategory,
   setDescription,
   setDuration,
@@ -37,6 +38,7 @@ const CreateRecipe = ({ navigation }) => {
   const scrollX = useSharedValue(0); //similar to new Animated.value(0)
 
   const dispatch = useDispatch();
+  const userName = useSelector((state) => state.auth.displayName);
   const selectedCategory = useSelector((state) => state.createRecipe.category);
   const recipeName = useSelector((state) => state.createRecipe.name);
   const recipeDescription = useSelector(
@@ -60,6 +62,7 @@ const CreateRecipe = ({ navigation }) => {
       recipeCategoryOk &&
       ingredients !== null
     ) {
+      dispatch(setAuthor(userName));
       setShowButton(true);
     } else {
       setShowButton(false);

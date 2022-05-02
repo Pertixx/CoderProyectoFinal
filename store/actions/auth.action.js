@@ -22,17 +22,17 @@ export const signup = (name, email, password) => {
       }),
     });
 
+    const data = await response.json();
+
     if (!response.ok) {
-      const errorResponse = await response.json();
-      const errorId = errorResponse.error.message;
+      //const errorResponse = await response.json();
+      const errorId = data.error.message;
 
       let message = "No se ha podido registrar";
       if (errorId === "EMAIL_EXISTS") message = "Este email ya esta registrado";
 
       console.error(message); // mostrar toaster con mensaje
     }
-
-    const data = await response.json();
     console.log(data);
 
     dispatch({
@@ -59,6 +59,20 @@ export const signIn = (email, password) => {
     });
 
     const data = await response.json();
+
+    if (!response.ok) {
+      //const errorResponse = await response.json();
+      const errorId = data.error.message;
+
+      let message = "No se ha podido iniciar sesion";
+      if (errorId === "EMAIL_NOT_FOUND") {
+        message = "No existe cuenta registrada con este email";
+      }
+      if (errorId === "INVALID_PASSWORD") {
+        message = "La contraseña no es válida";
+      }
+      console.error(message); // mostrar toaster con mensaje
+    }
     console.log(data);
 
     dispatch({

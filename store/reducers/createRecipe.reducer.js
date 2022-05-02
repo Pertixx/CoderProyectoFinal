@@ -2,6 +2,7 @@ import {
   CONFIRM_RECIPE,
   CREATE_RECIPE,
   SELECT_INGREDIENT,
+  SET_AUTHOR,
   SET_CATEGORY,
   SET_DESCRIPTION,
   SET_DURATION,
@@ -65,6 +66,9 @@ const CreateRecipeReducer = (state = initialState, action) => {
     case SET_DURATION:
       state.duration = action.payload.duration;
       state.recipe.duration = state.duration;
+      return { ...state };
+    case SET_AUTHOR:
+      state.recipe.author.name = action.payload.authorName;
       return { ...state };
     case CONFIRM_RECIPE:
       return {
