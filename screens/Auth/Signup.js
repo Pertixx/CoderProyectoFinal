@@ -24,10 +24,7 @@ import SeeAllButton from "../../components/Buttons/SeeAllButton";
 
 const Signup = ({ navigation }) => {
   const dispatch = useDispatch();
-  // const [name, setName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-
+  const form = "signup";
   const formName = useSelector((state) => state.auth.formFields.formName);
   const formEmail = useSelector((state) => state.auth.formFields.formEmail);
   const formPass = useSelector((state) => state.auth.formFields.formPass);
@@ -90,6 +87,7 @@ const Signup = ({ navigation }) => {
               value={formName}
               onChange={updateName}
               listenTo={formNameValid}
+              form={form}
             />
           </View>
           <View style={styles.inputContainer}>
@@ -99,6 +97,7 @@ const Signup = ({ navigation }) => {
               value={formEmail}
               onChange={updateEmail}
               listenTo={formEmailValid}
+              form={form}
             />
           </View>
           <View style={styles.inputContainer}>
@@ -108,6 +107,7 @@ const Signup = ({ navigation }) => {
               value={formPass}
               onChange={updatePass}
               listenTo={formPassValid}
+              form={form}
             />
           </View>
         </View>
@@ -183,5 +183,6 @@ const styles = StyleSheet.create({
   },
   footerContainer: {
     paddingHorizontal: SIZES.padding,
+    marginTop: SIZES.bottomTabHeight,
   },
 });

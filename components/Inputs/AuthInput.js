@@ -23,10 +23,10 @@ const AuthInput = ({
   value,
   onChange,
   listenTo = true,
+  form,
 }) => {
   const [borderColor, setBorderColor] = useState(COLORS.gray);
   const dispatch = useDispatch();
-  const notValid = useSelector((state) => state.auth.formValid);
   const animation = useSharedValue({ width: "100%" });
   const warningAnimation = useSharedValue({ opacity: 0 });
   const animationStyle = useAnimatedStyle(() => {
@@ -45,7 +45,6 @@ const AuthInput = ({
   });
 
   const onBlurHandler = () => {
-    console.log(value);
     setBorderColor(COLORS.gray);
     if (!listenTo) {
       animation.value = { width: "90%" };
@@ -57,8 +56,8 @@ const AuthInput = ({
   };
 
   const handleOnChange = (text) => {
-    dispatch(onChange(text));
-    dispatch(checkForm());
+    dispatch(onChange(text, form));
+    dispatch(checkForm(form));
   };
 
   const renderWarning = () => {

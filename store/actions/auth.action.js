@@ -44,21 +44,48 @@ export const signup = (name, email, password) => {
   };
 };
 
+export const signIn = (email, password) => {
+  return async (dispatch) => {
+    const response = await fetch(URL_AUTH_SIGNIN, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+        returnSecureToken: true,
+      }),
+    });
+
+    const data = await response.json();
+    console.log(data);
+
+    dispatch({
+      type: SIGN_IN,
+      token: data.idToken,
+      userId: data.localId,
+      displayName: data.displayName,
+    });
+  };
+};
+
 export const updateName = (name) => ({
   type: UPDATE_NAME,
   payload: name,
 });
 
-export const updateEmail = (email) => ({
+export const updateEmail = (email, form) => ({
   type: UPDATE_EMAIL,
-  payload: email,
+  payload: { email: email, form: form },
 });
 
-export const updatePass = (password) => ({
+export const updatePass = (password, form) => ({
   type: UPDATE_PASS,
-  payload: password,
+  payload: { password: password, form: form },
 });
 
-export const checkForm = () => ({
+export const checkForm = (form) => ({
   type: CHECK_FORM,
+  payload: form,
 });
