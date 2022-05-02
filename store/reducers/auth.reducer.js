@@ -1,5 +1,7 @@
 import {
   CHECK_FORM,
+  CLEAR_ERROR,
+  SET_ERROR,
   SIGN_IN,
   SIGN_UP,
   UPDATE_EMAIL,
@@ -17,6 +19,7 @@ const initialState = {
   formLogInFields: { formEmail: "", formPass: "" },
   formLogInValidation: { formEmail: false, formPass: false },
   formLogInValid: null,
+  error: null,
 };
 
 const AuthReducer = (state = initialState, action) => {
@@ -47,6 +50,10 @@ const AuthReducer = (state = initialState, action) => {
         formLogInValidation: initialState.formLogInValidation,
         formLogInValid: initialState.formLogInValid,
       };
+    case SET_ERROR:
+      return { ...state, error: action.payload };
+    case CLEAR_ERROR:
+      return { ...state, error: initialState.error };
     case UPDATE_NAME:
       state.formFields.formName = action.payload;
       return {

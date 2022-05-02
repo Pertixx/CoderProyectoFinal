@@ -8,22 +8,26 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import {
+  clearError,
   signup,
   updateEmail,
   updateName,
   updatePass,
 } from "../../store/actions/auth.action";
+import { setText, showToaster } from "../../store/actions/toaster.action";
 import { useDispatch, useSelector } from "react-redux";
 
 import AuthInput from "../../components/Inputs/AuthInput";
 import CustomButton from "../../components/Buttons/CustomButton";
 import { MaterialIcons } from "@expo/vector-icons";
 import SeeAllButton from "../../components/Buttons/SeeAllButton";
+import Toaster from "../../components/Toaster";
 
 const Signup = ({ navigation }) => {
   const dispatch = useDispatch();
+  const error = useSelector((state) => state.auth.error);
   const form = "signup";
   const formName = useSelector((state) => state.auth.formFields.formName);
   const formEmail = useSelector((state) => state.auth.formFields.formEmail);
@@ -42,6 +46,15 @@ const Signup = ({ navigation }) => {
   const handleOnPress = () => {
     if (formValid) dispatch(signup(formName, formEmail, formPass));
   };
+
+  useEffect(() => {
+    console.log(error);
+    if (error !== null) {
+      dispatch(setText(error));
+      dispatch(showToaster());
+      dispatch(clearError());
+    }
+  }, [error]);
 
   const renderHeader = () => {
     return (
@@ -140,6 +153,7 @@ const Signup = ({ navigation }) => {
           </View>
         </View>
       </ScrollView>
+      <Toaster />
     </KeyboardAvoidingView>
   );
 };

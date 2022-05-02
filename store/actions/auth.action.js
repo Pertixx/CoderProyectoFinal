@@ -6,6 +6,8 @@ export const UPDATE_NAME = "UPDATE_NAME";
 export const UPDATE_EMAIL = "UPDATE_EMAIL";
 export const UPDATE_PASS = "UPDATE_PASS";
 export const CHECK_FORM = "CHECK_FORM";
+export const SET_ERROR = "SET_ERROR";
+export const CLEAR_ERROR = "CLEAR_ERROR";
 
 export const signup = (name, email, password) => {
   return async (dispatch) => {
@@ -30,8 +32,10 @@ export const signup = (name, email, password) => {
 
       let message = "No se ha podido registrar";
       if (errorId === "EMAIL_EXISTS") message = "Este email ya esta registrado";
-
-      console.error(message); // mostrar toaster con mensaje
+      dispatch({
+        type: SET_ERROR,
+        payload: message,
+      });
     }
     console.log(data);
 
@@ -71,7 +75,10 @@ export const signIn = (email, password) => {
       if (errorId === "INVALID_PASSWORD") {
         message = "La contraseña no es válida";
       }
-      console.error(message); // mostrar toaster con mensaje
+      dispatch({
+        type: SET_ERROR,
+        payload: message,
+      });
     }
     console.log(data);
 
@@ -102,4 +109,8 @@ export const updatePass = (password, form) => ({
 export const checkForm = (form) => ({
   type: CHECK_FORM,
   payload: form,
+});
+
+export const clearError = () => ({
+  type: CLEAR_ERROR,
 });

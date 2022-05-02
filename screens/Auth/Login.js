@@ -8,21 +8,25 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import {
+  clearError,
   signIn,
   updateEmail,
   updatePass,
 } from "../../store/actions/auth.action";
+import { setText, showToaster } from "../../store/actions/toaster.action";
 import { useDispatch, useSelector } from "react-redux";
 
 import AuthInput from "../../components/Inputs/AuthInput";
 import CustomButton from "../../components/Buttons/CustomButton";
 import { MaterialIcons } from "@expo/vector-icons";
 import SeeAllButton from "../../components/Buttons/SeeAllButton";
+import Toaster from "../../components/Toaster";
 
 const Login = ({ navigation }) => {
   const dispatch = useDispatch();
+  const error = useSelector((state) => state.auth.error);
   const form = "login";
   const formEmail = useSelector(
     (state) => state.auth.formLogInFields.formEmail
@@ -39,6 +43,15 @@ const Login = ({ navigation }) => {
   const handleOnPress = () => {
     if (formLogInValid) dispatch(signIn(formEmail, formPass));
   };
+
+  useEffect(() => {
+    console.log(error);
+    if (error !== null) {
+      dispatch(setText(error));
+      dispatch(showToaster());
+      dispatch(clearError());
+    }
+  }, [error]);
 
   const renderHeader = () => {
     return (
@@ -128,6 +141,7 @@ const Login = ({ navigation }) => {
           </View>
         </View>
       </ScrollView>
+      <Toaster />
     </KeyboardAvoidingView>
   );
 };
