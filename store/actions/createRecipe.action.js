@@ -4,7 +4,10 @@ export const SET_DESCRIPTION = "SET_DESCRIPTION";
 export const SET_CATEGORY = "SET_CATEGORY";
 export const SET_DURATION = "SET_DURATION";
 export const SET_AUTHOR = "SET_AUTHOR";
+export const ADD_IMAGE = "ADD_IMAGE";
 export const CONFIRM_RECIPE = "CONFIRM_RECIPE";
+
+import * as FileSystem from "expo-file-system";
 
 import { API_URL } from "../../constants/Database";
 
@@ -60,5 +63,24 @@ export const confirmRecipe = (payload) => {
     } catch (error) {
       console.log(error.message);
     }
+  };
+};
+
+export const addImage = (image) => {
+  return async (dispatch) => {
+    const fileName = image.split("/").pop();
+    const Path = FileSystem.documentDirectory + fileName;
+
+    try {
+      FileSystem.moveAsync({
+        from: image,
+        to: Path,
+      });
+    } catch (error) {
+      console.log(error.message);
+      throw error;
+    }
+
+    dispatch({ type: ADD_IMAGE, payload: { image: Path } });
   };
 };

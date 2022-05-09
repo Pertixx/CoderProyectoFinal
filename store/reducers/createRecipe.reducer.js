@@ -1,6 +1,6 @@
 import {
+  ADD_IMAGE,
   CONFIRM_RECIPE,
-  CREATE_RECIPE,
   SELECT_INGREDIENT,
   SET_AUTHOR,
   SET_CATEGORY,
@@ -8,8 +8,6 @@ import {
   SET_DURATION,
   SET_RECIPE_NAME,
 } from "../actions/createRecipe.action";
-
-import { images } from "../../constants";
 
 const initialState = {
   recipe: {
@@ -19,7 +17,7 @@ const initialState = {
     category: null,
     ingredients: null,
     views: 0,
-    image: images.spagetti,
+    image: null,
     author: {
       name: "Agustin Perticaro",
       profilePic: null,
@@ -80,6 +78,9 @@ const CreateRecipeReducer = (state = initialState, action) => {
         category: null,
         ingredients: null,
       };
+    case ADD_IMAGE:
+      state.recipe.image = action.payload.image;
+      return { ...state };
     default:
       return state;
   }

@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setInactive } from "../store/actions/toaster.action";
 
 const HIDDEN_POSITION = 150;
-const VISIBLE_POSITION = -SIZES.bottomTabHeight;
+const VISIBLE_POSITION = -(SIZES.bottomTabHeight * 2);
 
 const Toaster = () => {
   const dispatch = useDispatch();

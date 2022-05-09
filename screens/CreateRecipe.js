@@ -31,7 +31,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 import CreateRecipeButton from "../components/Buttons/CreateRecipeButton";
 import CustomInput from "../components/Inputs/CustomInput";
+import ImageSelector from "../components/ImageSelector";
 import SelectIngredientCard from "../components/SelectIngredientCard";
+import Toaster from "../components/Toaster";
 import { dummyData } from "../constants";
 
 const CreateRecipe = ({ navigation }) => {
@@ -198,18 +200,17 @@ const CreateRecipe = ({ navigation }) => {
     );
   };
 
-  const renderCreateButton = () => {
-    if (recipeName != null && recipeName != "") {
-      if (recipeDescription != null && recipeDescription != "") {
-        if (recipeDuration != null && recipeDuration != "") {
-          if (selectedCategory != null) {
-            if (ingredients.length > 0) {
-              return <CreateRecipeButton />;
-            }
-          }
-        }
-      }
-    }
+  const renderThirdSection = () => {
+    return (
+      <View style={{ paddingVertical: SIZES.padding }}>
+        <View>
+          <Text style={{ ...FONTS.h2 }}>
+            Agrega una foto del plato ya finalizado
+          </Text>
+          <ImageSelector />
+        </View>
+      </View>
+    );
   };
 
   return (
@@ -222,9 +223,13 @@ const CreateRecipe = ({ navigation }) => {
       >
         {renderFirstSection()}
         {renderSecondSection()}
+        {renderThirdSection()}
         <View style={{ height: SIZES.bottomTabHeight * 3 }} />
       </ScrollView>
       {showButton ? <CreateRecipeButton /> : null}
+      <View style={{ paddingHorizontal: SIZES.padding }}>
+        <Toaster />
+      </View>
     </SafeAreaView>
   );
 };
