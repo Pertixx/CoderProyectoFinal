@@ -69,15 +69,7 @@ const CreateRecipeReducer = (state = initialState, action) => {
       state.recipe.author.name = action.payload.authorName;
       return { ...state };
     case CONFIRM_RECIPE:
-      return {
-        ...state,
-        recipe: initialState.recipe,
-        name: null,
-        description: null,
-        duration: null,
-        category: null,
-        ingredients: null,
-      };
+      return initialState;
     case ADD_IMAGE:
       state.recipe.image = action.payload.image;
       return { ...state };

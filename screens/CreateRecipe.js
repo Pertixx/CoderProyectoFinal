@@ -48,6 +48,7 @@ const CreateRecipe = ({ navigation }) => {
   );
   const recipeDuration = useSelector((state) => state.createRecipe.duration);
   const ingredients = useSelector((state) => state.createRecipe.ingredients);
+  const image = useSelector((state) => state.createRecipe.recipe.image);
   const [showButton, setShowButton] = useState(false);
   const [recipeNameOk, setRecipeNameOk] = useState(false);
   const [recipeDurationOk, setRecipeDurationOk] = useState(false);
@@ -62,14 +63,15 @@ const CreateRecipe = ({ navigation }) => {
       recipeNameOk &&
       recipeDurationOk &&
       recipeCategoryOk &&
-      ingredients !== null
+      ingredients !== null &&
+      image !== null
     ) {
       dispatch(setAuthor(userName));
       setShowButton(true);
     } else {
       setShowButton(false);
     }
-  }, [recipeNameOk, recipeDurationOk, recipeCategoryOk, ingredients]);
+  }, [recipeNameOk, recipeDurationOk, recipeCategoryOk, ingredients, image]);
 
   useEffect(() => {
     if (recipeName !== null && recipeName !== "") {

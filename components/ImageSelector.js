@@ -1,18 +1,50 @@
 import * as ImagePicker from "expo-image-picker";
 
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 import { COLORS, SHADOW, SIZES } from "../constants";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { setText, showToaster } from "../store/actions/toaster.action";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Entypo } from "@expo/vector-icons";
-import { FlatList } from "react-native-gesture-handler";
 import { addImage } from "../store/actions/createRecipe.action";
 
 const ImageSelector = () => {
   const dispatch = useDispatch();
-  const [image, setImage] = useState(null);
+  const image = useSelector((state) => state.createRecipe.recipe.image);
+  const containerHeight = useSharedValue(SIZES.bottomTabHeight * 2);
+  const buttonsContainerHeight = useSharedValue("100%");
+
+  const containerAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      height: withTiming(containerHeight.value, {
+        duration: 400,
+      }),
+    };
+  });
+
+  const buttonsContainerAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      height: withTiming(buttonsContainerHeight.value, {
+        duration: 400,
+      }),
+    };
+  });
+
+  useEffect(() => {
+    console.log(image);
+    if (image) {
+      containerHeight.value = SIZES.height * 0.6;
+      buttonsContainerHeight.value = "35%";
+    } else {
+      console.log("null");
+    }
+  }, [image]);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -22,16 +54,12 @@ const ImageSelector = () => {
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.cancelled) {
       dispatch(addImage(result.uri));
-      //setImage(result.uri);
     }
   };
 
   const showImage = () => {
-    const image = useSelector((state) => state.createRecipe.recipe.image);
     if (image) {
       return (
         <View style={styles.imageContainer}>
@@ -69,14 +97,14 @@ const ImageSelector = () => {
     });
 
     dispatch(addImage(image.uri));
-    //setImage(image.uri);
-    //props.onImage(image.uri)
   };
 
   return (
-    <View style={styles.container}>
+    <Animated.View style={[styles.container, containerAnimatedStyle]}>
       {showImage()}
-      <View style={styles.buttonsContainer}>
+      <Animated.View
+        style={[styles.buttonsContainer, buttonsContainerAnimatedStyle]}
+      >
         <TouchableOpacity
           style={styles.takePhotoButton}
           onPress={handleTakeImage}
@@ -88,8 +116,8 @@ const ImageSelector = () => {
           <Entypo name="images" size={SIZES.icon} color={COLORS.black} />
           <Text>Añadir foto desde la galeria</Text>
         </TouchableOpacity>
-      </View>
-    </View>
+      </Animated.View>
+    </Animated.View>
   );
 };
 
@@ -97,13 +125,13 @@ export default ImageSelector;
 
 const styles = StyleSheet.create({
   container: {
-    //backgroundColor: COLORS.orange,
-    height: SIZES.height * 0.6,
+    //height: SIZES.height * 0.6,
+    marginTop: SIZES.padding,
     justifyContent: "flex-end",
   },
   buttonsContainer: {
     alignItems: "center",
-    height: "35%",
+    //height: "35%",
     justifyContent: "space-between",
   },
   takePhotoButton: {
