@@ -7,7 +7,11 @@ import React from "react";
 const RecipeCard = ({ recipeItem, navigation }) => {
   return (
     <View style={styles.card}>
-      <Image source={images.spagetti} resizeMode="cover" style={styles.image} />
+      <Image
+        source={{ uri: recipeItem.item.image }}
+        resizeMode="cover"
+        style={styles.image}
+      />
       <View style={styles.details}>
         <Text style={styles.itemName}>{recipeItem.item.name}</Text>
         <View style={styles.authorContainer}>

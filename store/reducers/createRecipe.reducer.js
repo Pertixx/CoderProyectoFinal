@@ -19,6 +19,7 @@ const initialState = {
     views: 0,
     image: null,
     author: {
+      id: null,
       name: "Agustin Perticaro",
       profilePic: null,
     },
@@ -67,6 +68,7 @@ const CreateRecipeReducer = (state = initialState, action) => {
       return { ...state };
     case SET_AUTHOR:
       state.recipe.author.name = action.payload.authorName;
+      state.recipe.author.id = action.payload.id;
       return { ...state };
     case CONFIRM_RECIPE:
       return initialState;

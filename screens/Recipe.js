@@ -81,7 +81,7 @@ const Recipe = ({ navigation, route }) => {
     return (
       <View style={styles.headerContainer}>
         <Animated.Image
-          source={images.spagetti}
+          source={{ uri: recipeItem.item.image }}
           style={[styles.image, imageAnimatedStyle]}
           blurRadius={0}
         />

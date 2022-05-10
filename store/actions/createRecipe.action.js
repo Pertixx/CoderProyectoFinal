@@ -9,7 +9,13 @@ export const CONFIRM_RECIPE = "CONFIRM_RECIPE";
 
 import * as FileSystem from "expo-file-system";
 
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+
 import { API_URL } from "../../constants/Database";
+import { firebaseConfig } from "../../firebase/firebase-config";
+import { initializeApp } from "firebase/app";
+
+const app = initializeApp(firebaseConfig);
 
 export const selectIngredient = (ingredient) => ({
   type: SELECT_INGREDIENT,
@@ -36,9 +42,9 @@ export const setDuration = (duration) => ({
   payload: { duration: duration },
 });
 
-export const setAuthor = (authorName) => ({
+export const setAuthor = (authorName, id) => ({
   type: SET_AUTHOR,
-  payload: { authorName: authorName },
+  payload: { authorName: authorName, id: id },
 });
 
 export const confirmRecipe = (payload) => {
@@ -66,7 +72,7 @@ export const confirmRecipe = (payload) => {
   };
 };
 
-export const addImage = (image) => {
+export const addImage = (image, userId) => {
   return async (dispatch) => {
     const fileName = image.split("/").pop();
     const Path = FileSystem.documentDirectory + fileName;
@@ -81,6 +87,20 @@ export const addImage = (image) => {
       throw error;
     }
 
-    dispatch({ type: ADD_IMAGE, payload: { image: Path } });
+    // Upload image to cloud store
+    const storage = getStorage(app);
+    const reference = ref(storage, "recipes/" + `${userId}`);
+
+    const img = await fetch(Path);
+    const bytes = await img.blob();
+
+    await uploadBytes(reference, bytes);
+
+    // Get new firebase image url from cloud store
+    await getDownloadURL(reference).then((resolve) => {
+      dispatch({ type: ADD_IMAGE, payload: { image: resolve } });
+    });
+
+    //dispatch({ type: ADD_IMAGE, payload: { image: Path } });
   };
 };

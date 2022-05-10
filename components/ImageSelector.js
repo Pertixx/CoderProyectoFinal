@@ -19,6 +19,7 @@ const ImageSelector = () => {
   const image = useSelector((state) => state.createRecipe.recipe.image);
   const containerHeight = useSharedValue(SIZES.bottomTabHeight * 2);
   const buttonsContainerHeight = useSharedValue("100%");
+  const userId = useSelector((state) => state.auth.userId);
 
   const containerAnimatedStyle = useAnimatedStyle(() => {
     return {
@@ -55,7 +56,7 @@ const ImageSelector = () => {
     });
 
     if (!result.cancelled) {
-      dispatch(addImage(result.uri));
+      dispatch(addImage(result.uri, userId));
     }
   };
 
@@ -96,7 +97,7 @@ const ImageSelector = () => {
       quality: 1,
     });
 
-    dispatch(addImage(image.uri));
+    dispatch(addImage(image.uri, userId));
   };
 
   return (

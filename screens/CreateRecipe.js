@@ -53,6 +53,7 @@ const CreateRecipe = ({ navigation }) => {
   const [recipeNameOk, setRecipeNameOk] = useState(false);
   const [recipeDurationOk, setRecipeDurationOk] = useState(false);
   const [recipeCategoryOk, setRecipeCategoryOk] = useState(false);
+  const userId = useSelector((state) => state.auth.userId);
 
   const onScroll = useAnimatedScrollHandler((event) => {
     scrollX.value = event.contentOffset.x;
@@ -66,7 +67,7 @@ const CreateRecipe = ({ navigation }) => {
       ingredients !== null &&
       image !== null
     ) {
-      dispatch(setAuthor(userName));
+      dispatch(setAuthor(userName, userId));
       setShowButton(true);
     } else {
       setShowButton(false);
