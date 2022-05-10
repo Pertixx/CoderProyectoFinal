@@ -6,16 +6,23 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import {
+  confirmRecipe,
+  generateImageUrl,
+} from "../../store/actions/createRecipe.action";
 import { useDispatch, useSelector } from "react-redux";
 
 import Animated from "react-native-reanimated";
 import React from "react";
-import { confirmRecipe } from "../../store/actions/createRecipe.action";
 
 const CreateRecipeButton = () => {
   const recipe = useSelector((state) => state.createRecipe.recipe);
+  const image = useSelector((state) => state.createRecipe.recipe.image);
+  const userId = useSelector((state) => state.auth.userId);
   const dispatch = useDispatch();
+
   const handleOnPress = () => {
+    dispatch(generateImageUrl(userId, image));
     dispatch(confirmRecipe(recipe));
   };
 

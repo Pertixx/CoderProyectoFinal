@@ -42,8 +42,6 @@ const ImageSelector = () => {
     if (image) {
       containerHeight.value = SIZES.height * 0.6;
       buttonsContainerHeight.value = "35%";
-    } else {
-      console.log("null");
     }
   }, [image]);
 
@@ -56,7 +54,7 @@ const ImageSelector = () => {
     });
 
     if (!result.cancelled) {
-      dispatch(addImage(result.uri, userId));
+      dispatch(addImage(result.uri));
     }
   };
 
@@ -97,7 +95,7 @@ const ImageSelector = () => {
       quality: 1,
     });
 
-    dispatch(addImage(image.uri, userId));
+    dispatch(addImage(image.uri));
   };
 
   return (
@@ -157,6 +155,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginBottom: SIZES.padding,
     borderRadius: SIZES.padding - 5,
+    backgroundColor: COLORS.black,
   },
   image: {
     width: "100%",

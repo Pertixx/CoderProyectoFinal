@@ -72,7 +72,24 @@ export const confirmRecipe = (payload) => {
   };
 };
 
-export const addImage = (image, userId) => {
+export const generateImageUrl = (userId, image) => {
+  return async (dispatch) => {
+    const storage = getStorage(app);
+    const reference = ref(storage, "recipes/" + `${userId}${Date.now()}`);
+
+    const img = await fetch(image);
+    const bytes = await img.blob();
+
+    await uploadBytes(reference, bytes);
+
+    // Get new firebase image url from cloud store
+    await getDownloadURL(reference).then((resolve) => {
+      dispatch({ type: ADD_IMAGE, payload: { image: resolve } });
+    });
+  };
+};
+
+export const addImage = (image) => {
   return async (dispatch) => {
     const fileName = image.split("/").pop();
     const Path = FileSystem.documentDirectory + fileName;
@@ -87,20 +104,6 @@ export const addImage = (image, userId) => {
       throw error;
     }
 
-    // Upload image to cloud store
-    const storage = getStorage(app);
-    const reference = ref(storage, "recipes/" + `${userId}`);
-
-    const img = await fetch(Path);
-    const bytes = await img.blob();
-
-    await uploadBytes(reference, bytes);
-
-    // Get new firebase image url from cloud store
-    await getDownloadURL(reference).then((resolve) => {
-      dispatch({ type: ADD_IMAGE, payload: { image: resolve } });
-    });
-
-    //dispatch({ type: ADD_IMAGE, payload: { image: Path } });
+    dispatch({ type: ADD_IMAGE, payload: { image: Path } });
   };
 };
