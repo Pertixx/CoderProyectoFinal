@@ -1,11 +1,12 @@
-import { COLORS, FONTS, SIZES } from "../../constants";
 import {
+  ActivityIndicator,
   Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
 } from "react-native";
+import { COLORS, FONTS, SIZES } from "../../constants";
+import React, { useState } from "react";
 import {
   confirmRecipe,
   generateImageUrl,
@@ -13,22 +14,28 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 import Animated from "react-native-reanimated";
-import React from "react";
 
 const CreateRecipeButton = () => {
   const recipe = useSelector((state) => state.createRecipe.recipe);
   const image = useSelector((state) => state.createRecipe.recipe.image);
   const userId = useSelector((state) => state.auth.userId);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
 
-  const handleOnPress = () => {
-    dispatch(generateImageUrl(userId, image));
+  const handleOnPress = async () => {
+    setLoading(true);
+    await dispatch(generateImageUrl(userId, image));
     dispatch(confirmRecipe(recipe));
+    setLoading(false);
   };
 
   return (
     <TouchableOpacity style={styles.button} onPress={handleOnPress}>
-      <Text style={styles.text}>Crear</Text>
+      {loading ? (
+        <ActivityIndicator size={"small"} color={COLORS.white} />
+      ) : (
+        <Text style={styles.text}>Crear</Text>
+      )}
     </TouchableOpacity>
   );
 };
