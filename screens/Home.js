@@ -1,12 +1,14 @@
-import { COLORS, FONTS, SIZES } from "../constants/";
 import {
+  ActivityIndicator,
   FlatList,
   SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
+import { COLORS, FONTS, SIZES } from "../constants/";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -20,6 +22,7 @@ const Home = ({ navigation }) => {
   const data = useSelector((state) => state.recipes.filteredRecipes);
   const dispatch = useDispatch();
   const [refreshing, setRefreshing] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     dispatch(getRecipes());
@@ -55,6 +58,26 @@ const Home = ({ navigation }) => {
     fetchData();
   };
 
+  const renderLoadMoreButton = () => {
+    return (
+      <TouchableOpacity
+        style={styles.loadMoreButton}
+        onPress={() => {
+          setLoading(true);
+          setTimeout(() => {
+            setLoading(false);
+          }, 3000);
+        }}
+      >
+        {loading ? (
+          <ActivityIndicator size={"small"} color={COLORS.white} />
+        ) : (
+          <Text style={{ ...FONTS.h3, color: COLORS.white }}>Cargar Mas</Text>
+        )}
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="default" />
@@ -73,8 +96,9 @@ const Home = ({ navigation }) => {
           </View>
         }
         ListFooterComponent={
-          <View>
+          <View style={{ paddingHorizontal: SIZES.padding }}>
             {renderEmptyListMessage()}
+            {renderLoadMoreButton()}
             <View style={{ marginBottom: SIZES.bottomTabHeight * 2 }} />
           </View>
         }
@@ -89,5 +113,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.white2,
+  },
+  loadMoreButton: {
+    backgroundColor: COLORS.black,
+    justifyContent: "center",
+    alignItems: "center",
+    height: SIZES.bottomTabHeight,
+    borderRadius: SIZES.padding + 5,
+    marginTop: SIZES.padding * 2,
   },
 });
