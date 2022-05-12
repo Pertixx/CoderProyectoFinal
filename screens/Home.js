@@ -1,11 +1,10 @@
-import { COLORS, FONTS, SIZES, dummyData } from "../constants/";
+import { COLORS, FONTS, SIZES } from "../constants/";
 import {
   FlatList,
   SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import React, { useEffect, useState } from "react";
@@ -20,6 +19,7 @@ import { getRecipes } from "../store/actions/recipe.action";
 const Home = ({ navigation }) => {
   const data = useSelector((state) => state.recipes.filteredRecipes);
   const dispatch = useDispatch();
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     dispatch(getRecipes());
@@ -45,10 +45,22 @@ const Home = ({ navigation }) => {
     }
   };
 
+  const fetchData = () => {
+    dispatch(getRecipes());
+    setRefreshing(false);
+  };
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    fetchData();
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="default" />
       <FlatList
+        onRefresh={onRefresh}
+        refreshing={refreshing}
         data={data}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item.id}
