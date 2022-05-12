@@ -1,16 +1,43 @@
+import {
+  ActivityIndicator,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { COLORS, FONTS, SHADOW, SIZES, images } from "../constants";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useState } from "react";
 
 import { Feather } from "@expo/vector-icons";
-import React from "react";
 
 const RecipeCard = ({ recipeItem, navigation }) => {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    console.log(loaded);
+  }, [loaded]);
+
   return (
     <View style={styles.card}>
       <Image
+        onLoad={() => setLoaded(true)}
         source={{ uri: recipeItem.item.image }}
         resizeMode="cover"
-        style={styles.image}
+        style={[
+          styles.image,
+          loaded
+            ? {
+                width: SIZES.bottomTabHeight * 1.6,
+                height: SIZES.bottomTabHeight * 1.6,
+              }
+            : { width: 0, height: 0 },
+        ]}
+      />
+      <ActivityIndicator
+        size={"small"}
+        color={COLORS.black}
+        style={{ display: loaded ? "none" : "flex" }}
       />
       <View style={styles.details}>
         <Text style={styles.itemName}>{recipeItem.item.name}</Text>
@@ -37,16 +64,16 @@ const styles = StyleSheet.create({
   card: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 10,
-    marginTop: 10,
-    borderRadius: 10,
+    padding: SIZES.padding - 5,
+    marginTop: SIZES.padding - 5,
+    borderRadius: SIZES.padding - 5,
     backgroundColor: COLORS.white,
     ...SHADOW.shadow1,
   },
   image: {
-    width: 100,
-    height: 100,
-    borderRadius: 15,
+    //width: SIZES.bottomTabHeight * 1.6,
+    //height: SIZES.bottomTabHeight * 1.6,
+    borderRadius: SIZES.padding,
   },
   details: {
     width: "65%",
