@@ -61,9 +61,6 @@ const styles = StyleSheet.create({
     right: SIZES.padding,
     borderRadius: SIZES.padding,
     ...SHADOW.shadow1,
-  },
-  iconContainer: {
-    flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },

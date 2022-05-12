@@ -1,4 +1,11 @@
-import { URL_AUTH_SIGNIN, URL_AUTH_SIGNUP } from "../../constants/Database";
+import {
+  API_URL,
+  URL_AUTH_SIGNIN,
+  URL_AUTH_SIGNUP,
+} from "../../constants/Database";
+import { ref, set } from "firebase/database";
+
+import { db } from "../../firebase/firebase-config";
 
 export const SIGN_UP = "SIGN_UP";
 export const SIGN_IN = "SIGN_IN";
@@ -8,6 +15,20 @@ export const UPDATE_PASS = "UPDATE_PASS";
 export const CHECK_FORM = "CHECK_FORM";
 export const SET_ERROR = "SET_ERROR";
 export const CLEAR_ERROR = "CLEAR_ERROR";
+
+const createUserDataBase = (userId, name) => {
+  set(ref(db, "users/" + userId), {
+    name: name,
+    profilePic:
+      "https://cdn.pixabay.com/photo/2015/05/26/00/48/basketball-784097_1280.jpg",
+  })
+    .then(() => {
+      console.log("User database created!");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
 export const signup = (name, email, password) => {
   return async (dispatch) => {
@@ -45,6 +66,7 @@ export const signup = (name, email, password) => {
       userId: data.localId,
       displayName: data.displayName,
     });
+    createUserDataBase(data.localId, data.displayName);
   };
 };
 
@@ -80,7 +102,7 @@ export const signIn = (email, password) => {
         payload: message,
       });
     }
-    console.log(data);
+    //console.log(data);
 
     dispatch({
       type: SIGN_IN,

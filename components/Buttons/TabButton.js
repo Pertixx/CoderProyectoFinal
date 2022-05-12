@@ -4,8 +4,14 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { COLORS, SIZES } from "../../constants";
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useEffect, useRef } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { Feather } from "@expo/vector-icons";
 
@@ -39,7 +45,10 @@ const TabButton = (props) => {
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={[styles.container, Platform.OS === "ios" ? { top: 15 } : null]}
+      style={[
+        styles.container,
+        Platform.OS === "ios" ? { top: SIZES.padding } : null,
+      ]} //a partir del iphone x hay que ponerle top
     >
       <View>
         <Animated.View style={[animationStyle, styles.emergingView]} />

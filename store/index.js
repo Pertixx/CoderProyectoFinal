@@ -5,6 +5,7 @@ import CategoryReducer from "./reducers/category.reducer";
 import CreateRecipeReducer from "./reducers/createRecipe.reducer";
 import RecipeReducer from "./reducers/recipe.reducer";
 import ToasterReducer from "./reducers/toaster.reducer";
+import UserReducer from "./reducers/user.reducer";
 import thunk from "redux-thunk";
 
 const RootReducer = combineReducers({
@@ -13,6 +14,7 @@ const RootReducer = combineReducers({
   createRecipe: CreateRecipeReducer,
   auth: AuthReducer,
   toaster: ToasterReducer,
+  user: UserReducer,
 });
 
 export default createStore(RootReducer, applyMiddleware(thunk));

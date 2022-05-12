@@ -17,15 +17,18 @@ import Header from "../components/Header";
 import RecipeCard from "../components/RecipeCard";
 import TrendingRecipesCarousel from "../components/TrendingRecipesCarousel";
 import { getRecipes } from "../store/actions/recipe.action";
+import { getUserData } from "../store/actions/user.action";
 
 const Home = ({ navigation }) => {
   const data = useSelector((state) => state.recipes.filteredRecipes);
+  const userId = useSelector((state) => state.auth.userId);
   const dispatch = useDispatch();
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     dispatch(getRecipes());
+    dispatch(getUserData(userId));
   }, []);
 
   const renderItem = (item) => {

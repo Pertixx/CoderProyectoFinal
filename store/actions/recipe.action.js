@@ -22,7 +22,7 @@ export const getRecipes = () => {
         ...result[key],
         id: key,
       }));
-      console.log(recipes);
+      //console.log(recipes);
 
       dispatch({
         type: GET_RECIPES,

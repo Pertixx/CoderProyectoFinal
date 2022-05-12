@@ -7,7 +7,8 @@ import { dummyData } from "../constants";
 import { useSelector } from "react-redux";
 
 const Header = ({ navigation }) => {
-  const displayName = useSelector((state) => state.auth.displayName);
+  const displayName = useSelector((state) => state.user.name);
+  const profilePic = useSelector((state) => state.user.profilePic);
 
   return (
     <View style={styles.headerContainer}>
@@ -23,10 +24,7 @@ const Header = ({ navigation }) => {
           onPress={() => navigation.navigate("Profile")}
           style={{ borderRadius: SIZES.padding }}
         >
-          <Image
-            source={dummyData.user.profilePic}
-            style={styles.profileImage}
-          />
+          <Image source={{ uri: profilePic }} style={styles.profileImage} />
         </TouchableOpacity>
       </View>
     </View>

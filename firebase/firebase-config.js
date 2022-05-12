@@ -1,3 +1,6 @@
+import { getDatabase } from "firebase/database";
+import { initializeApp } from "firebase/app";
+
 // Your web app's Firebase configuration
 export const firebaseConfig = {
   apiKey: "AIzaSyAtG66RjLNvZzBhzKsUwy6xrL1xK9fcf1o",
@@ -8,3 +11,7 @@ export const firebaseConfig = {
   messagingSenderId: "824154448914",
   appId: "1:824154448914:web:aadace31bdf89d1c9524cb",
 };
+
+const app = initializeApp(firebaseConfig);
+
+export const db = getDatabase(app);

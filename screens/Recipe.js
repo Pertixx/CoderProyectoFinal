@@ -5,17 +5,15 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from "react-native-reanimated";
-import { COLORS, FONTS, SHADOW, SIZES, dummyData, images } from "../constants";
+import { COLORS, FONTS, SHADOW, SIZES, images } from "../constants";
 import {
-  FlatList,
-  Image,
   Platform,
-  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
+import { getDatabase, ref, set } from "firebase/database";
 
 import BookmarkButton from "../components/Buttons/BookmarkButton";
 import CreateYourRecipeButton from "../components/Buttons/CreateYourRecipeButton";
@@ -23,10 +21,13 @@ import { Feather } from "@expo/vector-icons";
 import IngredientCard from "../components/IngredientCard";
 import React from "react";
 import RecipeCreatorCard from "../components/RecipeCreatorCard";
+import { db } from "../firebase/firebase-config";
+import { useSelector } from "react-redux";
 
 const Recipe = ({ navigation, route }) => {
   const { recipeItem } = route.params;
   const scrollY = useSharedValue(0); //similar to new Animated.value(0)
+  const userId = useSelector((state) => state.auth.userId);
 
   const onScroll = useAnimatedScrollHandler((event) => {
     scrollY.value = event.contentOffset.y;
@@ -60,6 +61,14 @@ const Recipe = ({ navigation, route }) => {
     };
   });
 
+  const handleBookmark = () => {
+    set(ref(db, "users/" + userId), {
+      profilePic: "agustin",
+    }).catch((error) => {
+      console.log(error);
+    });
+  };
+
   const renderHeader = () => {
     return (
       <View style={styles.backButtonContainer}>
@@ -69,10 +78,7 @@ const Recipe = ({ navigation, route }) => {
         >
           <Feather name="arrow-left" size={SIZES.icon} color={COLORS.black} />
         </TouchableOpacity>
-        <BookmarkButton
-          onPress={() => console.log("Bookmark")}
-          colorMode="white"
-        />
+        <BookmarkButton onPress={handleBookmark} colorMode="white" />
       </View>
     );
   };

@@ -14,30 +14,12 @@ import { Feather } from "@expo/vector-icons";
 const RecipeCard = ({ recipeItem, navigation }) => {
   const [loaded, setLoaded] = useState(false);
 
-  useEffect(() => {
-    console.log(loaded);
-  }, [loaded]);
-
   return (
     <View style={styles.card}>
       <Image
-        onLoad={() => setLoaded(true)}
         source={{ uri: recipeItem.item.image }}
         resizeMode="cover"
-        style={[
-          styles.image,
-          loaded
-            ? {
-                width: SIZES.bottomTabHeight * 1.6,
-                height: SIZES.bottomTabHeight * 1.6,
-              }
-            : { width: 0, height: 0 },
-        ]}
-      />
-      <ActivityIndicator
-        size={"small"}
-        color={COLORS.black}
-        style={{ display: loaded ? "none" : "flex" }}
+        style={styles.image}
       />
       <View style={styles.details}>
         <Text style={styles.itemName}>{recipeItem.item.name}</Text>
@@ -71,8 +53,8 @@ const styles = StyleSheet.create({
     ...SHADOW.shadow1,
   },
   image: {
-    //width: SIZES.bottomTabHeight * 1.6,
-    //height: SIZES.bottomTabHeight * 1.6,
+    width: SIZES.bottomTabHeight * 1.6,
+    height: SIZES.bottomTabHeight * 1.6,
     borderRadius: SIZES.padding,
   },
   details: {
