@@ -11,11 +11,21 @@ import * as FileSystem from "expo-file-system";
 
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
+import { ADD_LAST_RECIPE } from "./user.action";
 import { API_URL } from "../../constants/Database";
+import { db } from "../../firebase/firebase-config";
 import { firebaseConfig } from "../../firebase/firebase-config";
 import { initializeApp } from "firebase/app";
 
 const app = initializeApp(firebaseConfig);
+
+const addUserRecipe = (recipe) => {
+  update(ref(db, "users/" + userId), {
+    createdRecipes: createdRecipes.push(),
+  }).catch((error) => {
+    console.log(error);
+  });
+};
 
 export const selectIngredient = (ingredient) => ({
   type: SELECT_INGREDIENT,
@@ -63,6 +73,10 @@ export const confirmRecipe = (payload) => {
 
       const result = await response.json();
       console.log(result);
+      dispatch({
+        type: ADD_LAST_RECIPE,
+        payload: { id: result.name },
+      });
       dispatch({
         type: CONFIRM_RECIPE,
       });

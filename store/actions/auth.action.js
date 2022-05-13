@@ -21,6 +21,8 @@ const createUserDataBase = (userId, name) => {
     name: name,
     profilePic:
       "https://cdn.pixabay.com/photo/2015/05/26/00/48/basketball-784097_1280.jpg",
+    createdRecipes: [0],
+    bookmarks: [0],
   })
     .then(() => {
       console.log("User database created!");
