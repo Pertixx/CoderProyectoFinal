@@ -1,7 +1,9 @@
 import {
+  ADD_BOOKMARK,
   ADD_DATA,
   ADD_LAST_RECIPE,
   ADD_NEW_RECIPE,
+  DONT_ADD_BOOKMARK,
 } from "../actions/user.action";
 
 const initialState = {
@@ -10,6 +12,7 @@ const initialState = {
   profilePic: null,
   name: null,
   addNewRecipe: false,
+  addBookmark: false,
 };
 
 const UserReducer = (state = initialState, action) => {
@@ -28,11 +31,29 @@ const UserReducer = (state = initialState, action) => {
       }
       state.createdRecipes.push(action.payload.id);
       state.addNewRecipe = true;
-      return {
-        ...state,
-      };
+      return { ...state };
     case ADD_NEW_RECIPE:
       state.addNewRecipe = false;
+      return { ...state };
+    case ADD_BOOKMARK:
+      if (state.bookmarks[0] === 0) {
+        state.bookmarks = [];
+      }
+      const index = state.bookmarks.findIndex(
+        (bookmark) => bookmark === action.payload.id
+      );
+      if (index === -1) {
+        state.bookmarks.push(action.payload.id);
+      } else {
+        state.bookmarks.splice(index, 1);
+        if (state.bookmarks.length === 0) {
+          state.bookmarks = [0];
+        }
+      }
+      state.addBookmark = true;
+      return { ...state };
+    case DONT_ADD_BOOKMARK:
+      state.addBookmark = false;
       return { ...state };
     default:
       return state;

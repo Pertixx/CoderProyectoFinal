@@ -1,23 +1,20 @@
 import { COLORS, SHADOW } from "../../constants";
-import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 
 import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
+import React from "react";
 
-const BookmarkButton = ({ onPress, colorMode }) => {
-  const [selected, setSelected] = useState(false);
-
+const BookmarkButton = ({ onPress, colorMode, active }) => {
   if (colorMode === "black") {
     return (
       <TouchableOpacity
         onPress={() => {
           onPress();
-          setSelected(!selected);
         }}
         style={styles.container}
       >
-        {selected ? (
+        {active ? (
           <AntDesign name="heart" size={24} color={COLORS.orange} />
         ) : (
           <Feather name="heart" size={24} color={COLORS.white} />
@@ -29,11 +26,10 @@ const BookmarkButton = ({ onPress, colorMode }) => {
       <TouchableOpacity
         onPress={() => {
           onPress();
-          setSelected(!selected);
         }}
         style={[styles.container, { backgroundColor: COLORS.white }]}
       >
-        {selected ? (
+        {active ? (
           <AntDesign name="heart" size={24} color={COLORS.orange} />
         ) : (
           <Feather name="heart" size={24} color={COLORS.black} />

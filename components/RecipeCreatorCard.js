@@ -4,14 +4,30 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { BlurView } from "expo-blur";
 import { Feather } from "@expo/vector-icons";
 import React from "react";
+import { useSelector } from "react-redux";
 
 const RecipeCreatorCard = ({ author, recipeDescription = null }) => {
+  const userId = useSelector((state) => state.auth.userId);
+
   const renderDescription = () => {
     if (recipeDescription != null) {
       return (
         <Text style={styles.description} numberOfLines={4}>
           {recipeDescription}
         </Text>
+      );
+    }
+  };
+
+  const renderGoToAuthor = () => {
+    if (author.id !== userId) {
+      return (
+        <TouchableOpacity
+          onPress={() => console.log("Go to author profile")}
+          style={styles.button}
+        >
+          <Feather name="arrow-right" size={SIZES.icon} color={COLORS.white} />
+        </TouchableOpacity>
       );
     }
   };
@@ -41,12 +57,7 @@ const RecipeCreatorCard = ({ author, recipeDescription = null }) => {
             <Text style={styles.name}>{author.name}</Text>
           </View>
         </View>
-        <TouchableOpacity
-          onPress={() => console.log("Go to author profile")}
-          style={styles.button}
-        >
-          <Feather name="arrow-right" size={SIZES.icon} color={COLORS.white} />
-        </TouchableOpacity>
+        {renderGoToAuthor()}
       </View>
       {renderDescription()}
     </BlurView>
