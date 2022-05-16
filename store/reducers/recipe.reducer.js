@@ -1,8 +1,13 @@
-import { FILTER_RECIPES, GET_RECIPES } from "../actions/recipe.action";
+import {
+  FILTER_RECIPES,
+  GET_CREATED_RECIPES,
+  GET_RECIPES,
+} from "../actions/recipe.action";
 
 const initialState = {
   recipes: [],
   filteredRecipes: [],
+  createdRecipes: [],
 };
 
 const RecipeReducer = (state = initialState, action) => {
@@ -26,6 +31,11 @@ const RecipeReducer = (state = initialState, action) => {
         ...state,
         recipes: action.payload,
         filteredRecipes: action.payload,
+      };
+    case GET_CREATED_RECIPES:
+      return {
+        ...state,
+        createdRecipes: action.payload.createdRecipes,
       };
     default:
       return state;

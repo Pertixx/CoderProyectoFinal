@@ -29,6 +29,7 @@ const initialState = {
   duration: null,
   category: null,
   ingredients: null,
+  localImage: null,
 };
 
 const CreateRecipeReducer = (state = initialState, action) => {
@@ -71,9 +72,18 @@ const CreateRecipeReducer = (state = initialState, action) => {
       state.recipe.author.id = action.payload.id;
       return { ...state };
     case CONFIRM_RECIPE:
-      return initialState;
+      return {
+        ...state,
+        recipe: initialState.recipe,
+        name: initialState.name,
+        description: initialState.description,
+        duration: initialState.duration,
+        category: initialState.category,
+        ingredients: initialState.ingredients,
+      };
     case ADD_IMAGE:
       state.recipe.image = action.payload.image;
+      state.localImage = action.payload.image;
       return { ...state };
     default:
       return state;

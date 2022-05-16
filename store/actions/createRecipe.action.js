@@ -16,6 +16,7 @@ import { API_URL } from "../../constants/Database";
 import { db } from "../../firebase/firebase-config";
 import { firebaseConfig } from "../../firebase/firebase-config";
 import { initializeApp } from "firebase/app";
+import { insertRecipe } from "../../db";
 
 const app = initializeApp(firebaseConfig);
 
@@ -57,7 +58,7 @@ export const setAuthor = (authorName, id) => ({
   payload: { authorName: authorName, id: id },
 });
 
-export const confirmRecipe = (payload) => {
+export const confirmRecipe = (recipe, localImage) => {
   return async (dispatch) => {
     try {
       const response = await fetch(`${API_URL}/recipes.json`, {
@@ -67,12 +68,20 @@ export const confirmRecipe = (payload) => {
         },
         body: JSON.stringify({
           date: Date.now(),
-          item: { ...payload },
+          item: { ...recipe },
         }),
       });
 
       const result = await response.json();
       console.log(result);
+      const dbResult = await insertRecipe(
+        recipe.name,
+        localImage,
+        recipe.ingredients,
+        recipe.duration,
+        recipe.category
+      );
+      console.log(dbResult);
       dispatch({
         type: ADD_LAST_RECIPE,
         payload: { id: result.name },
@@ -84,6 +93,20 @@ export const confirmRecipe = (payload) => {
       console.log(error.message);
     }
   };
+};
+
+const dispatchPromise = (name) => {
+  const dispatchPromise = new Promise((resolve, reject) => {
+    dispatch({
+      type: ADD_LAST_RECIPE,
+      payload: { id: name },
+    });
+    dispatch({
+      type: CONFIRM_RECIPE,
+    });
+  });
+
+  return dispatchPromise;
 };
 
 export const generateImageUrl = (userId, image) => {

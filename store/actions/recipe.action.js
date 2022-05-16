@@ -1,7 +1,9 @@
 export const FILTER_RECIPES = "FILTER_RECIPES";
 export const GET_RECIPES = "GET_RECIPES";
+export const GET_CREATED_RECIPES = "GET_CREATED_RECIPES";
 
 import { API_URL } from "../../constants/Database";
+import { fetchCreatedRecipes } from "../../db";
 
 export const filterRecipes = (selectedCategories) => ({
   type: FILTER_RECIPES,
@@ -27,6 +29,21 @@ export const getRecipes = () => {
       dispatch({
         type: GET_RECIPES,
         payload: recipes,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const getCreatedRecipes = () => {
+  return async (dispatch) => {
+    try {
+      const result = await fetchCreatedRecipes();
+      console.log(result);
+      dispatch({
+        type: GET_CREATED_RECIPES,
+        payload: { createdRecipes: result.rows._array },
       });
     } catch (error) {
       console.log(error.message);

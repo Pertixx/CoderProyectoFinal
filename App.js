@@ -1,4 +1,5 @@
-import { StyleSheet, View } from "react-native";
+import { LogBox, StyleSheet, View } from "react-native";
+import { deleteDatabase, init } from "./db";
 
 import AppLoading from "expo-app-loading";
 import Navigator from "./navigation/Navigator";
@@ -7,7 +8,17 @@ import Toaster from "./components/Toaster";
 import store from "./store";
 import { useFonts } from "expo-font";
 
+init()
+  .then(() => console.log("Database initialized"))
+  .catch((error) => {
+    console.log("Database fail to connect");
+    console.log(error.message);
+  });
+
+//deleteDatabase();
+
 export default function App() {
+  LogBox.ignoreLogs(["Setting a timer"]);
   const [loaded] = useFonts({
     Heebo: require("./assets/fonts/Heebo-Regular.ttf"),
     HeeboBold: require("./assets/fonts/Heebo-Bold.ttf"),

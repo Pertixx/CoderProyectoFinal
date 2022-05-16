@@ -20,6 +20,7 @@ import { dontAddNewRecipe } from "../../store/actions/user.action";
 
 const CreateRecipeButton = () => {
   const recipe = useSelector((state) => state.createRecipe.recipe);
+  const localImage = useSelector((state) => state.createRecipe.localImage);
   const image = useSelector((state) => state.createRecipe.recipe.image);
   const userId = useSelector((state) => state.auth.userId);
   const createdRecipes = useSelector((state) => state.user.createdRecipes);
@@ -45,7 +46,7 @@ const CreateRecipeButton = () => {
   const handleOnPress = async () => {
     setLoading(true);
     await dispatch(generateImageUrl(userId, image));
-    await dispatch(confirmRecipe(recipe));
+    await dispatch(confirmRecipe(recipe, localImage));
     setLoading(false);
     //addCreatedRecipe();
   };
