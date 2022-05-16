@@ -31,10 +31,14 @@ const Home = ({ navigation }) => {
     dispatch(getUserData(userId));
   }, []);
 
-  const renderItem = (item) => {
+  const renderItem = (recipe) => {
     return (
       <View style={{ paddingHorizontal: SIZES.padding }}>
-        <RecipeCard recipeItem={item} navigation={navigation} />
+        <RecipeCard
+          recipeItem={recipe.item}
+          navigation={navigation}
+          recipeId={recipe.id}
+        />
       </View>
     );
   };

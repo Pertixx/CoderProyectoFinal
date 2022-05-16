@@ -26,7 +26,7 @@ import RecipeCreatorCard from "../components/RecipeCreatorCard";
 import { db } from "../firebase/firebase-config";
 
 const Recipe = ({ navigation, route }) => {
-  const { recipeItem } = route.params;
+  const { recipeItem, recipeId } = route.params;
   const scrollY = useSharedValue(0); //similar to new Animated.value(0)
   const userId = useSelector((state) => state.auth.userId);
   const dispatch = useDispatch();
@@ -35,13 +35,13 @@ const Recipe = ({ navigation, route }) => {
   const [active, setActive] = useState(false);
 
   useEffect(() => {
-    if (bookmarks.find((id) => id === recipeItem.id)) {
+    if (bookmarks.find((id) => id === recipeId)) {
       setActive(true);
     }
   }, []);
 
   useEffect(() => {
-    if (bookmarks.find((id) => id === recipeItem.id)) {
+    if (bookmarks.find((id) => id === recipeId)) {
       setActive(true);
     } else {
       setActive(false);
@@ -92,12 +92,12 @@ const Recipe = ({ navigation, route }) => {
   }, [add_Bookmark]);
 
   const handleBookmark = () => {
-    dispatch(addBookmark(recipeItem.id));
+    dispatch(addBookmark(recipeId));
     //addBookmarkToDb();
   };
 
   const renderBookmarkButton = () => {
-    if (userId !== recipeItem.item.author.id) {
+    if (userId !== recipeItem.author.id) {
       return (
         <BookmarkButton
           onPress={handleBookmark}
@@ -126,7 +126,7 @@ const Recipe = ({ navigation, route }) => {
     return (
       <View style={styles.headerContainer}>
         <Animated.Image
-          source={{ uri: recipeItem.item.image }}
+          source={{ uri: recipeItem.image }}
           style={[styles.image, imageAnimatedStyle]}
           blurRadius={0}
         />
@@ -140,8 +140,8 @@ const Recipe = ({ navigation, route }) => {
           ]}
         >
           <RecipeCreatorCard
-            author={recipeItem.item.author}
-            recipeDescription={recipeItem.item.description}
+            author={recipeItem.author}
+            recipeDescription={recipeItem.description}
           />
         </Animated.View>
       </View>
@@ -159,7 +159,7 @@ const Recipe = ({ navigation, route }) => {
         >
           Ingredientes de:
         </Text>
-        <Text style={styles.ingredientsTitle}>{recipeItem.item.name}</Text>
+        <Text style={styles.ingredientsTitle}>{recipeItem.name}</Text>
       </View>
     );
   };
@@ -177,7 +177,7 @@ const Recipe = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <Animated.FlatList
-        data={recipeItem.item.ingredients}
+        data={recipeItem.ingredients}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => `${item.id}`}
         renderItem={({ item }) => {

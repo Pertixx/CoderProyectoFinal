@@ -11,26 +11,29 @@ import React, { useEffect, useState } from "react";
 
 import { Feather } from "@expo/vector-icons";
 
-const RecipeCard = ({ recipeItem, navigation }) => {
+const RecipeCard = ({ recipeItem, navigation, recipeId }) => {
   const [loaded, setLoaded] = useState(false);
 
   return (
     <View style={styles.card}>
       <Image
-        source={{ uri: recipeItem.item.image }}
+        source={{ uri: recipeItem.image }}
         resizeMode="cover"
         style={styles.image}
       />
       <View style={styles.details}>
-        <Text style={styles.itemName}>{recipeItem.item.name}</Text>
+        <Text style={styles.itemName}>{recipeItem.name}</Text>
         <View style={styles.authorContainer}>
           <Image source={images.myProfile} style={styles.profilePic} />
-          <Text style={styles.itemInfo}>{recipeItem.item.author.name}</Text>
+          <Text style={styles.itemInfo}>{recipeItem.author.name}</Text>
         </View>
       </View>
       <TouchableOpacity
         onPress={() =>
-          navigation.navigate("Recipe", { recipeItem: recipeItem })
+          navigation.navigate("Recipe", {
+            recipeItem: recipeItem,
+            recipeId: recipeId,
+          })
         }
         style={styles.button}
       >
