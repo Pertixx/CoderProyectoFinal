@@ -12,6 +12,7 @@ import {
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import CreatedRecipeCard from "../components/CreatedRecipeCard";
 import { Feather } from "@expo/vector-icons";
 import RecipeCard from "../components/RecipeCard";
 import { getCreatedRecipes } from "../store/actions/recipe.action";
@@ -30,37 +31,8 @@ const Profile = ({ navigation }) => {
   const renderItem = (item) => {
     console.log(item);
     return (
-      <View
-        style={{
-          //paddingHorizontal: SIZES.padding,
-          marginRight: SIZES.padding,
-          width: 300,
-        }}
-      >
-        <View style={styles.card}>
-          <Image
-            source={{ uri: item.image }}
-            resizeMode="cover"
-            style={styles.image}
-          />
-          <View style={styles.details}>
-            <Text style={styles.itemName}>{item.title}</Text>
-            <View style={styles.authorContainer}>
-              {/* <Image source={images.myProfile} style={styles.profilePic} /> */}
-              <Text style={styles.itemInfo}>{userName}</Text>
-            </View>
-          </View>
-          {/* <TouchableOpacity
-            onPress={() => navigation.navigate("Recipe", { recipeItem: item })}
-            style={styles.button}
-          >
-            <Feather
-              name="arrow-right"
-              size={SIZES.icon}
-              color={COLORS.white}
-            />
-          </TouchableOpacity> */}
-        </View>
+      <View>
+        <CreatedRecipeCard recipe={item} />
       </View>
     );
   };
@@ -77,6 +49,7 @@ const Profile = ({ navigation }) => {
         keyExtractor={(item) => `${item.id}`}
         renderItem={({ item }) => renderItem(item)}
         horizontal
+        showsHorizontalScrollIndicator={false}
       />
     </ScrollView>
   );
@@ -104,6 +77,7 @@ const styles = StyleSheet.create({
     ...FONTS.h2,
   },
   card: {
+    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     padding: SIZES.padding - 5,
@@ -113,8 +87,9 @@ const styles = StyleSheet.create({
     ...SHADOW.shadow1,
   },
   image: {
-    width: SIZES.bottomTabHeight * 1.6,
-    height: SIZES.bottomTabHeight * 1.6,
+    flex: 1,
+    // width: SIZES.bottomTabHeight * 1.6,
+    // height: SIZES.bottomTabHeight * 1.6,
     borderRadius: SIZES.padding,
   },
   details: {

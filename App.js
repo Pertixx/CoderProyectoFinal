@@ -8,14 +8,14 @@ import Toaster from "./components/Toaster";
 import store from "./store";
 import { useFonts } from "expo-font";
 
+//deleteDatabase();
+
 init()
   .then(() => console.log("Database initialized"))
   .catch((error) => {
     console.log("Database fail to connect");
     console.log(error.message);
   });
-
-//deleteDatabase();
 
 export default function App() {
   LogBox.ignoreLogs(["Setting a timer"]);

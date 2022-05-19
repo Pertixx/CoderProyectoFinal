@@ -1,27 +1,31 @@
-import { COLORS, FONTS, SIZES, icons } from '../constants'
-import { StyleSheet, Text, View } from 'react-native'
+import { COLORS, FONTS, SIZES, icons } from "../constants";
+import { StyleSheet, Text, View } from "react-native";
 
-import { Feather } from '@expo/vector-icons'
+import { Feather } from "@expo/vector-icons";
 //import { BlurView } from 'expo-blur'
-import React from 'react'
+import React from "react";
 
-const RecipeCardInfo = ({recipeItem}) => {
+const RecipeCardInfo = ({ recipeItem }) => {
   return (
     <View
       //tint='dark'
       //intensity={Platform.OS != 'ios' ? 100 : 80}
       style={styles.container}
     >
-      <Text style={styles.name}>{recipeItem.name}</Text>
+      <Text style={styles.name} numberOfLines={2}>
+        {recipeItem.name}
+      </Text>
       <View style={styles.details}>
         <Feather name="clock" size={20} color={COLORS.white} />
-        <Text style={styles.description}>{recipeItem.duration} | {recipeItem.views} visitas</Text>
+        <Text style={styles.description}>
+          {recipeItem.duration} | {recipeItem.views} visitas
+        </Text>
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default RecipeCardInfo
+export default RecipeCardInfo;
 
 const styles = StyleSheet.create({
   container: {
@@ -29,12 +33,12 @@ const styles = StyleSheet.create({
     bottom: 40,
     left: 10,
     right: 10,
-    height: SIZES.height * 0.15,
+    height: "25%",
     paddingHorizontal: SIZES.padding,
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
   details: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   name: {
     color: COLORS.white,
@@ -46,4 +50,4 @@ const styles = StyleSheet.create({
     color: COLORS.gray3,
     marginLeft: SIZES.padding - 5,
   },
-})
+});

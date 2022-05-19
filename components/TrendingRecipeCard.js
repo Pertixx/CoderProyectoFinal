@@ -1,6 +1,6 @@
 import { COLORS, FONTS, SIZES } from "../constants";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import BookmarkButton from "./Buttons/BookmarkButton";
 import RecipeCardInfo from "./RecipeCardInfo";
@@ -8,10 +8,26 @@ import { useSelector } from "react-redux";
 
 const TrendingRecipeCard = ({ recipeItem, navigation }) => {
   const categories = useSelector((state) => state.categories.categories);
+  const userId = useSelector((state) => state.auth.userId);
+  const [categoryName, setCategoryName] = useState(null);
 
-  const categoryName =
-    categories[categories.findIndex((cat) => cat.id === recipeItem.category)]
-      .name;
+  useEffect(() => {
+    const category =
+      categories[categories.findIndex((cat) => cat.id === recipeItem.category)]
+        .name;
+    setCategoryName(category);
+  }, []);
+
+  const renderBookmark = () => {
+    if (userId !== recipeItem.author.id) {
+      return (
+        <BookmarkButton
+          onPress={() => console.log("Bookmark")}
+          colorMode="black"
+        />
+      );
+    }
+  };
 
   return (
     <TouchableOpacity
@@ -27,10 +43,7 @@ const TrendingRecipeCard = ({ recipeItem, navigation }) => {
         <View style={styles.category}>
           <Text style={{ color: "#fff", ...FONTS.h4 }}>{categoryName}</Text>
         </View>
-        <BookmarkButton
-          onPress={() => console.log("Bookmark")}
-          colorMode="black"
-        />
+        {renderBookmark()}
       </View>
       <RecipeCardInfo recipeItem={recipeItem} />
     </TouchableOpacity>
@@ -41,16 +54,16 @@ export default TrendingRecipeCard;
 
 const styles = StyleSheet.create({
   container: {
-    height: SIZES.height / 1.8,
-    width: SIZES.width / 1.3,
-    marginTop: 10,
-    marginRight: 20,
-    borderRadius: 15,
+    height: SIZES.height * 0.6,
+    width: SIZES.width * 0.8,
+    marginTop: SIZES.padding - 5,
+    marginRight: SIZES.padding + 5,
+    borderRadius: SIZES.padding,
   },
   image: {
-    width: SIZES.width / 1.3,
-    height: SIZES.height / 1.8,
-    borderRadius: 15,
+    width: SIZES.width * 0.8,
+    height: SIZES.height * 0.6,
+    borderRadius: SIZES.padding,
   },
   category: {
     backgroundColor: COLORS.black,

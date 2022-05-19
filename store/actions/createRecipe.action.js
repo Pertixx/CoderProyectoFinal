@@ -77,9 +77,9 @@ export const confirmRecipe = (recipe, localImage) => {
       const dbResult = await insertRecipe(
         recipe.name,
         localImage,
-        recipe.ingredients,
         recipe.duration,
-        recipe.category
+        recipe.category,
+        recipe.author.id
       );
       console.log(dbResult);
       dispatch({

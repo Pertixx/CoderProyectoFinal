@@ -6,7 +6,7 @@ export const init = () => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        "CREATE TABLE IF NOT EXISTS createdRecipes (id INTEGER PRIMARY KEY NOT NULL, title TEXT NOT NULL, image TEXT NOT NULL, ingredients BLOB NOT NULL, duration TEXT NOT NULL, category INTEGER NOT NULL);",
+        "CREATE TABLE IF NOT EXISTS createdRecipes (id INTEGER PRIMARY KEY NOT NULL, name TEXT NOT NULL, image TEXT NOT NULL, duration TEXT NOT NULL, category INTEGER NOT NULL, authorId TEXT NOT NULL);",
         [],
         () => resolve(),
         (_, err) => reject(err)
@@ -17,12 +17,12 @@ export const init = () => {
   return promise;
 };
 
-export const insertRecipe = (title, image, ingredients, duration, category) => {
+export const insertRecipe = (name, image, duration, category, authorId) => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        "INSERT INTO createdRecipes (title, image, ingredients, duration, category) VALUES (?, ?, ?, ?, ?)",
-        [title, image, ingredients, duration, category],
+        "INSERT INTO createdRecipes (name, image, duration, category, authorId) VALUES (?, ?, ?, ?, ?)",
+        [name, image, duration, category, authorId],
         (_, result) => resolve(result),
         (_, err) => reject(err)
       );
@@ -48,6 +48,16 @@ export const fetchCreatedRecipes = () => {
 };
 
 export const deleteDatabase = () => {
-  db.closeAsync();
-  db.deleteAsync("MainDB");
+  const promise = new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "DROP TABLE IF EXISTS createdRecipes",
+        [],
+        (_, result) => resolve(result),
+        (_, err) => reject(err)
+      );
+    });
+  });
+
+  return promise;
 };

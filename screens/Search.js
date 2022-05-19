@@ -48,10 +48,14 @@ const Search = ({ navigation }) => {
     }
   };
 
-  const renderItem = (item) => {
+  const renderItem = (recipe) => {
     return (
       <View style={{ paddingHorizontal: SIZES.padding }}>
-        <RecipeCard recipeItem={item} navigation={navigation} />
+        <RecipeCard
+          recipeItem={recipe.item}
+          recipeId={recipe.id}
+          navigation={navigation}
+        />
       </View>
     );
   };
