@@ -36,10 +36,10 @@ export const getRecipes = () => {
   };
 };
 
-export const getCreatedRecipes = () => {
+export const getCreatedRecipes = (userId) => {
   return async (dispatch) => {
     try {
-      const result = await fetchCreatedRecipes();
+      const result = await fetchCreatedRecipes(userId);
       console.log(result);
       dispatch({
         type: GET_CREATED_RECIPES,

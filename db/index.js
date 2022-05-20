@@ -32,12 +32,12 @@ export const insertRecipe = (name, image, duration, category, authorId) => {
   return promise;
 };
 
-export const fetchCreatedRecipes = () => {
+export const fetchCreatedRecipes = (userId) => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        "SELECT * FROM createdRecipes",
-        [],
+        `SELECT * FROM createdRecipes WHERE authorId = ?`,
+        [userId],
         (_, result) => resolve(result),
         (_, err) => reject(err)
       );

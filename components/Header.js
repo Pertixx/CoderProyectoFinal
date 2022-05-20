@@ -1,23 +1,47 @@
 import { COLORS, FONTS, SIZES, images } from "../constants";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useState } from "react";
 
 import { Feather } from "@expo/vector-icons";
-import React from "react";
 import { dummyData } from "../constants";
 import { useSelector } from "react-redux";
 
 const Header = ({ navigation }) => {
   const displayName = useSelector((state) => state.user.name);
   const profilePic = useSelector((state) => state.user.profilePic);
+  //const [time, setTime] = useState(null);
+  const [message, setMessage] = useState("Bienvenido");
+  const [icon, setIcon] = useState("sun");
+
+  useEffect(() => {
+    const today = new Date();
+    const time = today.getHours();
+    if (time < 12) {
+      setMessage("Buenos Dias");
+      setIcon("sun");
+    } else if (time < 18) {
+      setMessage("Buenas Tardes");
+      setIcon("sunset");
+    } else {
+      setMessage("Buenas Noches");
+      setIcon("moon");
+    }
+  }, []);
+
+  const renderWelcome = () => {
+    return (
+      <View style={styles.iconContainer}>
+        <Feather name={icon} size={SIZES.icon} color={COLORS.gray} />
+        <Text style={styles.welcomeText}>{message}</Text>
+      </View>
+    );
+  };
 
   return (
     <View style={styles.headerContainer}>
       <View style={styles.titleContainer}>
         <View style={{ flex: 1 }}>
-          <View style={styles.iconContainer}>
-            <Feather name="sun" size={24} color={COLORS.gray} />
-            <Text style={styles.welcomeText}>Buenas Noches</Text>
-          </View>
+          {renderWelcome()}
           <Text style={styles.name}>{displayName}</Text>
         </View>
         <TouchableOpacity

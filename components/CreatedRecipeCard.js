@@ -1,4 +1,4 @@
-import { COLORS, FONTS, SIZES } from "../constants";
+import { COLORS, FONTS, SHADOW, SIZES } from "../constants";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useState } from "react";
 
