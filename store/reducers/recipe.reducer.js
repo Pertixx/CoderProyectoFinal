@@ -1,4 +1,5 @@
 import {
+  DELETE_RECIPE,
   FILTER_RECIPES,
   GET_CREATED_RECIPES,
   GET_RECIPES,
@@ -37,6 +38,14 @@ const RecipeReducer = (state = initialState, action) => {
         ...state,
         createdRecipes: action.payload.createdRecipes,
       };
+    case DELETE_RECIPE:
+      const index = state.createdRecipes.findIndex(
+        (recipeId) => recipeId === action.payload.id
+      );
+      if (index !== -1) {
+        state.createdRecipes.splice(index, 1);
+      }
+      return { ...state };
     default:
       return state;
   }

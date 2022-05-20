@@ -1,9 +1,11 @@
 export const FILTER_RECIPES = "FILTER_RECIPES";
 export const GET_RECIPES = "GET_RECIPES";
 export const GET_CREATED_RECIPES = "GET_CREATED_RECIPES";
+export const DELETE_RECIPE = "DELETE_RECIPE";
+
+import { deleteRecipe, fetchCreatedRecipes } from "../../db";
 
 import { API_URL } from "../../constants/Database";
-import { fetchCreatedRecipes } from "../../db";
 
 export const filterRecipes = (selectedCategories) => ({
   type: FILTER_RECIPES,
@@ -44,6 +46,21 @@ export const getCreatedRecipes = (userId) => {
       dispatch({
         type: GET_CREATED_RECIPES,
         payload: { createdRecipes: result.rows._array },
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const deleteCreatedRecipe = (id) => {
+  return async (dispatch) => {
+    try {
+      const result = await deleteRecipe(id);
+      console.log(result);
+      dispatch({
+        type: DELETE_RECIPE,
+        payload: { id: id },
       });
     } catch (error) {
       console.log(error.message);

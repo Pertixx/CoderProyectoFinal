@@ -36,8 +36,23 @@ export const fetchCreatedRecipes = (userId) => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        `SELECT * FROM createdRecipes WHERE authorId = ?`,
+        "SELECT * FROM createdRecipes WHERE authorId = ?",
         [userId],
+        (_, result) => resolve(result),
+        (_, err) => reject(err)
+      );
+    });
+  });
+
+  return promise;
+};
+
+export const deleteRecipe = (id) => {
+  const promise = new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "DELETE FROM createdRecipes WHERE id = ?",
+        [id],
         (_, result) => resolve(result),
         (_, err) => reject(err)
       );

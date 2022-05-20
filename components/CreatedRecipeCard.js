@@ -1,14 +1,16 @@
 import { COLORS, FONTS, SHADOW, SIZES } from "../constants";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Feather } from "@expo/vector-icons";
 import RecipeCardInfo from "./RecipeCardInfo";
-import { useSelector } from "react-redux";
+import { deleteCreatedRecipe } from "../store/actions/recipe.action";
 
 const CreatedRecipeCard = ({ recipe }) => {
   const [categoryName, setCategoryName] = useState(null);
   const categories = useSelector((state) => state.categories.categories);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const category =
@@ -16,6 +18,10 @@ const CreatedRecipeCard = ({ recipe }) => {
         .name;
     setCategoryName(category);
   }, []);
+
+  const handleOnPress = () => {
+    dispatch(deleteCreatedRecipe(recipe.id));
+  };
 
   return (
     <View style={styles.container}>
@@ -28,10 +34,7 @@ const CreatedRecipeCard = ({ recipe }) => {
         <View style={styles.category}>
           <Text style={{ color: "#fff", ...FONTS.h4 }}>{categoryName}</Text>
         </View>
-        <TouchableOpacity
-          onPress={() => console.log("remove recipe")}
-          style={styles.trash}
-        >
+        <TouchableOpacity onPress={handleOnPress} style={styles.trash}>
           <Feather name="trash-2" size={SIZES.icon} color={COLORS.white} />
         </TouchableOpacity>
       </View>
