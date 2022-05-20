@@ -20,6 +20,7 @@ const ImageSelector = () => {
   const containerHeight = useSharedValue(SIZES.bottomTabHeight * 2);
   const buttonsContainerHeight = useSharedValue("100%");
   const userId = useSelector((state) => state.auth.userId);
+  const appTheme = useSelector((state) => state.appTheme.appTheme);
 
   const containerAnimatedStyle = useAnimatedStyle(() => {
     return {
@@ -105,15 +106,26 @@ const ImageSelector = () => {
         style={[styles.buttonsContainer, buttonsContainerAnimatedStyle]}
       >
         <TouchableOpacity
-          style={styles.takePhotoButton}
+          style={[
+            styles.takePhotoButton,
+            { backgroundColor: appTheme.backgroundColor2 },
+          ]}
           onPress={handleTakeImage}
         >
-          <Entypo name="camera" size={SIZES.icon} color={COLORS.black} />
-          <Text>Tomar Foto</Text>
+          <Entypo name="camera" size={SIZES.icon} color={appTheme.tintColor1} />
+          <Text style={{ color: appTheme.textColor5 }}>Tomar Foto</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.selectFromGallery} onPress={pickImage}>
-          <Entypo name="images" size={SIZES.icon} color={COLORS.black} />
-          <Text>Añadir foto desde la galeria</Text>
+        <TouchableOpacity
+          style={[
+            styles.selectFromGallery,
+            { backgroundColor: appTheme.backgroundColor2 },
+          ]}
+          onPress={pickImage}
+        >
+          <Entypo name="images" size={SIZES.icon} color={appTheme.tintColor1} />
+          <Text style={{ color: appTheme.textColor5 }}>
+            Añadir foto desde la galeria
+          </Text>
         </TouchableOpacity>
       </Animated.View>
     </Animated.View>

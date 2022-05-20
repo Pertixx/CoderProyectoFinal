@@ -12,6 +12,7 @@ const CategoryButton = ({ item }) => {
     (state) => state.categories.selectedCategories
   );
   const [selected, setSelected] = useState(false);
+  const appTheme = useSelector((state) => state.appTheme.appTheme);
 
   return (
     <TouchableOpacity
@@ -22,7 +23,9 @@ const CategoryButton = ({ item }) => {
       }}
       style={[
         styles.categoryButton,
-        selected ? { backgroundColor: COLORS.orange, borderWidth: 0 } : null,
+        selected
+          ? { backgroundColor: COLORS.orange, borderWidth: 0 }
+          : { backgroundColor: appTheme.categoryButtonColor },
       ]}
     >
       <Text

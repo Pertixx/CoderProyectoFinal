@@ -54,6 +54,7 @@ const CreateRecipe = ({ navigation }) => {
   const [recipeDurationOk, setRecipeDurationOk] = useState(false);
   const [recipeCategoryOk, setRecipeCategoryOk] = useState(false);
   const userId = useSelector((state) => state.auth.userId);
+  const appTheme = useSelector((state) => state.appTheme.appTheme);
 
   const onScroll = useAnimatedScrollHandler((event) => {
     scrollX.value = event.contentOffset.x;
@@ -102,19 +103,13 @@ const CreateRecipe = ({ navigation }) => {
     return <SelectIngredientCard item={item} />;
   };
 
-  const renderHeader = () => {
-    return (
-      <View style={{ paddingHorizontal: SIZES.padding }}>
-        <Text>HEADER</Text>
-      </View>
-    );
-  };
-
   const renderFirstSection = () => {
     return (
       <View style={{ paddingVertical: SIZES.padding }}>
         <View>
-          <Text style={{ ...FONTS.h2 }}>Cual es el nombre de la receta?</Text>
+          <Text style={{ ...FONTS.h2, color: appTheme.textColor1 }}>
+            Cual es el nombre de la receta?
+          </Text>
           <CustomInput
             placeholder="Fideos con tuco"
             value={recipeName}
@@ -122,7 +117,9 @@ const CreateRecipe = ({ navigation }) => {
           />
         </View>
         <View style={{ marginTop: SIZES.padding + 5 }}>
-          <Text style={{ ...FONTS.h2 }}>Quieres agregar una descripcion?</Text>
+          <Text style={{ ...FONTS.h2, color: appTheme.textColor1 }}>
+            Quieres agregar una descripcion?
+          </Text>
           <CustomInput
             placeholder="Receta dedicada a..."
             value={recipeDescription}
@@ -131,7 +128,9 @@ const CreateRecipe = ({ navigation }) => {
           />
         </View>
         <View style={{ marginTop: SIZES.padding + 5 }}>
-          <Text style={{ ...FONTS.h2 }}>Agrega el tiempo de preparacion</Text>
+          <Text style={{ ...FONTS.h2, color: appTheme.textColor1 }}>
+            Agrega el tiempo de preparacion
+          </Text>
           <CustomInput
             placeholder="30 minutos"
             value={recipeDuration}
@@ -146,7 +145,7 @@ const CreateRecipe = ({ navigation }) => {
     return (
       <View style={{ paddingVertical: SIZES.padding }}>
         <View style={{ marginTop: SIZES.padding + 5 }}>
-          <Text style={{ ...FONTS.h2 }}>
+          <Text style={{ ...FONTS.h2, color: appTheme.textColor1 }}>
             Selecciona una de las siguientes categorias
           </Text>
           <View style={{ marginTop: SIZES.padding }}>
@@ -164,8 +163,8 @@ const CreateRecipe = ({ navigation }) => {
                     style={[
                       styles.categoryButton,
                       selectedCategory === item.id
-                        ? { backgroundColor: COLORS.black }
-                        : null,
+                        ? { backgroundColor: appTheme.tintColor3 }
+                        : { backgroundColor: appTheme.categoryButtonColor },
                     ]}
                   >
                     <Text
@@ -186,7 +185,9 @@ const CreateRecipe = ({ navigation }) => {
           </View>
         </View>
         <View style={{ marginTop: SIZES.padding + 5 }}>
-          <Text style={{ ...FONTS.h2 }}>Agreguemos los ingredientes</Text>
+          <Text style={{ ...FONTS.h2, color: appTheme.textColor1 }}>
+            Agreguemos los ingredientes
+          </Text>
           <FlatList
             data={dummyData.ingredients}
             keyExtractor={(item) => `${item.id}`}
@@ -207,7 +208,7 @@ const CreateRecipe = ({ navigation }) => {
     return (
       <View style={{ paddingVertical: SIZES.padding }}>
         <View>
-          <Text style={{ ...FONTS.h2 }}>
+          <Text style={{ ...FONTS.h2, color: appTheme.textColor1 }}>
             Agrega una foto del plato ya finalizado
           </Text>
           <ImageSelector />
@@ -217,8 +218,9 @@ const CreateRecipe = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      {renderHeader()}
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: appTheme.backgroundColor1 }]}
+    >
       <ScrollView
         showsVerticalScrollIndicator={false}
         bounces={false}
@@ -245,7 +247,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white2,
   },
   scrollView: {
-    backgroundColor: COLORS.white2,
     paddingHorizontal: SIZES.padding,
   },
   categoryButton: {

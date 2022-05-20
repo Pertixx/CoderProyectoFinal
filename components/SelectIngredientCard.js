@@ -20,6 +20,7 @@ const SelectIngredientCard = ({ item }) => {
   const [textInput, setTextInput] = useState(null);
   const [selected, setSelected] = useState(false);
   const ingredients = useSelector((state) => state.createRecipe.ingredients);
+  const appTheme = useSelector((state) => state.appTheme.appTheme);
 
   const handleOnPress = () => {
     if (textInput === null || textInput === "") {
@@ -44,30 +45,44 @@ const SelectIngredientCard = ({ item }) => {
   }, [ingredients]);
 
   return (
-    <View style={styles.ingredientContainer}>
+    <View
+      style={[
+        styles.ingredientContainer,
+        { backgroundColor: appTheme.backgroundColor2 },
+      ]}
+    >
       <View style={{ alignItems: "center", justifyContent: "center" }}>
         <Image source={item.icon} style={{ width: 30, height: 30 }} />
-        <Text style={{ ...FONTS.bodyBold }}>{item.name}</Text>
+        <Text style={{ ...FONTS.bodyBold, color: appTheme.textColor1 }}>
+          {item.name}
+        </Text>
       </View>
       <TextInput
         placeholder="200 g"
-        style={styles.input}
+        style={[
+          styles.input,
+          {
+            backgroundColor: appTheme.backgroundColor2,
+            color: appTheme.textColor1,
+          },
+        ]}
         value={textInput}
         onChangeText={(text) => setTextInput(text)}
         editable={!selected}
+        placeholderTextColor={appTheme.textColor3}
       />
       <TouchableOpacity onPress={handleOnPress}>
         {selected ? (
           <AntDesign
             name="closecircle"
             size={SIZES.icon}
-            color={COLORS.black}
+            color={appTheme.tintColor2}
           />
         ) : (
           <AntDesign
             name="checkcircle"
             size={SIZES.icon}
-            color={COLORS.black}
+            color={appTheme.tintColor2}
           />
         )}
       </TouchableOpacity>

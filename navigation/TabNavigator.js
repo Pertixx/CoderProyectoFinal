@@ -8,6 +8,7 @@ import React from "react";
 import Search from "../screens/Search";
 import TabButton from "../components/Buttons/TabButton";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useSelector } from "react-redux";
 
 const Tab = createBottomTabNavigator();
 
@@ -19,18 +20,19 @@ const tabsArray = [
 ];
 
 const TabNavigator = () => {
+  const appTheme = useSelector((state) => state.appTheme.appTheme);
+
   return (
     <Tab.Navigator
       screenOptions={{
         tabBarShowLabel: false,
         headerShown: false,
-        tabBarActiveTintColor: COLORS.black,
-        tabBarInactiveTintColor: COLORS.gray,
         tabBarStyle: [
           styles.tab,
           Platform.OS === "ios"
             ? { bottom: SIZES.padding * 3 }
             : { bottom: SIZES.padding },
+          { backgroundColor: appTheme.backgroundColor2 },
         ],
       }}
       initialRouteName="Home"

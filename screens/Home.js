@@ -25,6 +25,7 @@ const Home = ({ navigation }) => {
   const dispatch = useDispatch();
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);
+  const appTheme = useSelector((state) => state.appTheme.appTheme);
 
   useEffect(() => {
     dispatch(getRecipes());
@@ -68,7 +69,10 @@ const Home = ({ navigation }) => {
   const renderLoadMoreButton = () => {
     return (
       <TouchableOpacity
-        style={styles.loadMoreButton}
+        style={[
+          styles.loadMoreButton,
+          { backgroundColor: appTheme.loadMoreButton },
+        ]}
         onPress={() => {
           setLoading(true);
           setTimeout(() => {
@@ -86,7 +90,9 @@ const Home = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: appTheme.backgroundColor1 }]}
+    >
       <StatusBar barStyle="default" />
       <FlatList
         onRefresh={onRefresh}
@@ -119,7 +125,7 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.white2,
+    //backgroundColor: COLORS.white2,
   },
   loadMoreButton: {
     backgroundColor: COLORS.black,

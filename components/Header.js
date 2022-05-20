@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 const Header = ({ navigation }) => {
   const displayName = useSelector((state) => state.user.name);
   const profilePic = useSelector((state) => state.user.profilePic);
-  //const [time, setTime] = useState(null);
+  const appTheme = useSelector((state) => state.appTheme.appTheme);
   const [message, setMessage] = useState("Bienvenido");
   const [icon, setIcon] = useState("sun");
 
@@ -32,7 +32,9 @@ const Header = ({ navigation }) => {
     return (
       <View style={styles.iconContainer}>
         <Feather name={icon} size={SIZES.icon} color={COLORS.gray} />
-        <Text style={styles.welcomeText}>{message}</Text>
+        <Text style={[styles.welcomeText, { color: appTheme.textColor1 }]}>
+          {message}
+        </Text>
       </View>
     );
   };
@@ -42,7 +44,9 @@ const Header = ({ navigation }) => {
       <View style={styles.titleContainer}>
         <View style={{ flex: 1 }}>
           {renderWelcome()}
-          <Text style={styles.name}>{displayName}</Text>
+          <Text style={[styles.name, { color: appTheme.textColor1 }]}>
+            {displayName}
+          </Text>
         </View>
         <TouchableOpacity
           onPress={() => navigation.navigate("Profile")}

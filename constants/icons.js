@@ -1,3 +1,4 @@
+const sun = require("../assets/icons/sun.png");
 const pepper = require("../assets/icons/pepper.png");
 const chicken = require("../assets/icons/chicken.png");
 const coriander = require("../assets/icons/coriander.png");
@@ -13,6 +14,7 @@ const potato = require("../assets/icons/potato.png");
 const apple = require("../assets/icons/apple.png");
 
 export default {
+  sun,
   pepper,
   chicken,
   coriander,

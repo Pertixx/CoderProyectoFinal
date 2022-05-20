@@ -1,18 +1,28 @@
 import { COLORS, FONTS, SIZES } from "../../constants";
 import { StyleSheet, Text, TextInput, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
 import React from "react";
-import { useDispatch } from "react-redux";
 
 const CustomInput = ({ placeholder, value, onChange, condition = null }) => {
   const dispatch = useDispatch();
+  const appTheme = useSelector((state) => state.appTheme.appTheme);
+
   return (
     <View style={styles.container}>
       <TextInput
-        style={styles.input}
+        style={[
+          styles.input,
+          {
+            backgroundColor: appTheme.backgroundColor2,
+            color: appTheme.textColor1,
+            borderColor: appTheme.tintColor2,
+          },
+        ]}
         value={value}
         onChangeText={(value) => dispatch(onChange(value))}
         placeholder={placeholder}
+        placeholderTextColor={appTheme.textColor3}
       />
       {condition != null ? (
         <Text style={styles.condition}>{condition}</Text>

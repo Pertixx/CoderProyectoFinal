@@ -14,11 +14,14 @@ import { useSelector } from "react-redux";
 
 const CategoriesCarousel = ({ showSeeAll = false }) => {
   const categories = useSelector((state) => state.categories.categories);
+  const appTheme = useSelector((state) => state.appTheme.appTheme);
 
   return (
     <View style={styles.container}>
       <View style={styles.categoryContainer}>
-        <Text style={{ ...FONTS.h2 }}>Categorias</Text>
+        <Text style={{ ...FONTS.h2, color: appTheme.textColor1 }}>
+          Categorias
+        </Text>
         {showSeeAll ? (
           <SeeAllButton
             text="Ver todas"

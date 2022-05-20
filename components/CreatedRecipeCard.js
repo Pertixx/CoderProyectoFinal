@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   container: {
     marginRight: SIZES.padding,
     width: SIZES.width * 0.7,
-    height: SIZES.height * 0.4,
+    height: SIZES.height * 0.45,
   },
   image: {
     flex: 1,

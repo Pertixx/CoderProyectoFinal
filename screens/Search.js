@@ -18,6 +18,7 @@ const first_n = 5;
 
 const Search = ({ navigation }) => {
   const data = useSelector((state) => state.recipes.recipes);
+  const appTheme = useSelector((state) => state.appTheme.appTheme);
   const [searchHistory, setSearchHistory] = useState(
     dummyData.user.searchHistory.slice(0, first_n)
   );
@@ -69,14 +70,14 @@ const Search = ({ navigation }) => {
           text={text}
           onChangeText={setText}
         />
-        <SearchHistory data={searchHistory} onPress={setText} />
       </Animated.View>
     );
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      {console.log(text)}
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: appTheme.backgroundColor1 }]}
+    >
       <Animated.FlatList
         data={data}
         keyExtractor={(item) => item.id}
@@ -107,5 +108,6 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     overflow: "hidden",
+    marginBottom: SIZES.padding * 2,
   },
 });

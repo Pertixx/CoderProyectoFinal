@@ -10,22 +10,28 @@ import { COLORS, FONTS, SHADOW, SIZES, images } from "../constants";
 import React, { useEffect, useState } from "react";
 
 import { Feather } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 
 const RecipeCard = ({ recipeItem, navigation, recipeId }) => {
   const [loaded, setLoaded] = useState(false);
+  const appTheme = useSelector((state) => state.appTheme.appTheme);
 
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, { backgroundColor: appTheme.recipeCardColor }]}>
       <Image
         source={{ uri: recipeItem.image }}
         resizeMode="cover"
         style={styles.image}
       />
       <View style={styles.details}>
-        <Text style={styles.itemName}>{recipeItem.name}</Text>
+        <Text style={[styles.itemName, { color: appTheme.textColor1 }]}>
+          {recipeItem.name}
+        </Text>
         <View style={styles.authorContainer}>
           <Image source={images.myProfile} style={styles.profilePic} />
-          <Text style={styles.itemInfo}>{recipeItem.author.name}</Text>
+          <Text style={[styles.itemInfo, { color: appTheme.textColor5 }]}>
+            {recipeItem.author.name}
+          </Text>
         </View>
       </View>
       <TouchableOpacity
