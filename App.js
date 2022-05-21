@@ -1,5 +1,5 @@
 import { LogBox, StyleSheet, View } from "react-native";
-import { deleteDatabase, init } from "./db";
+import { deleteDatabase, deleteUserDB, init, initUser } from "./db";
 
 import AppLoading from "expo-app-loading";
 import Navigator from "./navigation/Navigator";
@@ -8,10 +8,18 @@ import Toaster from "./components/Toaster";
 import store from "./store";
 import { useFonts } from "expo-font";
 
-//deleteDatabase();
+// deleteDatabase();
+// deleteUserDB();
 
 init()
   .then(() => console.log("Database initialized"))
+  .catch((error) => {
+    console.log("Database fail to connect");
+    console.log(error.message);
+  });
+
+initUser()
+  .then(() => console.log("User Database initialized"))
   .catch((error) => {
     console.log("Database fail to connect");
     console.log(error.message);

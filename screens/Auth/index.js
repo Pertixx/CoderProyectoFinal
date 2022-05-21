@@ -6,12 +6,20 @@ import {
   Text,
   View,
 } from "react-native";
+import React, { useEffect } from "react";
 
 import CustomButton from "../../components/Buttons/CustomButton";
 import { LinearGradient } from "expo-linear-gradient";
-import React from "react";
+import { getUser } from "../../store/actions/auth.action";
+import { useDispatch } from "react-redux";
 
 const Auth = ({ navigation }) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
+
   const renderBackground = () => {
     return (
       <View style={styles.backgroundImageContainer}>

@@ -1,3 +1,5 @@
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+
 import { getDatabase } from "firebase/database";
 import { initializeApp } from "firebase/app";
 
@@ -15,3 +17,18 @@ export const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export const db = getDatabase(app);
+
+export const createUserImage = async (userId, image) => {
+  const storage = getStorage(app);
+  const reference = ref(storage, "users/" + `${userId}`);
+
+  const img = await fetch(image);
+  const bytes = await img.blob();
+
+  await uploadBytes(reference, bytes);
+
+  // Get new firebase image url from cloud store
+  const image_url = await getDownloadURL(reference);
+
+  return image_url;
+};

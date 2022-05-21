@@ -17,6 +17,66 @@ export const init = () => {
   return promise;
 };
 
+export const initUser = () => {
+  const promise = new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "CREATE TABLE IF NOT EXISTS users (id TEXT NOT NULL, name TEXT NOT NULL)",
+        [],
+        () => resolve(),
+        (_, err) => reject(err)
+      );
+    });
+  });
+
+  return promise;
+};
+
+export const insertUser = (id, name) => {
+  const promise = new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "INSERT INTO users (id, name) VALUES (?, ?)",
+        [id, name],
+        (_, result) => resolve(result),
+        (_, err) => reject(err)
+      );
+    });
+  });
+
+  return promise;
+};
+
+export const fetchUser = () => {
+  const promise = new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM users",
+        [],
+        (_, result) => resolve(result),
+        (_, err) => reject(err)
+      );
+    });
+  });
+
+  return promise;
+};
+
+export const deleteUser = (id) => {
+  const promise = new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "DELETE FROM users WHERE id = ?",
+        [id],
+        (_, result) => resolve(result),
+        (_, err) => reject(err)
+      );
+    });
+  });
+
+  return promise;
+};
+
 export const insertRecipe = (name, image, duration, category, authorId) => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
@@ -67,6 +127,21 @@ export const deleteDatabase = () => {
     db.transaction((tx) => {
       tx.executeSql(
         "DROP TABLE IF EXISTS createdRecipes",
+        [],
+        (_, result) => resolve(result),
+        (_, err) => reject(err)
+      );
+    });
+  });
+
+  return promise;
+};
+
+export const deleteUserDB = () => {
+  const promise = new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "DROP TABLE IF EXISTS users",
         [],
         (_, result) => resolve(result),
         (_, err) => reject(err)

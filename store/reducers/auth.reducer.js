@@ -1,10 +1,13 @@
 import {
   CHECK_FORM,
   CLEAR_ERROR,
+  OFFLINE_LOGIN,
   SET_ERROR,
+  SET_ID,
   SIGN_IN,
   SIGN_UP,
   UPDATE_EMAIL,
+  UPDATE_IMAGE,
   UPDATE_NAME,
   UPDATE_PASS,
 } from "../actions/auth.action";
@@ -13,8 +16,13 @@ const initialState = {
   token: null,
   userId: null,
   displayName: null,
-  formFields: { formName: "", formEmail: "", formPass: "" },
-  formFieldsValidation: { formName: false, formEmail: false, formPass: false },
+  formFields: { formName: "", formEmail: "", formPass: "", image: "" },
+  formFieldsValidation: {
+    formName: false,
+    formEmail: false,
+    formPass: false,
+    formImage: false,
+  },
   formValid: null,
   formLogInFields: { formEmail: "", formPass: "" },
   formLogInValidation: { formEmail: false, formPass: false },
@@ -77,6 +85,9 @@ const AuthReducer = (state = initialState, action) => {
           state.formFields.formPass = action.payload.password;
           return { ...state };
       }
+    case UPDATE_IMAGE:
+      state.formFields.image = action.payload;
+      return { ...state };
     case CHECK_FORM:
       let emailReg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
       let passReg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
@@ -101,6 +112,11 @@ const AuthReducer = (state = initialState, action) => {
           }
           return { ...state };
         case "signup":
+          if (state.formFields.image.trim()) {
+            state.formFieldsValidation.formImage = true;
+          } else {
+            state.formFieldsValidation.formImage = false;
+          }
           if (state.formFields.formName.trim()) {
             state.formFieldsValidation.formName = true;
           } else {
@@ -125,7 +141,17 @@ const AuthReducer = (state = initialState, action) => {
           }
           return { ...state };
       }
-
+    case SET_ID:
+      return {
+        ...state,
+        userId: null,
+      };
+    case OFFLINE_LOGIN:
+      return {
+        ...state,
+        userId: action.payload.userId,
+        displayName: action.payload.displayName,
+      };
     default:
       return state;
   }

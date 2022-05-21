@@ -11,6 +11,7 @@ import {
 import React, { useEffect } from "react";
 import {
   clearError,
+  setError,
   signIn,
   updateEmail,
   updatePass,
@@ -23,6 +24,7 @@ import CustomButton from "../../components/Buttons/CustomButton";
 import { MaterialIcons } from "@expo/vector-icons";
 import SeeAllButton from "../../components/Buttons/SeeAllButton";
 import Toaster from "../../components/Toaster";
+import { insertUser } from "../../db";
 
 const Login = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -39,10 +41,23 @@ const Login = ({ navigation }) => {
   const formPassValid = useSelector(
     (state) => state.auth.formLogInValidation.formPass
   );
+  const userId = useSelector((state) => state.auth.userId);
+  const userName = useSelector((state) => state.auth.displayName);
 
   const handleOnPress = () => {
-    if (formLogInValid) dispatch(signIn(formEmail, formPass));
+    if (formLogInValid) {
+      dispatch(signIn(formEmail, formPass));
+    } else {
+      dispatch(setError("Revisa los campos"));
+    }
   };
+
+  useEffect(() => {
+    if (userId !== null) {
+      console.log("NASHE");
+      insertUser(userId, userName);
+    }
+  }, [userId]);
 
   useEffect(() => {
     console.log(error);

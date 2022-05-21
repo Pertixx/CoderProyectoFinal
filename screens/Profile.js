@@ -12,9 +12,12 @@ import {
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import { AntDesign } from "@expo/vector-icons";
 import CreatedRecipeCard from "../components/CreatedRecipeCard";
 import { Feather } from "@expo/vector-icons";
+import { deleteUser } from "../db";
 import { getCreatedRecipes } from "../store/actions/recipe.action";
+import { logOut } from "../store/actions/auth.action";
 import { selectTheme } from "../store/actions/theme.action";
 
 const Profile = ({ navigation }) => {
@@ -96,6 +99,10 @@ const Profile = ({ navigation }) => {
     }
   };
 
+  const handleLogOut = () => {
+    dispatch(logOut(userId));
+  };
+
   return (
     <ScrollView
       style={[styles.container, { backgroundColor: appTheme.backgroundColor1 }]}
@@ -112,6 +119,9 @@ const Profile = ({ navigation }) => {
         </Text>
         {renderCreatedRecipes()}
       </View>
+      <TouchableOpacity onPress={handleLogOut}>
+        <AntDesign name="logout" size={24} color="black" />
+      </TouchableOpacity>
     </ScrollView>
   );
 };

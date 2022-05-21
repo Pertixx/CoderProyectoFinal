@@ -11,6 +11,7 @@ import {
 import React, { useEffect } from "react";
 import {
   clearError,
+  setError,
   signup,
   updateEmail,
   updateName,
@@ -22,6 +23,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AuthInput from "../../components/Inputs/AuthInput";
 import CustomButton from "../../components/Buttons/CustomButton";
 import { MaterialIcons } from "@expo/vector-icons";
+import ProfileImageSelector from "../../components/ProfileImageSelector";
 import SeeAllButton from "../../components/Buttons/SeeAllButton";
 import Toaster from "../../components/Toaster";
 
@@ -32,6 +34,7 @@ const Signup = ({ navigation }) => {
   const formName = useSelector((state) => state.auth.formFields.formName);
   const formEmail = useSelector((state) => state.auth.formFields.formEmail);
   const formPass = useSelector((state) => state.auth.formFields.formPass);
+  const image = useSelector((state) => state.auth.formFields.image);
   const formValid = useSelector((state) => state.auth.formValid);
   const formNameValid = useSelector(
     (state) => state.auth.formFieldsValidation.formName
@@ -44,7 +47,11 @@ const Signup = ({ navigation }) => {
   );
 
   const handleOnPress = () => {
-    if (formValid) dispatch(signup(formName, formEmail, formPass));
+    if (formValid) {
+      dispatch(signup(formName, formEmail, formPass, image));
+    } else {
+      dispatch(setError("Revisa los campos"));
+    }
   };
 
   useEffect(() => {
@@ -77,6 +84,14 @@ const Signup = ({ navigation }) => {
         >
           Log in
         </Text>
+      </View>
+    );
+  };
+
+  const renderImageSelector = () => {
+    return (
+      <View>
+        <ProfileImageSelector form={form} />
       </View>
     );
   };
@@ -124,6 +139,7 @@ const Signup = ({ navigation }) => {
             />
           </View>
         </View>
+        {renderImageSelector()}
         <View style={styles.footerContainer}>
           <CustomButton
             text="Crear Cuenta"
@@ -152,6 +168,7 @@ const Signup = ({ navigation }) => {
             />
           </View>
         </View>
+        <View style={{ marginBottom: SIZES.padding * 4 }} />
       </ScrollView>
       <Toaster />
     </KeyboardAvoidingView>
