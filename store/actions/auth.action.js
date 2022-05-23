@@ -4,7 +4,7 @@ import {
   URL_AUTH_SIGNUP,
 } from "../../constants/Database";
 import { createUserImage, db } from "../../firebase/firebase-config";
-import { deleteUser, fetchUser, insertUser } from "../../db";
+import { deleteUser, fetchUser, insertUser, updateUserLogged } from "../../db";
 import { ref, set } from "firebase/database";
 
 export const SIGN_UP = "SIGN_UP";
@@ -62,7 +62,7 @@ export const signup = (name, email, password, image) => {
         payload: message,
       });
     } else {
-      await insertUser(data.localId, data.displayName);
+      await insertUser(data.localId, data.displayName, "light", 1);
       const image_url = await createUserImage(data.localId, image);
       createUserDataBase(data.localId, data.displayName, image_url);
       console.log(data);
@@ -108,7 +108,8 @@ export const signIn = (email, password) => {
         payload: message,
       });
     } else {
-      await insertUser(data.localId, data.displayName);
+      //await insertUser(data.localId, data.displayName);
+      await updateUserLogged(data.localId, 1);
       dispatch({
         type: SIGN_IN,
         token: data.idToken,
@@ -129,6 +130,7 @@ export const getUser = () => {
         payload: {
           userId: user.rows._array[0].id,
           displayName: user.rows._array[0].name,
+          theme: user.rows._array[0].theme,
         },
       });
     } else {
@@ -141,7 +143,8 @@ export const getUser = () => {
 
 export const logOut = (id) => {
   return async (dispatch) => {
-    await deleteUser(id);
+    //await deleteUser(id);
+    await updateUserLogged(id, 0);
     dispatch({
       type: SET_ID,
     });

@@ -15,11 +15,11 @@ const TrendingRecipesCarousel = ({ navigation }) => {
         <Text style={{ ...FONTS.h2, color: appTheme.textColor1 }}>
           Mas Populares
         </Text>
-        <SeeAllButton
+        {/* <SeeAllButton
           text="Ver todas"
           onPress={() => console.log("Navegar a otra screen")}
           textStyle={styles.textButton}
-        />
+        /> */}
       </View>
       <FlatList
         data={dummyData.trendingRecipes}

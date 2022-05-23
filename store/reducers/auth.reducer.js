@@ -16,6 +16,7 @@ const initialState = {
   token: null,
   userId: null,
   displayName: null,
+  theme: null,
   formFields: { formName: "", formEmail: "", formPass: "", image: "" },
   formFieldsValidation: {
     formName: false,
@@ -151,6 +152,7 @@ const AuthReducer = (state = initialState, action) => {
         ...state,
         userId: action.payload.userId,
         displayName: action.payload.displayName,
+        theme: action.payload.theme,
       };
     default:
       return state;

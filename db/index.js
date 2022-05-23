@@ -21,7 +21,7 @@ export const initUser = () => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        "CREATE TABLE IF NOT EXISTS users (id TEXT NOT NULL, name TEXT NOT NULL)",
+        "CREATE TABLE IF NOT EXISTS users (id TEXT NOT NULL, name TEXT NOT NULL, theme TEXT NOT NULL, logged INTEGER NOT NULL)",
         [],
         () => resolve(),
         (_, err) => reject(err)
@@ -32,12 +32,42 @@ export const initUser = () => {
   return promise;
 };
 
-export const insertUser = (id, name) => {
+export const updateUserTheme = (id, theme) => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        "INSERT INTO users (id, name) VALUES (?, ?)",
-        [id, name],
+        "UPDATE users SET theme = ? WHERE id = ?",
+        [theme, id],
+        (_, result) => resolve(result),
+        (_, err) => reject(err)
+      );
+    });
+  });
+
+  return promise;
+};
+
+export const updateUserLogged = (id, logged) => {
+  const promise = new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "UPDATE users SET logged = ? WHERE id = ?",
+        [logged, id],
+        (_, result) => resolve(result),
+        (_, err) => reject(err)
+      );
+    });
+  });
+
+  return promise;
+};
+
+export const insertUser = (id, name, theme, logged) => {
+  const promise = new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "INSERT INTO users (id, name, theme, logged) VALUES (?, ?, ?, ?)",
+        [id, name, theme, logged],
         (_, result) => resolve(result),
         (_, err) => reject(err)
       );
@@ -51,7 +81,7 @@ export const fetchUser = () => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        "SELECT * FROM users",
+        "SELECT * FROM users WHERE logged = 1",
         [],
         (_, result) => resolve(result),
         (_, err) => reject(err)

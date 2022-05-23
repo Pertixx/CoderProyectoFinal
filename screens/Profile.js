@@ -10,12 +10,15 @@ import {
   View,
 } from "react-native";
 import React, { useEffect } from "react";
+import { deleteUser, updateUserTheme } from "../db";
 import { useDispatch, useSelector } from "react-redux";
 
 import { AntDesign } from "@expo/vector-icons";
 import CreatedRecipeCard from "../components/CreatedRecipeCard";
+import CustomSwitch from "../components/CustomSwitch";
+import { Entypo } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
-import { deleteUser } from "../db";
+import { Ionicons } from "@expo/vector-icons";
 import { getCreatedRecipes } from "../store/actions/recipe.action";
 import { logOut } from "../store/actions/auth.action";
 import { selectTheme } from "../store/actions/theme.action";
@@ -33,7 +36,6 @@ const Profile = ({ navigation }) => {
   }, []);
 
   const renderItem = (item) => {
-    console.log(item);
     return (
       <View>
         <CreatedRecipeCard recipe={item} />
@@ -45,9 +47,11 @@ const Profile = ({ navigation }) => {
     if (appTheme.name === "light") {
       console.log("dark");
       dispatch(selectTheme("dark"));
+      updateUserTheme(userId, "dark");
     } else {
       console.log("light");
       dispatch(selectTheme("light"));
+      updateUserTheme(userId, "light");
     }
   };
 
@@ -60,15 +64,8 @@ const Profile = ({ navigation }) => {
         >
           <Feather name="arrow-left" size={SIZES.icon} color={COLORS.black} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleToggleTheme} style={styles.backButton}>
-          <Image
-            source={icons.sun}
-            resizeMode="cover"
-            style={{
-              width: SIZES.icon,
-              height: SIZES.icon,
-            }}
-          />
+        <TouchableOpacity onPress={handleLogOut} style={styles.backButton}>
+          <AntDesign name="logout" size={SIZES.icon} color={COLORS.black} />
         </TouchableOpacity>
       </View>
     );
@@ -77,7 +74,7 @@ const Profile = ({ navigation }) => {
   const renderCreatedRecipes = () => {
     if (data.length > 0) {
       return (
-        <View style={{ width: "100%", marginTop: SIZES.padding }}>
+        <View style={{ width: "100%", marginTop: SIZES.padding * 2 }}>
           <Text
             style={{
               ...FONTS.h3,
@@ -103,6 +100,47 @@ const Profile = ({ navigation }) => {
     dispatch(logOut(userId));
   };
 
+  const renderSettings = () => {
+    return (
+      <View style={{ alignItems: "center", marginTop: SIZES.padding * 3 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "65%",
+            height: SIZES.bottomTabHeight,
+            marginBottom: SIZES.padding,
+          }}
+        >
+          <Ionicons name="moon" size={SIZES.icon} color={appTheme.tintColor1} />
+          <CustomSwitch label={"Tema Oscuro"} onPress={handleToggleTheme} />
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            width: "65%",
+            height: SIZES.bottomTabHeight,
+            justifyContent: "space-between",
+          }}
+        >
+          <Entypo
+            name="language"
+            size={SIZES.icon}
+            color={appTheme.tintColor1}
+          />
+          <Text style={{ ...FONTS.h3, color: appTheme.textColor1 }}>
+            Idioma
+          </Text>
+          <Text style={{ color: appTheme.textColor3, ...FONTS.h3 }}>
+            Español
+          </Text>
+        </View>
+      </View>
+    );
+  };
+
   return (
     <ScrollView
       style={[styles.container, { backgroundColor: appTheme.backgroundColor1 }]}
@@ -117,11 +155,14 @@ const Profile = ({ navigation }) => {
         <Text style={[styles.name, { color: appTheme.textColor1 }]}>
           {name}
         </Text>
-        {renderCreatedRecipes()}
       </View>
-      <TouchableOpacity onPress={handleLogOut}>
-        <AntDesign name="logout" size={24} color="black" />
-      </TouchableOpacity>
+      {renderSettings()}
+      {renderCreatedRecipes()}
+      <View
+        style={{
+          marginBottom: SIZES.bottomTabHeight * 2,
+        }}
+      />
     </ScrollView>
   );
 };

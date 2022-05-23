@@ -69,7 +69,6 @@ const styles = StyleSheet.create({
     height: "90%",
     borderColor: COLORS.gray,
     backgroundColor: COLORS.white,
-    ...SHADOW.shadow1,
   },
   searchButton: {
     width: 40,

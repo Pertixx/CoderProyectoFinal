@@ -18,16 +18,19 @@ import RecipeCard from "../components/RecipeCard";
 import TrendingRecipesCarousel from "../components/TrendingRecipesCarousel";
 import { getRecipes } from "../store/actions/recipe.action";
 import { getUserData } from "../store/actions/user.action";
+import { selectTheme } from "../store/actions/theme.action";
 
 const Home = ({ navigation }) => {
   const data = useSelector((state) => state.recipes.filteredRecipes);
   const userId = useSelector((state) => state.auth.userId);
+  const userTheme = useSelector((state) => state.auth.theme);
   const dispatch = useDispatch();
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);
   const appTheme = useSelector((state) => state.appTheme.appTheme);
 
   useEffect(() => {
+    dispatch(selectTheme(userTheme));
     dispatch(getRecipes());
     dispatch(getUserData(userId));
   }, []);

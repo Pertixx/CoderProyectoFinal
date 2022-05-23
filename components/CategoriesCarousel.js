@@ -22,13 +22,14 @@ const CategoriesCarousel = ({ showSeeAll = false }) => {
         <Text style={{ ...FONTS.h2, color: appTheme.textColor1 }}>
           Categorias
         </Text>
-        {showSeeAll ? (
-          <SeeAllButton
-            text="Ver todas"
-            onPress={() => console.log("Navegar a otra screen?")}
-            textStyle={{ color: COLORS.orange, ...FONTS.bodyBold }}
-          />
-        ) : null}
+        {showSeeAll
+          ? null
+          : // <SeeAllButton
+            //   text="Ver todas"
+            //   onPress={() => console.log("Navegar a otra screen?")}
+            //   textStyle={{ color: COLORS.orange, ...FONTS.bodyBold }}
+            // />
+            null}
       </View>
       <FlatList
         data={categories}
