@@ -15,7 +15,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { addBookmark, dontAddBookmark } from "../store/actions/user.action";
-import { ref, update } from "firebase/database";
+import { child, get, onValue, ref, update } from "firebase/database";
 import { useDispatch, useSelector } from "react-redux";
 
 import BookmarkButton from "../components/Buttons/BookmarkButton";
@@ -33,10 +33,14 @@ const Recipe = ({ navigation, route }) => {
   const bookmarks = useSelector((state) => state.user.bookmarks);
   const add_Bookmark = useSelector((state) => state.user.addBookmark);
   const [active, setActive] = useState(false);
+  const appTheme = useSelector((state) => state.appTheme.appTheme);
 
   useEffect(() => {
     if (bookmarks.find((id) => id === recipeId)) {
       setActive(true);
+    }
+    if (recipeItem.author.id !== userId) {
+      updateRecipeViews();
     }
   }, []);
 
@@ -47,6 +51,19 @@ const Recipe = ({ navigation, route }) => {
       setActive(false);
     }
   }, [bookmarks]);
+
+  const updateRecipeViews = () => {
+    const dbRef = ref(db);
+    //const currentViews = ref(db, "recipes/" + recipeId + "/item/views");
+    get(child(dbRef, `recipes/${recipeId}/item/views`)).then((snapshot) => {
+      const currentViews = snapshot.val();
+      update(ref(db, "recipes/" + recipeId + "/item"), {
+        views: currentViews + 1,
+      }).catch((error) => {
+        console.log(error);
+      });
+    });
+  };
 
   const onScroll = useAnimatedScrollHandler((event) => {
     scrollY.value = event.contentOffset.y;
@@ -159,7 +176,9 @@ const Recipe = ({ navigation, route }) => {
         >
           Ingredientes de:
         </Text>
-        <Text style={styles.ingredientsTitle}>{recipeItem.name}</Text>
+        <Text style={[styles.ingredientsTitle, { color: appTheme.textColor1 }]}>
+          {recipeItem.name}
+        </Text>
       </View>
     );
   };
@@ -175,7 +194,9 @@ const Recipe = ({ navigation, route }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[styles.container, { backgroundColor: appTheme.backgroundColor1 }]}
+    >
       <Animated.FlatList
         data={recipeItem.ingredients}
         showsVerticalScrollIndicator={false}

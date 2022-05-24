@@ -3,12 +3,14 @@ import {
   FILTER_RECIPES,
   GET_CREATED_RECIPES,
   GET_RECIPES,
+  GET_TRENDING_RECIPES,
 } from "../actions/recipe.action";
 
 const initialState = {
   recipes: [],
   filteredRecipes: [],
   createdRecipes: [],
+  trendingRecipes: [],
 };
 
 const RecipeReducer = (state = initialState, action) => {
@@ -45,6 +47,15 @@ const RecipeReducer = (state = initialState, action) => {
       if (index !== -1) {
         state.createdRecipes.splice(index, 1);
       }
+      return { ...state };
+    case GET_TRENDING_RECIPES:
+      state.trendingRecipes = state.recipes;
+      state.trendingRecipes.sort((a, b) => {
+        if (a.item.views < b.item.views) return 1;
+        if (a.item.views > b.item.views) return -1;
+        return 0;
+        //return a.item.views - b.item.views;
+      });
       return { ...state };
     default:
       return state;

@@ -2,6 +2,7 @@ export const FILTER_RECIPES = "FILTER_RECIPES";
 export const GET_RECIPES = "GET_RECIPES";
 export const GET_CREATED_RECIPES = "GET_CREATED_RECIPES";
 export const DELETE_RECIPE = "DELETE_RECIPE";
+export const GET_TRENDING_RECIPES = "GET_TRENDING_RECIPES";
 
 import { deleteRecipe, fetchCreatedRecipes } from "../../db";
 
@@ -31,6 +32,9 @@ export const getRecipes = () => {
       dispatch({
         type: GET_RECIPES,
         payload: recipes,
+      });
+      dispatch({
+        type: GET_TRENDING_RECIPES,
       });
     } catch (error) {
       console.log(error.message);

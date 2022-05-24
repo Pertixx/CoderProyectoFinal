@@ -27,6 +27,7 @@ const CreateRecipeButton = () => {
   const addNewRecipe = useSelector((state) => state.user.addNewRecipe);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const appTheme = useSelector((state) => state.appTheme.appTheme);
 
   useEffect(() => {
     if (addNewRecipe) {
@@ -52,7 +53,10 @@ const CreateRecipeButton = () => {
   };
 
   return (
-    <TouchableOpacity style={styles.button} onPress={handleOnPress}>
+    <TouchableOpacity
+      style={[styles.button, { backgroundColor: appTheme.loadMoreButton }]}
+      onPress={handleOnPress}
+    >
       {loading ? (
         <ActivityIndicator size={"small"} color={COLORS.white} />
       ) : (

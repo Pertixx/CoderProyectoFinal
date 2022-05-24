@@ -19,8 +19,10 @@ const CustomSwitch = ({ label, onPress }) => {
   const [switchColor, setSwitchColor] = useState("#C4C4C4");
   const animatedValue = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current;
   const appTheme = useSelector((state) => state.appTheme.appTheme);
+  const [disableButton, setDisableButton] = useState(false);
 
   useEffect(() => {
+    setDisableButton(true);
     if (appTheme.name === "light") {
       moveLeft(() => console.log("do nothing"));
     } else {
@@ -35,7 +37,10 @@ const CustomSwitch = ({ label, onPress }) => {
       speed: 8,
       useNativeDriver: false,
     }).start();
-    setTimeout(callback, 300);
+    setTimeout(() => {
+      callback();
+      setDisableButton(false);
+    }, 300);
     setIsEnabled(true);
     setSwitchColor(COLORS.orange);
     // setButtonColor("#E6DD3E")
@@ -48,13 +53,17 @@ const CustomSwitch = ({ label, onPress }) => {
       speed: 8,
       useNativeDriver: false,
     }).start();
-    setTimeout(callback, 300);
+    setTimeout(() => {
+      callback();
+      setDisableButton(false);
+    }, 300);
     setIsEnabled(false);
     setSwitchColor("#C4C4C4");
     // setButtonColor("#fff")
   };
 
   const toggleSwitch = () => {
+    setDisableButton(true);
     console.log("toggleSwitch", isEnabled);
     if (!isEnabled) {
       moveRight(onPress);
@@ -79,12 +88,17 @@ const CustomSwitch = ({ label, onPress }) => {
       >
         {label}
       </Text>
-      <TouchableOpacity onPress={toggleSwitch} style={styles.container}>
+      <TouchableOpacity
+        onPress={toggleSwitch}
+        style={styles.container}
+        disabled={disableButton}
+      >
         <View style={{ backgroundColor: switchColor, ...styles.switch }}>
           <Animated.View style={animatedValue.getLayout()}>
             <TouchableOpacity
               onPress={toggleSwitch}
               style={{ backgroundColor: buttonColor, ...styles.toggleButton }}
+              disabled={disableButton}
             />
           </Animated.View>
         </View>

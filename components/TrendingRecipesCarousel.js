@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 
 const TrendingRecipesCarousel = ({ navigation }) => {
   const appTheme = useSelector((state) => state.appTheme.appTheme);
+  const data = useSelector((state) => state.recipes.trendingRecipes);
 
   return (
     <View style={styles.trendingContainer}>
@@ -22,14 +23,18 @@ const TrendingRecipesCarousel = ({ navigation }) => {
         /> */}
       </View>
       <FlatList
-        data={dummyData.trendingRecipes}
+        data={data}
         horizontal
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item) => `${item.id}`}
         renderItem={({ item }) => {
           return (
             <View>
-              <TrendingRecipeCard recipeItem={item} navigation={navigation} />
+              <TrendingRecipeCard
+                recipeItem={item.item}
+                navigation={navigation}
+                recipeId={item.id}
+              />
             </View>
           );
         }}

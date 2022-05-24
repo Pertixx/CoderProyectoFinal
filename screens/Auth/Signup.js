@@ -90,7 +90,8 @@ const Signup = ({ navigation }) => {
 
   const renderImageSelector = () => {
     return (
-      <View>
+      <View style={{ paddingHorizontal: SIZES.padding }}>
+        <Text style={styles.label}>Selecciona tu foto de perfil</Text>
         <ProfileImageSelector form={form} />
       </View>
     );

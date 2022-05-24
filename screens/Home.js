@@ -28,12 +28,17 @@ const Home = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);
   const appTheme = useSelector((state) => state.appTheme.appTheme);
+  const trendingRecipes = useSelector((state) => state.recipes.trendingRecipes);
 
   useEffect(() => {
     dispatch(selectTheme(userTheme));
     dispatch(getRecipes());
     dispatch(getUserData(userId));
   }, []);
+
+  useEffect(() => {
+    console.log(trendingRecipes);
+  }, [trendingRecipes]);
 
   const renderItem = (recipe) => {
     return (
@@ -96,7 +101,7 @@ const Home = ({ navigation }) => {
     <SafeAreaView
       style={[styles.container, { backgroundColor: appTheme.backgroundColor1 }]}
     >
-      <StatusBar barStyle="default" />
+      <StatusBar barStyle="light-content" />
       <FlatList
         onRefresh={onRefresh}
         refreshing={refreshing}

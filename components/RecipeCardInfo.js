@@ -5,7 +5,7 @@ import { Feather } from "@expo/vector-icons";
 //import { BlurView } from 'expo-blur'
 import React from "react";
 
-const RecipeCardInfo = ({ recipeItem }) => {
+const RecipeCardInfo = ({ recipeItem, showViews = true }) => {
   return (
     <View
       //tint='dark'
@@ -17,9 +17,13 @@ const RecipeCardInfo = ({ recipeItem }) => {
       </Text>
       <View style={styles.details}>
         <Feather name="clock" size={20} color={COLORS.white} />
-        <Text style={styles.description}>
-          {recipeItem.duration} | {recipeItem.views} visitas
-        </Text>
+        {!showViews ? (
+          <Text style={styles.description}>{recipeItem.duration}</Text>
+        ) : (
+          <Text style={styles.description}>
+            {recipeItem.duration} | {recipeItem.views} visitas
+          </Text>
+        )}
       </View>
     </View>
   );

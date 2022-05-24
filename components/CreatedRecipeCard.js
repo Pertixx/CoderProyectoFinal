@@ -38,7 +38,7 @@ const CreatedRecipeCard = ({ recipe }) => {
           <Feather name="trash-2" size={SIZES.icon} color={COLORS.white} />
         </TouchableOpacity>
       </View>
-      <RecipeCardInfo recipeItem={recipe} />
+      <RecipeCardInfo recipeItem={recipe} showViews={false} />
     </View>
   );
 };

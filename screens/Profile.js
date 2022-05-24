@@ -45,11 +45,9 @@ const Profile = ({ navigation }) => {
 
   const handleToggleTheme = () => {
     if (appTheme.name === "light") {
-      console.log("dark");
       dispatch(selectTheme("dark"));
       updateUserTheme(userId, "dark");
     } else {
-      console.log("light");
       dispatch(selectTheme("light"));
       updateUserTheme(userId, "light");
     }

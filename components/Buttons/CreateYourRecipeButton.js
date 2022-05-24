@@ -3,14 +3,19 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { Feather } from "@expo/vector-icons";
 import React from "react";
+import { useSelector } from "react-redux";
 
 const CreateYourRecipeButton = ({ navigation }) => {
+  const appTheme = useSelector((state) => state.appTheme.appTheme);
+
   return (
-    <View style={styles.container}>
+    <View
+      style={[styles.container, { backgroundColor: appTheme.loadMoreButton }]}
+    >
       <Text style={styles.text}>Crea tu receta</Text>
       <TouchableOpacity
         onPress={() => navigation.navigate("CreateRecipe")}
-        style={styles.button}
+        style={[styles.button, { backgroundColor: appTheme.tintColor4 }]}
       >
         <Feather name="arrow-right" size={SIZES.icon} color={COLORS.white} />
       </TouchableOpacity>
