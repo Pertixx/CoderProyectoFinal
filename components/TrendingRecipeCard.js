@@ -19,7 +19,7 @@ const TrendingRecipeCard = ({ recipeItem, navigation, recipeId }) => {
   const [active, setActive] = useState(false);
 
   useEffect(() => {
-    if (bookmarks.find((id) => id === recipeId)) {
+    if (bookmarks.find((recipe) => recipe.id === recipeId)) {
       setActive(true);
     }
     const category =
@@ -29,7 +29,7 @@ const TrendingRecipeCard = ({ recipeItem, navigation, recipeId }) => {
   }, []);
 
   useEffect(() => {
-    if (bookmarks.find((id) => id === recipeId)) {
+    if (bookmarks.find((recipe) => recipe.id === recipeId)) {
       setActive(true);
     } else {
       setActive(false);
@@ -48,7 +48,7 @@ const TrendingRecipeCard = ({ recipeItem, navigation, recipeId }) => {
   }, [add_Bookmark]);
 
   const handleBookmark = () => {
-    dispatch(addBookmark(recipeId));
+    dispatch(addBookmark(recipeId, recipeItem));
     //addBookmarkToDb();
   };
 

@@ -36,7 +36,7 @@ const Recipe = ({ navigation, route }) => {
   const appTheme = useSelector((state) => state.appTheme.appTheme);
 
   useEffect(() => {
-    if (bookmarks.find((id) => id === recipeId)) {
+    if (bookmarks.find((recipe) => recipe.id === recipeId)) {
       setActive(true);
     }
     if (recipeItem.author.id !== userId) {
@@ -45,7 +45,7 @@ const Recipe = ({ navigation, route }) => {
   }, []);
 
   useEffect(() => {
-    if (bookmarks.find((id) => id === recipeId)) {
+    if (bookmarks.find((recipe) => recipe.id === recipeId)) {
       setActive(true);
     } else {
       setActive(false);
@@ -109,7 +109,7 @@ const Recipe = ({ navigation, route }) => {
   }, [add_Bookmark]);
 
   const handleBookmark = () => {
-    dispatch(addBookmark(recipeId));
+    dispatch(addBookmark(recipeId, recipeItem));
     //addBookmarkToDb();
   };
 

@@ -8,13 +8,28 @@ import {
 } from "react-native";
 import { COLORS, FONTS, SHADOW, SIZES, images } from "../constants";
 import React, { useEffect, useState } from "react";
+import { child, get, onValue, ref, update } from "firebase/database";
 
 import { Feather } from "@expo/vector-icons";
+import { db } from "../firebase/firebase-config";
 import { useSelector } from "react-redux";
 
 const RecipeCard = ({ recipeItem, navigation, recipeId }) => {
   const [loaded, setLoaded] = useState(false);
   const appTheme = useSelector((state) => state.appTheme.appTheme);
+  const [authorImage, setAuthorImage] = useState(null);
+
+  useEffect(() => {
+    const dbRef = ref(db);
+    get(child(dbRef, `users/${recipeItem.author.id}`)).then((snapshot) => {
+      if (snapshot.exists()) {
+        console.log(snapshot.val());
+        setAuthorImage(snapshot.val().profilePic);
+      } else {
+        console.log("No data available");
+      }
+    });
+  }, []);
 
   return (
     <View style={[styles.card, { backgroundColor: appTheme.recipeCardColor }]}>
@@ -28,7 +43,7 @@ const RecipeCard = ({ recipeItem, navigation, recipeId }) => {
           {recipeItem.name}
         </Text>
         <View style={styles.authorContainer}>
-          <Image source={images.myProfile} style={styles.profilePic} />
+          <Image source={{ uri: authorImage }} style={styles.profilePic} />
           <Text style={[styles.itemInfo, { color: appTheme.textColor5 }]}>
             {recipeItem.author.name}
           </Text>

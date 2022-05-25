@@ -10,13 +10,13 @@ import {
 } from "react-native";
 import { COLORS, FONTS, SIZES } from "../constants/";
 import React, { useEffect, useState } from "react";
+import { getRecipes, getTrendingRecipes } from "../store/actions/recipe.action";
 import { useDispatch, useSelector } from "react-redux";
 
 import CategoriesCarousel from "../components/CategoriesCarousel";
 import Header from "../components/Header";
 import RecipeCard from "../components/RecipeCard";
 import TrendingRecipesCarousel from "../components/TrendingRecipesCarousel";
-import { getRecipes } from "../store/actions/recipe.action";
 import { getUserData } from "../store/actions/user.action";
 import { selectTheme } from "../store/actions/theme.action";
 
@@ -28,17 +28,13 @@ const Home = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);
   const appTheme = useSelector((state) => state.appTheme.appTheme);
-  const trendingRecipes = useSelector((state) => state.recipes.trendingRecipes);
 
   useEffect(() => {
     dispatch(selectTheme(userTheme));
     dispatch(getRecipes());
+    //dispatch(getTrendingRecipes(0));
     dispatch(getUserData(userId));
   }, []);
-
-  useEffect(() => {
-    console.log(trendingRecipes);
-  }, [trendingRecipes]);
 
   const renderItem = (recipe) => {
     return (

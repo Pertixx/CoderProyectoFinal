@@ -1,5 +1,6 @@
 import {
   ADD_BOOKMARK,
+  ADD_BOOKMARK_RECIPE,
   ADD_DATA,
   ADD_LAST_RECIPE,
   ADD_NEW_RECIPE,
@@ -40,10 +41,11 @@ const UserReducer = (state = initialState, action) => {
         state.bookmarks = [];
       }
       const index = state.bookmarks.findIndex(
-        (bookmark) => bookmark === action.payload.id
+        (bookmark) => bookmark.id === action.payload.id
       );
+      //state.bookmarksRecipes = [];
       if (index === -1) {
-        state.bookmarks.push(action.payload.id);
+        state.bookmarks.push(action.payload);
       } else {
         state.bookmarks.splice(index, 1);
         if (state.bookmarks.length === 0) {
@@ -54,6 +56,9 @@ const UserReducer = (state = initialState, action) => {
       return { ...state };
     case DONT_ADD_BOOKMARK:
       state.addBookmark = false;
+      return { ...state };
+    case ADD_BOOKMARK_RECIPE:
+      state.bookmarksRecipes.push(action.payload);
       return { ...state };
     default:
       return state;
