@@ -1,8 +1,17 @@
-import { COLORS, FONTS } from "../constants";
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { COLORS, FONTS, SIZES } from "../constants";
+import {
+  FlatList,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import CreateYourRecipeButton from "../components/Buttons/CreateYourRecipeButton";
+import { Feather } from "@expo/vector-icons";
 import RecipeCard from "../components/RecipeCard";
 
 const Bookmark = ({ navigation }) => {
@@ -10,28 +19,48 @@ const Bookmark = ({ navigation }) => {
   const appTheme = useSelector((state) => state.appTheme.appTheme);
   const bookmarks = useSelector((state) => state.user.bookmarks);
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", () => {
-      console.log("FOCUSED BOOKMARKS");
-    });
-
-    return unsubscribe;
-  }, [navigation]);
-
   const renderItem = (recipe) => {
-    if (bookmarks[0] === 0) {
+    if (bookmarks[0] !== 0) {
       return (
-        <Text style={{ ...FONTS.h3, color: appTheme.textColor1 }}>
-          NO HAY RECETAS FAVORITAS
-        </Text>
+        <View style={{ paddingHorizontal: SIZES.padding }}>
+          <RecipeCard
+            navigation={navigation}
+            recipeId={recipe.id}
+            recipeItem={recipe.recipe}
+          />
+        </View>
       );
     }
+  };
+
+  const renderVisitRecipes = () => {
+    if (bookmarks[0] === 0) {
+      return (
+        <View
+          style={{
+            //paddingHorizontal: SIZES.padding,
+            width: "50%",
+            height: SIZES.height * 0.07,
+            marginTop: SIZES.height * 0.25,
+          }}
+        >
+          <CreateYourRecipeButton
+            navigation={navigation}
+            label={"Explora recetas"}
+            destination={"Home"}
+          />
+        </View>
+      );
+    }
+  };
+
+  const renderHeader = () => {
     return (
-      <RecipeCard
-        navigation={navigation}
-        recipeId={recipe.id}
-        recipeItem={recipe.recipe}
-      />
+      <View style={styles.headerContainer}>
+        <Text style={{ ...FONTS.h2, color: appTheme.textColor1 }}>
+          Recetas Marcadas
+        </Text>
+      </View>
     );
   };
 
@@ -44,6 +73,13 @@ const Bookmark = ({ navigation }) => {
         keyExtractor={(item) => `${item.id}`}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => renderItem(item)}
+        ListHeaderComponent={<View>{renderHeader()}</View>}
+        ListFooterComponent={
+          <View style={{ alignItems: "center" }}>
+            {renderVisitRecipes()}
+            <View style={{ marginBottom: SIZES.bottomTabHeight * 2 }} />
+          </View>
+        }
       />
     </SafeAreaView>
   );
@@ -54,5 +90,18 @@ export default Bookmark;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  headerContainer: {
+    paddingTop: SIZES.padding * 4,
+    marginBottom: SIZES.padding * 2,
+    alignItems: "center",
+  },
+  button: {
+    width: 30,
+    height: 30,
+    borderRadius: SIZES.padding - 5,
+    backgroundColor: COLORS.black3,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

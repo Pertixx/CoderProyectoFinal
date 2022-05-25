@@ -97,7 +97,7 @@ const Home = ({ navigation }) => {
     <SafeAreaView
       style={[styles.container, { backgroundColor: appTheme.backgroundColor1 }]}
     >
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle={appTheme.statusBar} />
       <FlatList
         onRefresh={onRefresh}
         refreshing={refreshing}

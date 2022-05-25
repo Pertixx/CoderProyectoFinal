@@ -57,7 +57,6 @@ const RecipeCreatorCard = ({ author, recipeDescription = null }) => {
             <Text style={styles.name}>{author.name}</Text>
           </View>
         </View>
-        {renderGoToAuthor()}
       </View>
       {renderDescription()}
     </BlurView>
