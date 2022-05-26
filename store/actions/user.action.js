@@ -14,7 +14,6 @@ export const getUserData = (id) => {
     const starCountRef = ref(db, "users/" + id);
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val();
-      console.log(data);
       dispatch({
         type: ADD_DATA,
         payload: {

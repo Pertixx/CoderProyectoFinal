@@ -81,7 +81,6 @@ export const confirmRecipe = (recipe, localImage) => {
         recipe.category,
         recipe.author.id
       );
-      console.log(dbResult);
       dispatch({
         type: ADD_LAST_RECIPE,
         payload: { id: result.name },

@@ -54,7 +54,6 @@ const Login = ({ navigation }) => {
 
   useEffect(() => {
     if (userId !== null) {
-      console.log("NASHE");
       insertUser(userId, userName);
     }
   }, [userId]);

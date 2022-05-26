@@ -28,10 +28,12 @@ const Home = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);
   const appTheme = useSelector((state) => state.appTheme.appTheme);
+  const [maxRecipesToGet, setMaxRecipesToGet] = useState(20);
+  const lastRecipe = useSelector((state) => state.recipes.lastRecipe);
 
   useEffect(() => {
     dispatch(selectTheme(userTheme));
-    dispatch(getRecipes());
+    dispatch(getRecipes(maxRecipesToGet));
     //dispatch(getTrendingRecipes(0));
     dispatch(getUserData(userId));
   }, []);
@@ -61,13 +63,21 @@ const Home = ({ navigation }) => {
   };
 
   const fetchData = () => {
-    dispatch(getRecipes());
+    dispatch(getRecipes(maxRecipesToGet));
     setRefreshing(false);
   };
 
   const onRefresh = () => {
     setRefreshing(true);
     fetchData();
+  };
+
+  const handleLoadMore = () => {
+    setLoading(true);
+    dispatch(getRecipes(maxRecipesToGet, lastRecipe));
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
   };
 
   const renderLoadMoreButton = () => {
@@ -77,12 +87,7 @@ const Home = ({ navigation }) => {
           styles.loadMoreButton,
           { backgroundColor: appTheme.loadMoreButton },
         ]}
-        onPress={() => {
-          setLoading(true);
-          setTimeout(() => {
-            setLoading(false);
-          }, 3000);
-        }}
+        onPress={handleLoadMore}
       >
         {loading ? (
           <ActivityIndicator size={"small"} color={COLORS.white} />

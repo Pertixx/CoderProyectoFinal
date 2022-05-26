@@ -11,6 +11,8 @@ const initialState = {
   filteredRecipes: [],
   createdRecipes: [],
   trendingRecipes: [],
+  lastRecipe: null,
+  maxTrending: 5,
 };
 
 const RecipeReducer = (state = initialState, action) => {
@@ -30,10 +32,18 @@ const RecipeReducer = (state = initialState, action) => {
         return { ...state, filteredRecipes: state.recipes };
       }
     case GET_RECIPES:
+      action.payload.recipes.forEach((recipe) => {
+        const response = state.recipes.find(
+          (element) => element.id === recipe.id
+        );
+        if (response === undefined) {
+          state.recipes.push(recipe);
+          state.filteredRecipes.push(recipe);
+        }
+      });
       return {
         ...state,
-        recipes: action.payload,
-        filteredRecipes: action.payload,
+        lastRecipe: action.payload.lastRecipe,
       };
     case GET_CREATED_RECIPES:
       return {
@@ -56,6 +66,7 @@ const RecipeReducer = (state = initialState, action) => {
         return 0;
         //return a.item.views - b.item.views;
       });
+      state.trendingRecipes = state.trendingRecipes.slice(0, state.maxTrending);
       return { ...state };
     default:
       return state;

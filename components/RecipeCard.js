@@ -23,7 +23,6 @@ const RecipeCard = ({ recipeItem, navigation, recipeId }) => {
     const dbRef = ref(db);
     get(child(dbRef, `users/${recipeItem.author.id}`)).then((snapshot) => {
       if (snapshot.exists()) {
-        console.log(snapshot.val());
         setAuthorImage(snapshot.val().profilePic);
       } else {
         console.log("No data available");

@@ -17,31 +17,39 @@ import {
 import { API_URL } from "../../constants/Database";
 import { db } from "../../firebase/firebase-config";
 
-const RECIPE_AMOUNT = 3;
-
 export const filterRecipes = (selectedCategories) => ({
   type: FILTER_RECIPES,
   payload: { selectedCategories: selectedCategories },
 });
 
-export const getRecipes = () => {
+export const getRecipes = (amount, lastRecipe = null) => {
+  let fetchUrl;
+  if (lastRecipe) {
+    fetchUrl = `${API_URL}/recipes.json?orderBy="$key"&limitToFirst=2&startAt="${lastRecipe}"`;
+  } else {
+    fetchUrl = `${API_URL}/recipes.json?orderBy="$key"&limitToFirst=${amount}`;
+  }
+
   return async (dispatch) => {
     try {
-      const response = await fetch(`${API_URL}/recipes.json?`, {
+      const response = await fetch(fetchUrl, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-
       const result = await response.json();
+
       const recipes = Object.keys(result).map((key) => ({
         ...result[key],
         id: key,
       }));
 
+      const lastReadRecipe = recipes[recipes.length - 1].id;
+      console.log(lastReadRecipe);
+
       dispatch({
         type: GET_RECIPES,
-        payload: recipes,
+        payload: { recipes: recipes, lastRecipe: lastReadRecipe },
       });
       dispatch({
         type: GET_TRENDING_RECIPES,
@@ -55,7 +63,6 @@ export const getRecipes = () => {
 export const getTrendingRecipes = (page) => {
   return async (dispatch) => {
     const mostViewedRecipes = query(ref(db, "recipes"), limitToFirst(3));
-    console.log(mostViewedRecipes);
     dispatch({
       type: GET_TRENDING_RECIPES,
       payload: mostViewedRecipes,

@@ -102,7 +102,7 @@ export const lightTheme = {
   categoryButtonColor: COLORS.lightGray,
   recipeCardColor: COLORS.white,
   loadMoreButton: COLORS.black,
-  statusBar: "dark-content",
+  statusBar: "default",
 };
 
 export const darkTheme = {
