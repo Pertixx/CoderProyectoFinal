@@ -3,6 +3,7 @@ export const GET_RECIPES = "GET_RECIPES";
 export const GET_CREATED_RECIPES = "GET_CREATED_RECIPES";
 export const DELETE_RECIPE = "DELETE_RECIPE";
 export const GET_TRENDING_RECIPES = "GET_TRENDING_RECIPES";
+export const ADD_INGREDIENTS = "ADD_INGREDIENTS";
 
 import { deleteRecipe, fetchCreatedRecipes } from "../../db";
 import {
@@ -21,6 +22,31 @@ export const filterRecipes = (selectedCategories) => ({
   type: FILTER_RECIPES,
   payload: { selectedCategories: selectedCategories },
 });
+
+export const getIngredients = () => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`${API_URL}/ingredients.json`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const result = await response.json();
+      const ingredients = Object.keys(result).map((key) => ({
+        ...result[key],
+        id: key,
+      }));
+
+      dispatch({
+        type: ADD_INGREDIENTS,
+        payload: ingredients,
+      });
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+};
 
 export const getRecipes = (amount, lastRecipe = null) => {
   let fetchUrl;

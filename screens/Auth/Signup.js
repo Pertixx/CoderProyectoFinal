@@ -51,7 +51,7 @@ const Signup = ({ navigation }) => {
     if (formValid) {
       dispatch(signup(formName, formEmail, formPass, image));
     } else {
-      dispatch(setError("Revisa los campos"));
+      dispatch(setError(i18n.t("reviewFields")));
     }
   };
 

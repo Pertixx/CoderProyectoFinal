@@ -8,7 +8,10 @@ const IngredientCard = ({ ingredient }) => {
     <View style={styles.itemContainer}>
       <View style={styles.leftContainer}>
         <View style={styles.imageContainer}>
-          <Image source={ingredient.icon} style={{ width: 30, height: 30 }} />
+          <Image
+            source={{ uri: ingredient.icon }}
+            style={{ width: 30, height: 30 }}
+          />
         </View>
         <Text style={styles.ingredientName} numberOfLines={2}>
           {ingredient.name}

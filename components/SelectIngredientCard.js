@@ -52,7 +52,7 @@ const SelectIngredientCard = ({ item }) => {
       ]}
     >
       <View style={{ alignItems: "center", justifyContent: "center" }}>
-        <Image source={item.icon} style={{ width: 30, height: 30 }} />
+        <Image source={{ uri: item.icon }} style={{ width: 30, height: 30 }} />
         <Text style={{ ...FONTS.bodyBold, color: appTheme.textColor1 }}>
           {item.name}
         </Text>

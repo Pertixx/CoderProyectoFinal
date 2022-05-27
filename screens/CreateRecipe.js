@@ -39,7 +39,7 @@ import i18n from "i18n-js";
 
 const CreateRecipe = ({ navigation }) => {
   const scrollX = useSharedValue(0); //similar to new Animated.value(0)
-
+  const ingredientsData = useSelector((state) => state.recipes.ingredients);
   const dispatch = useDispatch();
   const userName = useSelector((state) => state.auth.displayName);
   const selectedCategory = useSelector((state) => state.createRecipe.category);
@@ -190,7 +190,7 @@ const CreateRecipe = ({ navigation }) => {
             {i18n.t("formIngredients")}
           </Text>
           <FlatList
-            data={dummyData.ingredients}
+            data={ingredientsData}
             keyExtractor={(item) => `${item.id}`}
             renderItem={({ item }) => renderItem(item)}
             horizontal

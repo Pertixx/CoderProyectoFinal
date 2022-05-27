@@ -1,4 +1,5 @@
 import {
+  ADD_INGREDIENTS,
   DELETE_RECIPE,
   FILTER_RECIPES,
   GET_CREATED_RECIPES,
@@ -8,6 +9,7 @@ import {
 
 const initialState = {
   recipes: [],
+  ingredients: [],
   filteredRecipes: [],
   createdRecipes: [],
   trendingRecipes: [],
@@ -68,6 +70,11 @@ const RecipeReducer = (state = initialState, action) => {
       });
       state.trendingRecipes = state.trendingRecipes.slice(0, state.maxTrending);
       return { ...state };
+    case ADD_INGREDIENTS:
+      return {
+        ...state,
+        ingredients: action.payload,
+      };
     default:
       return state;
   }

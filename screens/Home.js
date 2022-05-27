@@ -10,7 +10,11 @@ import {
 } from "react-native";
 import { COLORS, FONTS, SIZES } from "../constants/";
 import React, { useEffect, useState } from "react";
-import { getRecipes, getTrendingRecipes } from "../store/actions/recipe.action";
+import {
+  getIngredients,
+  getRecipes,
+  getTrendingRecipes,
+} from "../store/actions/recipe.action";
 import { useDispatch, useSelector } from "react-redux";
 
 import CategoriesCarousel from "../components/CategoriesCarousel";
@@ -35,7 +39,7 @@ const Home = ({ navigation }) => {
   useEffect(() => {
     dispatch(selectTheme(userTheme));
     dispatch(getRecipes(maxRecipesToGet));
-    //dispatch(getTrendingRecipes(0));
+    dispatch(getIngredients());
     dispatch(getUserData(userId));
   }, []);
 
