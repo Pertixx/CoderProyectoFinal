@@ -61,7 +61,6 @@ const Search = ({ navigation }) => {
       <Animated.View style={[styles.headerContainer, headerAnimatedStyle]}>
         <SearchBar
           handleSearch={handleSearch}
-          onPressFilter={() => console.log("Filter")}
           text={text}
           onChangeText={setText}
         />

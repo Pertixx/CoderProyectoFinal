@@ -12,7 +12,7 @@ import React, { useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 
-const SearchBar = ({ onPressFilter, text, onChangeText, handleSearch }) => {
+const SearchBar = ({ text, onChangeText, handleSearch }) => {
   const appTheme = useSelector((state) => state.appTheme.appTheme);
 
   return (
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderWidth: 1,
     borderRadius: SIZES.padding,
-    width: "80%",
+    width: "100%",
     height: "90%",
     borderColor: COLORS.gray,
     backgroundColor: COLORS.white,

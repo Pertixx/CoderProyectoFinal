@@ -1,12 +1,14 @@
 import * as Localization from "expo-localization";
 
 import { LogBox, StyleSheet, View } from "react-native";
+import { Provider, useDispatch } from "react-redux";
 import { deleteDatabase, deleteUserDB, init, initUser } from "./db";
+import { getIngredients, getRecipes } from "./store/actions/recipe.action";
 import { useEffect, useState } from "react";
 
 import AppLoading from "expo-app-loading";
 import Navigator from "./navigation/Navigator";
-import { Provider } from "react-redux";
+import SplashScreen from "./Splash";
 import setLocale from "./locale";
 import store from "./store";
 import { useFonts } from "expo-font";
@@ -17,8 +19,19 @@ import { useFonts } from "expo-font";
 console.log(Localization.locale.substring(0, 2));
 setLocale(Localization.locale.substring(0, 2));
 
-export default function App() {
+const AppWrapper = () => {
+  return (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+};
+
+const App = () => {
   const [loading, setLoading] = useState(true);
+  const [showSplash, setShowSplash] = useState(true);
+  const [maxRecipesToGet, setMaxRecipesToGet] = useState(20);
+  const dispatch = useDispatch();
 
   LogBox.ignoreLogs(["Setting a timer"]);
   const [fontsLoaded] = useFonts({
@@ -51,12 +64,16 @@ export default function App() {
 
   useEffect(() => {
     localBoot();
-    // console.log(Localization.locale.substring(0, 2));
-    // setLocale(Localization.locale.substring(0, 2));
+    dispatch(getRecipes(maxRecipesToGet));
+    dispatch(getIngredients());
   }, []);
 
   if (!fontsLoaded || loading) {
     return <AppLoading />;
+  }
+
+  if (showSplash) {
+    return <SplashScreen onFinish={setShowSplash} />;
   }
 
   return (
@@ -66,7 +83,9 @@ export default function App() {
       </Provider>
     </View>
   );
-}
+};
+
+export default AppWrapper;
 
 const styles = StyleSheet.create({
   container: {

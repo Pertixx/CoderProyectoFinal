@@ -38,8 +38,8 @@ const Home = ({ navigation }) => {
 
   useEffect(() => {
     dispatch(selectTheme(userTheme));
-    dispatch(getRecipes(maxRecipesToGet));
-    dispatch(getIngredients());
+    // dispatch(getRecipes(maxRecipesToGet));
+    // dispatch(getIngredients());
     dispatch(getUserData(userId));
   }, []);
 
