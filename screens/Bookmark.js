@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CreateYourRecipeButton from "../components/Buttons/CreateYourRecipeButton";
 import { Feather } from "@expo/vector-icons";
 import RecipeCard from "../components/RecipeCard";
+import i18n from "i18n-js";
 
 const Bookmark = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -46,7 +47,7 @@ const Bookmark = ({ navigation }) => {
         >
           <CreateYourRecipeButton
             navigation={navigation}
-            label={"Explora recetas"}
+            label={i18n.t("exploreRecipes")}
             destination={"Home"}
           />
         </View>
@@ -58,7 +59,7 @@ const Bookmark = ({ navigation }) => {
     return (
       <View style={styles.headerContainer}>
         <Text style={{ ...FONTS.h2, color: appTheme.textColor1 }}>
-          Recetas Marcadas
+          {i18n.t("markedRecipes")}
         </Text>
       </View>
     );

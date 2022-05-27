@@ -2,8 +2,8 @@ import { COLORS, FONTS, dummyData } from "../constants";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 
 import React from "react";
-import SeeAllButton from "./Buttons/SeeAllButton";
 import TrendingRecipeCard from "./TrendingRecipeCard";
+import i18n from "i18n-js";
 import { useSelector } from "react-redux";
 
 const TrendingRecipesCarousel = ({ navigation }) => {
@@ -14,7 +14,7 @@ const TrendingRecipesCarousel = ({ navigation }) => {
     <View style={styles.trendingContainer}>
       <View style={styles.titleContainer}>
         <Text style={{ ...FONTS.h2, color: appTheme.textColor1 }}>
-          Mas Populares
+          {i18n.t("morePopular")}
         </Text>
         {/* <SeeAllButton
           text="Ver todas"

@@ -18,6 +18,7 @@ import Header from "../components/Header";
 import RecipeCard from "../components/RecipeCard";
 import TrendingRecipesCarousel from "../components/TrendingRecipesCarousel";
 import { getUserData } from "../store/actions/user.action";
+import i18n from "i18n-js";
 import { selectTheme } from "../store/actions/theme.action";
 
 const Home = ({ navigation }) => {
@@ -55,7 +56,7 @@ const Home = ({ navigation }) => {
       return (
         <View style={{ alignItems: "center", marginTop: SIZES.padding }}>
           <Text style={{ ...FONTS.h3, color: COLORS.gray }}>
-            No hay recetas con la categoria seleccionada
+            {i18n.t("emptyRecipe")}
           </Text>
         </View>
       );
@@ -92,7 +93,9 @@ const Home = ({ navigation }) => {
         {loading ? (
           <ActivityIndicator size={"small"} color={COLORS.white} />
         ) : (
-          <Text style={{ ...FONTS.h3, color: COLORS.white }}>Cargar Mas</Text>
+          <Text style={{ ...FONTS.h3, color: COLORS.white }}>
+            {i18n.t("loadMore")}
+          </Text>
         )}
       </TouchableOpacity>
     );

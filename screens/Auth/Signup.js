@@ -26,6 +26,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import ProfileImageSelector from "../../components/ProfileImageSelector";
 import SeeAllButton from "../../components/Buttons/SeeAllButton";
 import Toaster from "../../components/Toaster";
+import i18n from "i18n-js";
 
 const Signup = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -82,7 +83,7 @@ const Signup = ({ navigation }) => {
             ...FONTS.h1Bold,
           }}
         >
-          Log in
+          {i18n.t("login")}
         </Text>
       </View>
     );
@@ -91,7 +92,7 @@ const Signup = ({ navigation }) => {
   const renderImageSelector = () => {
     return (
       <View style={{ paddingHorizontal: SIZES.padding }}>
-        <Text style={styles.label}>Selecciona tu foto de perfil</Text>
+        <Text style={styles.label}>{i18n.t("profileImageSelect")}</Text>
         <ProfileImageSelector form={form} />
       </View>
     );
@@ -111,7 +112,7 @@ const Signup = ({ navigation }) => {
           }}
         >
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Nombre</Text>
+            <Text style={styles.label}>{i18n.t("formName")}</Text>
             <AuthInput
               value={formName}
               onChange={updateName}
@@ -120,7 +121,7 @@ const Signup = ({ navigation }) => {
             />
           </View>
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Email</Text>
+            <Text style={styles.label}>{i18n.t("email")}</Text>
             <AuthInput
               type="email-address"
               value={formEmail}
@@ -130,7 +131,7 @@ const Signup = ({ navigation }) => {
             />
           </View>
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Contraseña</Text>
+            <Text style={styles.label}>{i18n.t("password")}</Text>
             <AuthInput
               secure
               value={formPass}
@@ -143,7 +144,7 @@ const Signup = ({ navigation }) => {
         {renderImageSelector()}
         <View style={styles.footerContainer}>
           <CustomButton
-            text="Crear Cuenta"
+            text={i18n.t("createAccount")}
             colors={[COLORS.darkOrange, COLORS.orange]}
             buttonStyle={styles.button}
             onPress={handleOnPress}
@@ -156,10 +157,10 @@ const Signup = ({ navigation }) => {
             }}
           >
             <Text style={{ color: COLORS.gray, lineHeight: 22 }}>
-              Ya tienes una cuenta?
+              {i18n.t("alreadyHaveAccount")}
             </Text>
             <SeeAllButton
-              text="Login"
+              text={i18n.t("login")}
               onPress={() => navigation.navigate("Login")}
               textStyle={{
                 ...FONTS.bodyBold,

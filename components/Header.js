@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 
 import { Feather } from "@expo/vector-icons";
 import { dummyData } from "../constants";
+import i18n from "i18n-js";
 import { useSelector } from "react-redux";
 
 const Header = ({ navigation }) => {
@@ -17,13 +18,13 @@ const Header = ({ navigation }) => {
     const today = new Date();
     const time = today.getHours();
     if (time < 12) {
-      setMessage("Buenos Dias");
+      setMessage(i18n.t("welcomeMorning"));
       setIcon("sun");
     } else if (time < 18) {
-      setMessage("Buenas Tardes");
+      setMessage(i18n.t("welcomeEvening"));
       setIcon("sunset");
     } else {
-      setMessage("Buenas Noches");
+      setMessage(i18n.t("welcomeNight"));
       setIcon("moon");
     }
   }, []);

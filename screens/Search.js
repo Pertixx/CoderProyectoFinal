@@ -11,7 +11,6 @@ import React, { useRef, useState } from "react";
 
 import RecipeCard from "../components/RecipeCard";
 import SearchBar from "../components/SearchBar";
-import SearchHistory from "../components/SearchHistory";
 import { useSelector } from "react-redux";
 
 const first_n = 5;
@@ -19,9 +18,6 @@ const first_n = 5;
 const Search = ({ navigation }) => {
   const data = useSelector((state) => state.recipes.recipes);
   const appTheme = useSelector((state) => state.appTheme.appTheme);
-  const [searchHistory, setSearchHistory] = useState(
-    dummyData.user.searchHistory.slice(0, first_n)
-  );
   const [text, setText] = useState(null);
 
   const scrollY = useSharedValue(0); //similar to new Animated.value(0)

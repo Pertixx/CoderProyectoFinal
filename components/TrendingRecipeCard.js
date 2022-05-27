@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import BookmarkButton from "./Buttons/BookmarkButton";
 import RecipeCardInfo from "./RecipeCardInfo";
 import { db } from "../firebase/firebase-config";
+import { dummyData } from "../constants";
 
 const TrendingRecipeCard = ({ recipeItem, navigation, recipeId }) => {
   const dispatch = useDispatch();

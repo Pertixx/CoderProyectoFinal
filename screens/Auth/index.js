@@ -11,6 +11,7 @@ import React, { useEffect } from "react";
 import CustomButton from "../../components/Buttons/CustomButton";
 import { LinearGradient } from "expo-linear-gradient";
 import { getUser } from "../../store/actions/auth.action";
+import i18n from "i18n-js";
 import { useDispatch } from "react-redux";
 
 const Auth = ({ navigation }) => {
@@ -34,7 +35,7 @@ const Auth = ({ navigation }) => {
             colors={[COLORS.transparent, COLORS.black]}
             style={styles.gradient}
           >
-            <Text style={styles.title}>Cocinando con las mejores recetas</Text>
+            <Text style={styles.title}>{i18n.t("loginScreenTitle")}</Text>
           </LinearGradient>
         </ImageBackground>
       </View>
@@ -45,18 +46,18 @@ const Auth = ({ navigation }) => {
     return (
       <View style={styles.detailsContainer}>
         <Text style={styles.descriptionText}>
-          Descubre las recetas mas populares y deliciosas!
+          {i18n.t("loginScreenSubtitle")}
         </Text>
         <View style={styles.buttonsContainer}>
           <CustomButton
             onPress={() => navigation.navigate("Login")}
-            text="Login"
+            text={i18n.t("login")}
             colors={[COLORS.darkOrange, COLORS.orange]}
             buttonStyle={styles.loginButton}
           />
           <CustomButton
             onPress={() => navigation.navigate("Signup")}
-            text="Signup"
+            text={i18n.t("signup")}
             buttonStyle={styles.signupButton}
           />
         </View>

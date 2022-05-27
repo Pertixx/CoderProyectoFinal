@@ -1,3 +1,5 @@
+import * as Localization from "expo-localization";
+
 import { COLORS, FONTS, SHADOW, SIZES, icons } from "../constants";
 import {
   FlatList,
@@ -20,6 +22,7 @@ import { Entypo } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { getCreatedRecipes } from "../store/actions/recipe.action";
+import i18n from "i18n-js";
 import { logOut } from "../store/actions/auth.action";
 import { selectTheme } from "../store/actions/theme.action";
 
@@ -80,7 +83,7 @@ const Profile = ({ navigation }) => {
               color: appTheme.textColor1,
             }}
           >
-            Recetas creadas por ti
+            {i18n.t("createdRecipes")}
           </Text>
           <FlatList
             data={data}
@@ -112,7 +115,10 @@ const Profile = ({ navigation }) => {
           }}
         >
           <Ionicons name="moon" size={SIZES.icon} color={appTheme.tintColor1} />
-          <CustomSwitch label={"Tema Oscuro"} onPress={handleToggleTheme} />
+          <CustomSwitch
+            label={i18n.t("darkTheme")}
+            onPress={handleToggleTheme}
+          />
         </View>
         <View
           style={{
@@ -129,10 +135,10 @@ const Profile = ({ navigation }) => {
             color={appTheme.tintColor1}
           />
           <Text style={{ ...FONTS.h3, color: appTheme.textColor1 }}>
-            Idioma
+            {i18n.t("language")}
           </Text>
           <Text style={{ color: appTheme.textColor3, ...FONTS.h3 }}>
-            Español
+            {i18n.t("languageName")}
           </Text>
         </View>
       </View>

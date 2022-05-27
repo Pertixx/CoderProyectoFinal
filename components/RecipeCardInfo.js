@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 //import { BlurView } from 'expo-blur'
 import React from "react";
+import i18n from "i18n-js";
 
 const RecipeCardInfo = ({ recipeItem, showViews = true }) => {
   return (
@@ -21,7 +22,7 @@ const RecipeCardInfo = ({ recipeItem, showViews = true }) => {
           <Text style={styles.description}>{recipeItem.duration}</Text>
         ) : (
           <Text style={styles.description}>
-            {recipeItem.duration} | {recipeItem.views} visitas
+            {recipeItem.duration} | {recipeItem.views} {i18n.t("views")}
           </Text>
         )}
       </View>

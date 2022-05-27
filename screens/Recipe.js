@@ -24,6 +24,7 @@ import { Feather } from "@expo/vector-icons";
 import IngredientCard from "../components/IngredientCard";
 import RecipeCreatorCard from "../components/RecipeCreatorCard";
 import { db } from "../firebase/firebase-config";
+import i18n from "i18n-js";
 
 const Recipe = ({ navigation, route }) => {
   const { recipeItem, recipeId } = route.params;
@@ -174,7 +175,7 @@ const Recipe = ({ navigation, route }) => {
             color: COLORS.gray,
           }}
         >
-          Ingredientes de:
+          {i18n.t("ingredientsOf")}
         </Text>
         <Text style={[styles.ingredientsTitle, { color: appTheme.textColor1 }]}>
           {recipeItem.name}

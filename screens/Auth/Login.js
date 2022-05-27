@@ -24,6 +24,7 @@ import CustomButton from "../../components/Buttons/CustomButton";
 import { MaterialIcons } from "@expo/vector-icons";
 import SeeAllButton from "../../components/Buttons/SeeAllButton";
 import Toaster from "../../components/Toaster";
+import i18n from "i18n-js";
 import { insertUser } from "../../db";
 
 const Login = ({ navigation }) => {
@@ -86,7 +87,7 @@ const Login = ({ navigation }) => {
             ...FONTS.h1Bold,
           }}
         >
-          Sign Up
+          {i18n.t("signup")}
         </Text>
       </View>
     );
@@ -106,7 +107,7 @@ const Login = ({ navigation }) => {
           }}
         >
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Email</Text>
+            <Text style={styles.label}>{i18n.t("email")}</Text>
             <AuthInput
               type="email-address"
               value={formEmail}
@@ -116,7 +117,7 @@ const Login = ({ navigation }) => {
             />
           </View>
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Contraseña</Text>
+            <Text style={styles.label}>{i18n.t("password")}</Text>
             <AuthInput
               secure
               value={formPass}
@@ -141,7 +142,7 @@ const Login = ({ navigation }) => {
             }}
           >
             <Text style={{ color: COLORS.gray, lineHeight: 22 }}>
-              Todavia no tienes una cuenta?
+              {i18n.t("createAccountInv")}
             </Text>
             <SeeAllButton
               text="SignUp"

@@ -35,6 +35,7 @@ import ImageSelector from "../components/ImageSelector";
 import SelectIngredientCard from "../components/SelectIngredientCard";
 import Toaster from "../components/Toaster";
 import { dummyData } from "../constants";
+import i18n from "i18n-js";
 
 const CreateRecipe = ({ navigation }) => {
   const scrollX = useSharedValue(0); //similar to new Animated.value(0)
@@ -108,31 +109,31 @@ const CreateRecipe = ({ navigation }) => {
       <View style={{ paddingVertical: SIZES.padding }}>
         <View>
           <Text style={{ ...FONTS.h2, color: appTheme.textColor1 }}>
-            Cual es el nombre de la receta?
+            {i18n.t("formRecipeName")}
           </Text>
           <CustomInput
-            placeholder="Fideos con tuco"
+            placeholder={i18n.t("placeHolderForm1")}
             value={recipeName}
             onChange={setRecipeName}
           />
         </View>
         <View style={{ marginTop: SIZES.padding + 5 }}>
           <Text style={{ ...FONTS.h2, color: appTheme.textColor1 }}>
-            Quieres agregar una descripcion?
+            {i18n.t("formRecipeDescription")}
           </Text>
           <CustomInput
-            placeholder="Receta dedicada a..."
+            placeholder={i18n.t("placeHolderForm2")}
             value={recipeDescription}
             onChange={setDescription}
-            condition="Opcional"
+            condition={i18n.t("optional")}
           />
         </View>
         <View style={{ marginTop: SIZES.padding + 5 }}>
           <Text style={{ ...FONTS.h2, color: appTheme.textColor1 }}>
-            Agrega el tiempo de preparacion
+            {i18n.t("formPreparationTime")}
           </Text>
           <CustomInput
-            placeholder="30 minutos"
+            placeholder={i18n.t("placeHolderForm3")}
             value={recipeDuration}
             onChange={setDuration}
           />
@@ -146,7 +147,7 @@ const CreateRecipe = ({ navigation }) => {
       <View style={{ paddingVertical: SIZES.padding }}>
         <View style={{ marginTop: SIZES.padding + 5 }}>
           <Text style={{ ...FONTS.h2, color: appTheme.textColor1 }}>
-            Selecciona una de las siguientes categorias
+            {i18n.t("formCategories")}
           </Text>
           <View style={{ marginTop: SIZES.padding }}>
             <FlatList
@@ -186,7 +187,7 @@ const CreateRecipe = ({ navigation }) => {
         </View>
         <View style={{ marginTop: SIZES.padding + 5 }}>
           <Text style={{ ...FONTS.h2, color: appTheme.textColor1 }}>
-            Agreguemos los ingredientes
+            {i18n.t("formIngredients")}
           </Text>
           <FlatList
             data={dummyData.ingredients}
@@ -209,7 +210,7 @@ const CreateRecipe = ({ navigation }) => {
       <View style={{ paddingVertical: SIZES.padding }}>
         <View>
           <Text style={{ ...FONTS.h2, color: appTheme.textColor1 }}>
-            Agrega una foto del plato ya finalizado
+            {i18n.t("formRecipePhoto")}
           </Text>
           <ImageSelector />
         </View>

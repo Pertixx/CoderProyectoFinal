@@ -3,6 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { Feather } from "@expo/vector-icons";
 import React from "react";
+import i18n from "i18n-js";
 import { useSelector } from "react-redux";
 
 const CreateYourRecipeButton = ({
@@ -17,7 +18,7 @@ const CreateYourRecipeButton = ({
       style={[styles.container, { backgroundColor: appTheme.loadMoreButton }]}
     >
       {!label ? (
-        <Text style={styles.text}>Crea tu receta</Text>
+        <Text style={styles.text}>{i18n.t("createYourRecipe")}</Text>
       ) : (
         <Text style={styles.text}>{label}</Text>
       )}

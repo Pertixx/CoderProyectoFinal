@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Entypo } from "@expo/vector-icons";
 import { addImage } from "../store/actions/createRecipe.action";
+import i18n from "i18n-js";
 
 const ProfileImageSelector = ({ form }) => {
   const dispatch = useDispatch();
@@ -80,7 +81,7 @@ const ProfileImageSelector = ({ form }) => {
     const status = await ImagePicker.requestCameraPermissionsAsync();
 
     if (status !== "granted") {
-      dispatch(setText("Permisos insuficientes"));
+      dispatch(setText(i18n.t("permissionsError")));
       dispatch(showToaster());
 
       return false;
@@ -115,7 +116,9 @@ const ProfileImageSelector = ({ form }) => {
           onPress={handleTakeImage}
         >
           <Entypo name="camera" size={SIZES.icon} color={appTheme.tintColor1} />
-          <Text style={{ color: appTheme.textColor5 }}>Tomar Foto</Text>
+          <Text style={{ color: appTheme.textColor5 }}>
+            {i18n.t("takePhoto")}
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[
@@ -126,7 +129,7 @@ const ProfileImageSelector = ({ form }) => {
         >
           <Entypo name="images" size={SIZES.icon} color={appTheme.tintColor1} />
           <Text style={{ color: appTheme.textColor5 }}>
-            Añadir foto desde la galeria
+            {i18n.t("galleryPhoto")}
           </Text>
         </TouchableOpacity>
       </Animated.View>

@@ -10,6 +10,7 @@ import {
 import CategoryButton from "./Buttons/CategoryButton";
 import React from "react";
 import SeeAllButton from "./Buttons/SeeAllButton";
+import i18n from "i18n-js";
 import { useSelector } from "react-redux";
 
 const CategoriesCarousel = ({ showSeeAll = false }) => {
@@ -20,7 +21,7 @@ const CategoriesCarousel = ({ showSeeAll = false }) => {
     <View style={styles.container}>
       <View style={styles.categoryContainer}>
         <Text style={{ ...FONTS.h2, color: appTheme.textColor1 }}>
-          Categorias
+          {i18n.t("categories")}
         </Text>
         {showSeeAll
           ? null

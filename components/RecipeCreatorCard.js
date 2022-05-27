@@ -4,6 +4,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { BlurView } from "expo-blur";
 import { Feather } from "@expo/vector-icons";
 import React from "react";
+import i18n from "i18n-js";
 import { useSelector } from "react-redux";
 
 const RecipeCreatorCard = ({ author, recipeDescription = null }) => {
@@ -52,7 +53,7 @@ const RecipeCreatorCard = ({ author, recipeDescription = null }) => {
           />
           <View style={{ marginLeft: SIZES.padding }}>
             <Text style={{ ...FONTS.h4, color: COLORS.gray3 }}>
-              Receta creada por:
+              {i18n.t("recipeCreatedBy")}
             </Text>
             <Text style={styles.name}>{author.name}</Text>
           </View>
