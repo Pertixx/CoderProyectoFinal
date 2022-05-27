@@ -12,7 +12,7 @@ import React, { useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 
-const SearchBar = ({ onPressSearch, onPressFilter, text, onChangeText }) => {
+const SearchBar = ({ onPressFilter, text, onChangeText, handleSearch }) => {
   const appTheme = useSelector((state) => state.appTheme.appTheme);
 
   return (
@@ -25,7 +25,7 @@ const SearchBar = ({ onPressSearch, onPressFilter, text, onChangeText }) => {
       >
         <TouchableOpacity
           onPress={() => {
-            onPressSearch(text);
+            handleSearch();
             onChangeText(null);
             Keyboard.dismiss();
           }}
@@ -43,9 +43,6 @@ const SearchBar = ({ onPressSearch, onPressFilter, text, onChangeText }) => {
           value={text}
         />
       </View>
-      <TouchableOpacity onPress={onPressFilter} style={styles.filterButton}>
-        <Feather name="filter" size={SIZES.icon} color={COLORS.black} />
-      </TouchableOpacity>
     </View>
   );
 };

@@ -4,6 +4,7 @@ export const GET_CREATED_RECIPES = "GET_CREATED_RECIPES";
 export const DELETE_RECIPE = "DELETE_RECIPE";
 export const GET_TRENDING_RECIPES = "GET_TRENDING_RECIPES";
 export const ADD_INGREDIENTS = "ADD_INGREDIENTS";
+export const GET_SEARCHED_RECIPES = "GET_SEARCHED_RECIPES";
 
 import { deleteRecipe, fetchCreatedRecipes } from "../../db";
 import {
@@ -21,6 +22,11 @@ import { db } from "../../firebase/firebase-config";
 export const filterRecipes = (selectedCategories) => ({
   type: FILTER_RECIPES,
   payload: { selectedCategories: selectedCategories },
+});
+
+export const getSearchedRecipes = (text) => ({
+  type: GET_SEARCHED_RECIPES,
+  payload: text,
 });
 
 export const getIngredients = () => {

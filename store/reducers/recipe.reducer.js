@@ -4,6 +4,7 @@ import {
   FILTER_RECIPES,
   GET_CREATED_RECIPES,
   GET_RECIPES,
+  GET_SEARCHED_RECIPES,
   GET_TRENDING_RECIPES,
 } from "../actions/recipe.action";
 
@@ -13,6 +14,7 @@ const initialState = {
   filteredRecipes: [],
   createdRecipes: [],
   trendingRecipes: [],
+  searchedRecipes: [],
   lastRecipe: null,
   maxTrending: 5,
 };
@@ -75,6 +77,23 @@ const RecipeReducer = (state = initialState, action) => {
         ...state,
         ingredients: action.payload,
       };
+    case GET_SEARCHED_RECIPES:
+      state.recipes.forEach((recipe) => {
+        if (
+          recipe.item.name
+            .toUpperCase()
+            .trim()
+            .includes(action.payload.toUpperCase().trim())
+        ) {
+          const index = state.searchedRecipes.findIndex(
+            (element) => element.id === recipe.id
+          );
+          if (index === -1) {
+            state.searchedRecipes.push(recipe);
+          }
+        }
+      });
+      return { ...state };
     default:
       return state;
   }

@@ -8,17 +8,17 @@ import Animated, {
 import { COLORS, SIZES, dummyData } from "../constants";
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React, { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import RecipeCard from "../components/RecipeCard";
 import SearchBar from "../components/SearchBar";
-import { useSelector } from "react-redux";
-
-const first_n = 5;
+import { getSearchedRecipes } from "../store/actions/recipe.action";
 
 const Search = ({ navigation }) => {
-  const data = useSelector((state) => state.recipes.recipes);
+  const data = useSelector((state) => state.recipes.searchedRecipes);
   const appTheme = useSelector((state) => state.appTheme.appTheme);
-  const [text, setText] = useState(null);
+  const [text, setText] = useState("");
+  const dispatch = useDispatch();
 
   const scrollY = useSharedValue(0); //similar to new Animated.value(0)
 
@@ -38,13 +38,6 @@ const Search = ({ navigation }) => {
     };
   });
 
-  const handleSearch = (text) => {
-    if (!searchHistory.includes(text) && text != null) {
-      searchHistory.unshift(text);
-      setSearchHistory(searchHistory.slice(0, first_n));
-    }
-  };
-
   const renderItem = (recipe) => {
     return (
       <View style={{ paddingHorizontal: SIZES.padding }}>
@@ -57,11 +50,17 @@ const Search = ({ navigation }) => {
     );
   };
 
+  const handleSearch = () => {
+    if (text !== "") {
+      dispatch(getSearchedRecipes(text));
+    }
+  };
+
   const renderHeader = () => {
     return (
       <Animated.View style={[styles.headerContainer, headerAnimatedStyle]}>
         <SearchBar
-          onPressSearch={handleSearch}
+          handleSearch={handleSearch}
           onPressFilter={() => console.log("Filter")}
           text={text}
           onChangeText={setText}

@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import React from "react";
 import Toaster from "./Toaster";
+import i18n from "i18n-js";
 import { selectIngredient } from "../store/actions/createRecipe.action";
 
 const SelectIngredientCard = ({ item }) => {
@@ -54,7 +55,7 @@ const SelectIngredientCard = ({ item }) => {
       <View style={{ alignItems: "center", justifyContent: "center" }}>
         <Image source={{ uri: item.icon }} style={{ width: 30, height: 30 }} />
         <Text style={{ ...FONTS.bodyBold, color: appTheme.textColor1 }}>
-          {item.name}
+          {i18n.t(item.name)}
         </Text>
       </View>
       <TextInput

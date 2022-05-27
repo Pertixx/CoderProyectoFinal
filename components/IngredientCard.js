@@ -2,6 +2,7 @@ import { COLORS, FONTS, SIZES } from "../constants";
 import { Image, StyleSheet, Text, View } from "react-native";
 
 import React from "react";
+import i18n from "i18n-js";
 
 const IngredientCard = ({ ingredient }) => {
   return (
@@ -14,7 +15,7 @@ const IngredientCard = ({ ingredient }) => {
           />
         </View>
         <Text style={styles.ingredientName} numberOfLines={2}>
-          {ingredient.name}
+          {i18n.t(ingredient.name)}
         </Text>
       </View>
       <Text style={styles.ingredientQuantity}>{ingredient.quantity}</Text>
