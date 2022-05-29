@@ -1,15 +1,13 @@
 {
   "expo": {
-    "name": "ProyectoFinal",
-    "slug": "ProyectoFinal",
+    "name": "Receply",
+    "slug": "Receply",
     "version": "1.0.0",
     "platforms": ["ios", "android"],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#0000"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -18,13 +16,21 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.coderHouse.receply",
+      "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {
+      "package": "com.coderHouse.receply",
+      "versionCode": 1,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#0000"
+      },
+      "permissions": [
+        "CAMERA",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"

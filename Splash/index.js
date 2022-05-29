@@ -10,6 +10,7 @@ const SplashScreen = ({ onFinish }) => {
       <LottieView
         source={require("../assets/animations/splashAnimation.json")}
         autoPlay
+        speed={2}
         loop={false}
         onAnimationFinish={() => onFinish(false)}
       />

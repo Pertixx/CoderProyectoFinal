@@ -129,7 +129,7 @@ const Login = ({ navigation }) => {
         </View>
         <View style={styles.footerContainer}>
           <CustomButton
-            text="Log In"
+            text={i18n.t("login")}
             colors={[COLORS.darkOrange, COLORS.orange]}
             buttonStyle={styles.button}
             onPress={handleOnPress}
@@ -145,7 +145,7 @@ const Login = ({ navigation }) => {
               {i18n.t("createAccountInv")}
             </Text>
             <SeeAllButton
-              text="SignUp"
+              text={i18n.t("signup")}
               onPress={() => navigation.navigate("Signup")}
               textStyle={{
                 ...FONTS.bodyBold,

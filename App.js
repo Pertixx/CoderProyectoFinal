@@ -1,7 +1,9 @@
+// TODOS LOS ICONOS UTILIZADOS PERTENECEN A www.flaticon.com
+
 import * as Localization from "expo-localization";
 
 import { LogBox, StyleSheet, View } from "react-native";
-import { Provider, useDispatch } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import { deleteDatabase, deleteUserDB, init, initUser } from "./db";
 import { getIngredients, getRecipes } from "./store/actions/recipe.action";
 import { useEffect, useState } from "react";
