@@ -78,6 +78,7 @@ const RecipeReducer = (state = initialState, action) => {
         ingredients: action.payload,
       };
     case GET_SEARCHED_RECIPES:
+      state.searchedRecipes = [];
       state.recipes.forEach((recipe) => {
         if (
           recipe.item.name

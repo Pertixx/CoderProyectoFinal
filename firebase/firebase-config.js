@@ -4,14 +4,25 @@ import { getDatabase } from "firebase/database";
 import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
+// export const firebaseConfig = {
+//   apiKey: "AIzaSyAtG66RjLNvZzBhzKsUwy6xrL1xK9fcf1o",
+//   authDomain: "recipeapp-52f16.firebaseapp.com",
+//   databaseURL: "https://recipeapp-52f16-default-rtdb.firebaseio.com",
+//   projectId: "recipeapp-52f16",
+//   storageBucket: "recipeapp-52f16.appspot.com",
+//   messagingSenderId: "824154448914",
+//   appId: "1:824154448914:web:aadace31bdf89d1c9524cb",
+// };
+
+// Your web app's Firebase configuration
 export const firebaseConfig = {
-  apiKey: "AIzaSyAtG66RjLNvZzBhzKsUwy6xrL1xK9fcf1o",
-  authDomain: "recipeapp-52f16.firebaseapp.com",
-  databaseURL: "https://recipeapp-52f16-default-rtdb.firebaseio.com",
-  projectId: "recipeapp-52f16",
-  storageBucket: "recipeapp-52f16.appspot.com",
-  messagingSenderId: "824154448914",
-  appId: "1:824154448914:web:aadace31bdf89d1c9524cb",
+  apiKey: "AIzaSyD6xIiaqHQZor3mlDXDMoRYOiZdA3HzSYM",
+  authDomain: "reciply-e7daf.firebaseapp.com",
+  databaseURL: "https://reciply-e7daf-default-rtdb.firebaseio.com",
+  projectId: "reciply-e7daf",
+  storageBucket: "reciply-e7daf.appspot.com",
+  messagingSenderId: "146982457601",
+  appId: "1:146982457601:web:4afda9e3dad8b383f18b00",
 };
 
 const app = initializeApp(firebaseConfig);

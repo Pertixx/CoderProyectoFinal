@@ -26,7 +26,7 @@ const SearchBar = ({ text, onChangeText, handleSearch }) => {
         <TouchableOpacity
           onPress={() => {
             handleSearch();
-            onChangeText(null);
+            onChangeText("");
             Keyboard.dismiss();
           }}
           style={styles.searchButton}
