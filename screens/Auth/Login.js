@@ -49,7 +49,7 @@ const Login = ({ navigation }) => {
     if (formLogInValid) {
       dispatch(signIn(formEmail, formPass));
     } else {
-      dispatch(setError("Revisa los campos"));
+      dispatch(setError(i18n.t("reviewFields")));
     }
   };
 
