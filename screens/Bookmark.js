@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import CreateYourRecipeButton from "../components/Buttons/CreateYourRecipeButton";
 import { Feather } from "@expo/vector-icons";
+import Offline from "../components/Offline";
 import RecipeCard from "../components/RecipeCard";
 import i18n from "i18n-js";
 
@@ -19,6 +20,7 @@ const Bookmark = ({ navigation }) => {
   const dispatch = useDispatch();
   const appTheme = useSelector((state) => state.appTheme.appTheme);
   const bookmarks = useSelector((state) => state.user.bookmarks);
+  const isOffline = useSelector((state) => state.recipes.offline);
 
   const renderItem = (recipe) => {
     if (bookmarks[0] !== 0) {
@@ -65,25 +67,32 @@ const Bookmark = ({ navigation }) => {
     );
   };
 
-  return (
-    <SafeAreaView
-      style={[styles.container, { backgroundColor: appTheme.backgroundColor1 }]}
-    >
-      <FlatList
-        data={bookmarks}
-        keyExtractor={(item) => `${item.id}`}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => renderItem(item)}
-        ListHeaderComponent={<View>{renderHeader()}</View>}
-        ListFooterComponent={
-          <View style={{ alignItems: "center" }}>
-            {renderVisitRecipes()}
-            <View style={{ marginBottom: SIZES.bottomTabHeight * 2 }} />
-          </View>
-        }
-      />
-    </SafeAreaView>
-  );
+  if (isOffline) {
+    return <Offline navigation={navigation} />;
+  } else {
+    return (
+      <SafeAreaView
+        style={[
+          styles.container,
+          { backgroundColor: appTheme.backgroundColor1 },
+        ]}
+      >
+        <FlatList
+          data={bookmarks}
+          keyExtractor={(item) => `${item.id}`}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item }) => renderItem(item)}
+          ListHeaderComponent={<View>{renderHeader()}</View>}
+          ListFooterComponent={
+            <View style={{ alignItems: "center" }}>
+              {renderVisitRecipes()}
+              <View style={{ marginBottom: SIZES.bottomTabHeight * 2 }} />
+            </View>
+          }
+        />
+      </SafeAreaView>
+    );
+  }
 };
 
 export default Bookmark;

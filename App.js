@@ -36,6 +36,7 @@ const App = () => {
   const [showSplash, setShowSplash] = useState(true);
   const [maxRecipesToGet, setMaxRecipesToGet] = useState(20);
   const dispatch = useDispatch();
+  const [isConnected, setIsConnected] = useState(false);
 
   LogBox.ignoreLogs(["Setting a timer"]);
   const [fontsLoaded] = useFonts({

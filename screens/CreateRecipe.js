@@ -32,6 +32,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CreateRecipeButton from "../components/Buttons/CreateRecipeButton";
 import CustomInput from "../components/Inputs/CustomInput";
 import ImageSelector from "../components/ImageSelector";
+import Offline from "../components/Offline";
 import SelectIngredientCard from "../components/SelectIngredientCard";
 import Toaster from "../components/Toaster";
 import { dummyData } from "../constants";
@@ -56,6 +57,7 @@ const CreateRecipe = ({ navigation }) => {
   const [recipeCategoryOk, setRecipeCategoryOk] = useState(false);
   const userId = useSelector((state) => state.auth.userId);
   const appTheme = useSelector((state) => state.appTheme.appTheme);
+  const isOffline = useSelector((state) => state.recipes.offline);
 
   const onScroll = useAnimatedScrollHandler((event) => {
     scrollX.value = event.contentOffset.x;
@@ -218,26 +220,33 @@ const CreateRecipe = ({ navigation }) => {
     );
   };
 
-  return (
-    <SafeAreaView
-      style={[styles.container, { backgroundColor: appTheme.backgroundColor1 }]}
-    >
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        bounces={false}
-        style={styles.scrollView}
+  if (isOffline) {
+    return <Offline navigation={navigation} />;
+  } else {
+    return (
+      <SafeAreaView
+        style={[
+          styles.container,
+          { backgroundColor: appTheme.backgroundColor1 },
+        ]}
       >
-        {renderFirstSection()}
-        {renderSecondSection()}
-        {renderThirdSection()}
-        <View style={{ height: SIZES.bottomTabHeight * 3 }} />
-      </ScrollView>
-      {showButton ? <CreateRecipeButton /> : null}
-      <View style={{ paddingHorizontal: SIZES.padding }}>
-        <Toaster />
-      </View>
-    </SafeAreaView>
-  );
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          bounces={false}
+          style={styles.scrollView}
+        >
+          {renderFirstSection()}
+          {renderSecondSection()}
+          {renderThirdSection()}
+          <View style={{ height: SIZES.bottomTabHeight * 3 }} />
+        </ScrollView>
+        {showButton ? <CreateRecipeButton /> : null}
+        <View style={{ paddingHorizontal: SIZES.padding }}>
+          <Toaster />
+        </View>
+      </SafeAreaView>
+    );
+  }
 };
 
 export default CreateRecipe;

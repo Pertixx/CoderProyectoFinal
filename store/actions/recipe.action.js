@@ -5,6 +5,7 @@ export const DELETE_RECIPE = "DELETE_RECIPE";
 export const GET_TRENDING_RECIPES = "GET_TRENDING_RECIPES";
 export const ADD_INGREDIENTS = "ADD_INGREDIENTS";
 export const GET_SEARCHED_RECIPES = "GET_SEARCHED_RECIPES";
+export const OFFLINE = "OFFLINE";
 
 import { deleteRecipe, fetchCreatedRecipes } from "../../db";
 import {
@@ -72,7 +73,9 @@ export const getRecipes = (amount, lastRecipe = null) => {
       const result = await response.json();
 
       if (!response.ok) {
-        console.log("error");
+        dispatch({
+          type: OFFLINE,
+        });
       } else {
         const recipes = Object.keys(result).map((key) => ({
           ...result[key],
@@ -92,7 +95,9 @@ export const getRecipes = (amount, lastRecipe = null) => {
       }
     } catch (error) {
       console.log(error.message);
-      throw error;
+      dispatch({
+        type: OFFLINE,
+      });
     }
   };
 };

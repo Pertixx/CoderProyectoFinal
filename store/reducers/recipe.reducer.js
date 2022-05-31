@@ -6,6 +6,7 @@ import {
   GET_RECIPES,
   GET_SEARCHED_RECIPES,
   GET_TRENDING_RECIPES,
+  OFFLINE,
 } from "../actions/recipe.action";
 
 const initialState = {
@@ -17,6 +18,7 @@ const initialState = {
   searchedRecipes: [],
   lastRecipe: null,
   maxTrending: 5,
+  offline: false,
 };
 
 const RecipeReducer = (state = initialState, action) => {
@@ -95,6 +97,11 @@ const RecipeReducer = (state = initialState, action) => {
         }
       });
       return { ...state };
+    case OFFLINE:
+      return {
+        ...state,
+        offline: true,
+      };
     default:
       return state;
   }
