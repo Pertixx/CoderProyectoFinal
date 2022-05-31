@@ -8,6 +8,7 @@ export const ADD_NEW_RECIPE = "ADD_NEW_RECIPE";
 export const ADD_BOOKMARK = "ADD_BOOKMARK";
 export const DONT_ADD_BOOKMARK = "DONT_ADD_BOOKMARK";
 export const ADD_BOOKMARK_RECIPE = "ADD_BOOKMARK_RECIPE";
+export const OFFLINE = "OFFLINE";
 
 export const getUserData = (id) => {
   return async (dispatch) => {
@@ -70,4 +71,8 @@ export const dontAddBookmark = () => ({
 
 export const dontAddNewRecipe = () => ({
   type: ADD_NEW_RECIPE,
+});
+
+export const setOffline = () => ({
+  type: OFFLINE,
 });

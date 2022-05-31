@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import CategoriesCarousel from "../components/CategoriesCarousel";
 import Header from "../components/Header";
+import Offline from "../components/Offline";
 import RecipeCard from "../components/RecipeCard";
 import TrendingRecipesCarousel from "../components/TrendingRecipesCarousel";
 import { getUserData } from "../store/actions/user.action";
@@ -35,6 +36,7 @@ const Home = ({ navigation }) => {
   const appTheme = useSelector((state) => state.appTheme.appTheme);
   const [maxRecipesToGet, setMaxRecipesToGet] = useState(20);
   const lastRecipe = useSelector((state) => state.recipes.lastRecipe);
+  const isOffline = useSelector((state) => state.user.offline);
 
   useEffect(() => {
     dispatch(selectTheme(userTheme));
@@ -105,35 +107,42 @@ const Home = ({ navigation }) => {
     );
   };
 
-  return (
-    <SafeAreaView
-      style={[styles.container, { backgroundColor: appTheme.backgroundColor1 }]}
-    >
-      <StatusBar barStyle={appTheme.statusBar} />
-      <FlatList
-        onRefresh={onRefresh}
-        refreshing={refreshing}
-        data={data}
-        showsVerticalScrollIndicator={false}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => renderItem(item)}
-        ListHeaderComponent={
-          <View style={{ paddingHorizontal: SIZES.padding }}>
-            <Header navigation={navigation} />
-            <TrendingRecipesCarousel navigation={navigation} />
-            <CategoriesCarousel showSeeAll={true} />
-          </View>
-        }
-        ListFooterComponent={
-          <View style={{ paddingHorizontal: SIZES.padding }}>
-            {renderEmptyListMessage()}
-            {renderLoadMoreButton()}
-            <View style={{ marginBottom: SIZES.bottomTabHeight * 2 }} />
-          </View>
-        }
-      />
-    </SafeAreaView>
-  );
+  if (isOffline) {
+    return <Offline navigation={navigation} />;
+  } else {
+    return (
+      <SafeAreaView
+        style={[
+          styles.container,
+          { backgroundColor: appTheme.backgroundColor1 },
+        ]}
+      >
+        <StatusBar barStyle={appTheme.statusBar} />
+        <FlatList
+          onRefresh={onRefresh}
+          refreshing={refreshing}
+          data={data}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => renderItem(item)}
+          ListHeaderComponent={
+            <View style={{ paddingHorizontal: SIZES.padding }}>
+              <Header navigation={navigation} />
+              <TrendingRecipesCarousel navigation={navigation} />
+              <CategoriesCarousel showSeeAll={true} />
+            </View>
+          }
+          ListFooterComponent={
+            <View style={{ paddingHorizontal: SIZES.padding }}>
+              {renderEmptyListMessage()}
+              {renderLoadMoreButton()}
+              <View style={{ marginBottom: SIZES.bottomTabHeight * 2 }} />
+            </View>
+          }
+        />
+      </SafeAreaView>
+    );
+  }
 };
 
 export default Home;

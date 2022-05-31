@@ -10,8 +10,10 @@ import { useEffect, useState } from "react";
 
 import AppLoading from "expo-app-loading";
 import Navigator from "./navigation/Navigator";
+import NetInfo from "@react-native-community/netinfo";
 import SplashScreen from "./Splash";
 import setLocale from "./locale";
+import { setOffline } from "./store/actions/user.action";
 import store from "./store";
 import { useFonts } from "expo-font";
 
@@ -64,10 +66,22 @@ const App = () => {
       });
   };
 
+  const checkConnection = async () => {
+    await NetInfo.fetch().then((state) => {
+      console.log(state.isConnected);
+      return state.isConnected;
+    });
+  };
+
   useEffect(() => {
     localBoot();
-    dispatch(getRecipes(maxRecipesToGet));
-    dispatch(getIngredients());
+    const isConnected = checkConnection();
+    if (isConnected) {
+      dispatch(getRecipes(maxRecipesToGet));
+      dispatch(getIngredients());
+    } else {
+      dispatch(setOffline());
+    }
   }, []);
 
   if (!fontsLoaded || loading) {

@@ -8,7 +8,7 @@ import i18n from "i18n-js";
 import { useSelector } from "react-redux";
 
 const Header = ({ navigation }) => {
-  const displayName = useSelector((state) => state.user.name);
+  const displayName = useSelector((state) => state.auth.displayName);
   const profilePic = useSelector((state) => state.user.profilePic);
   const appTheme = useSelector((state) => state.appTheme.appTheme);
   const [message, setMessage] = useState("Bienvenido");

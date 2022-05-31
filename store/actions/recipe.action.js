@@ -71,21 +71,25 @@ export const getRecipes = (amount, lastRecipe = null) => {
       });
       const result = await response.json();
 
-      const recipes = Object.keys(result).map((key) => ({
-        ...result[key],
-        id: key,
-      }));
+      if (!response.ok) {
+        console.log("error");
+      } else {
+        const recipes = Object.keys(result).map((key) => ({
+          ...result[key],
+          id: key,
+        }));
 
-      const lastReadRecipe = recipes[recipes.length - 1].id;
-      console.log(lastReadRecipe);
+        const lastReadRecipe = recipes[recipes.length - 1].id;
+        console.log(lastReadRecipe);
 
-      dispatch({
-        type: GET_RECIPES,
-        payload: { recipes: recipes, lastRecipe: lastReadRecipe },
-      });
-      dispatch({
-        type: GET_TRENDING_RECIPES,
-      });
+        dispatch({
+          type: GET_RECIPES,
+          payload: { recipes: recipes, lastRecipe: lastReadRecipe },
+        });
+        dispatch({
+          type: GET_TRENDING_RECIPES,
+        });
+      }
     } catch (error) {
       console.log(error.message);
     }

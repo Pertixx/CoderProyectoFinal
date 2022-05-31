@@ -5,6 +5,7 @@ import {
   ADD_LAST_RECIPE,
   ADD_NEW_RECIPE,
   DONT_ADD_BOOKMARK,
+  OFFLINE,
 } from "../actions/user.action";
 
 const initialState = {
@@ -14,6 +15,7 @@ const initialState = {
   name: null,
   addNewRecipe: false,
   addBookmark: false,
+  offline: false,
 };
 
 const UserReducer = (state = initialState, action) => {
@@ -60,6 +62,11 @@ const UserReducer = (state = initialState, action) => {
     case ADD_BOOKMARK_RECIPE:
       state.bookmarksRecipes.push(action.payload);
       return { ...state };
+    case OFFLINE:
+      return {
+        ...state,
+        offline: true,
+      };
     default:
       return state;
   }

@@ -33,6 +33,7 @@ const Profile = ({ navigation }) => {
   const data = useSelector((state) => state.recipes.createdRecipes);
   const userId = useSelector((state) => state.auth.userId);
   const appTheme = useSelector((state) => state.appTheme.appTheme);
+  const isOffline = useSelector((state) => state.user.offline);
 
   useEffect(() => {
     dispatch(getCreatedRecipes(userId));
@@ -151,11 +152,20 @@ const Profile = ({ navigation }) => {
     >
       {renderBackButton()}
       <View style={styles.headerContainer}>
-        <Image
-          source={{ uri: profilePic }}
-          style={styles.profilePic}
-          resizeMode="cover"
-        />
+        {isOffline ? (
+          <Image
+            source={require("../assets/icons/offlineProfilePic.png")}
+            style={styles.profilePic}
+            resizeMode="cover"
+          />
+        ) : (
+          <Image
+            source={{ uri: profilePic }}
+            style={styles.profilePic}
+            resizeMode="cover"
+          />
+        )}
+
         <Text style={[styles.name, { color: appTheme.textColor1 }]}>
           {name}
         </Text>
