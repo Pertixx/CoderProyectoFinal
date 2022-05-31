@@ -92,6 +92,7 @@ export const getRecipes = (amount, lastRecipe = null) => {
       }
     } catch (error) {
       console.log(error.message);
+      throw error;
     }
   };
 };
