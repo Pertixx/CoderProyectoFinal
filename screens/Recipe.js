@@ -35,8 +35,10 @@ const Recipe = ({ navigation, route }) => {
   const add_Bookmark = useSelector((state) => state.user.addBookmark);
   const [active, setActive] = useState(false);
   const appTheme = useSelector((state) => state.appTheme.appTheme);
+  const [authorImage, setAuthorImage] = useState(null);
 
   useEffect(() => {
+    getAuthorImage();
     if (bookmarks.find((recipe) => recipe.id === recipeId)) {
       setActive(true);
     }
@@ -52,6 +54,17 @@ const Recipe = ({ navigation, route }) => {
       setActive(false);
     }
   }, [bookmarks]);
+
+  const getAuthorImage = () => {
+    const dbRef = ref(db);
+    get(child(dbRef, `users/${recipeItem.author.id}/profilePic`))
+      .then((snapshot) => {
+        setAuthorImage(snapshot.val());
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const updateRecipeViews = () => {
     const dbRef = ref(db);
@@ -160,6 +173,7 @@ const Recipe = ({ navigation, route }) => {
           <RecipeCreatorCard
             author={recipeItem.author}
             recipeDescription={recipeItem.description}
+            authorImage={authorImage}
           />
         </Animated.View>
       </View>

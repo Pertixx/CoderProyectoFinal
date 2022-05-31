@@ -7,7 +7,11 @@ import React from "react";
 import i18n from "i18n-js";
 import { useSelector } from "react-redux";
 
-const RecipeCreatorCard = ({ author, recipeDescription = null }) => {
+const RecipeCreatorCard = ({
+  author,
+  recipeDescription = null,
+  authorImage,
+}) => {
   const userId = useSelector((state) => state.auth.userId);
 
   const renderDescription = () => {
@@ -48,7 +52,7 @@ const RecipeCreatorCard = ({ author, recipeDescription = null }) => {
           }}
         >
           <Image
-            source={images.myProfile}
+            source={{ uri: authorImage }}
             style={{ width: 30, height: 30, borderRadius: 5 }}
           />
           <View style={{ marginLeft: SIZES.padding }}>
