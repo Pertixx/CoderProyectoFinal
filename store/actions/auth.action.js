@@ -7,6 +7,8 @@ import { createUserImage, db } from "../../firebase/firebase-config";
 import { deleteUser, fetchUser, insertUser, updateUserLogged } from "../../db";
 import { ref, set } from "firebase/database";
 
+import i18n from "i18n-js";
+
 export const SIGN_UP = "SIGN_UP";
 export const SIGN_IN = "SIGN_IN";
 export const UPDATE_NAME = "UPDATE_NAME";
@@ -56,7 +58,8 @@ export const signup = (name, email, password, image) => {
       const errorId = data.error.message;
 
       let message = "No se ha podido registrar";
-      if (errorId === "EMAIL_EXISTS") message = "Este email ya esta registrado";
+      if (errorId === "EMAIL_EXISTS")
+        message = i18n.t("emailAlreadyRegistered");
       dispatch({
         type: SET_ERROR,
         payload: message,
@@ -98,10 +101,10 @@ export const signIn = (email, password) => {
 
       let message = "No se ha podido iniciar sesion";
       if (errorId === "EMAIL_NOT_FOUND") {
-        message = "No existe cuenta registrada con este email";
+        message = i18n.t("accountDoesentExist");
       }
       if (errorId === "INVALID_PASSWORD") {
-        message = "La contraseña no es válida";
+        message = i18n.t("invalidPassword");
       }
       dispatch({
         type: SET_ERROR,

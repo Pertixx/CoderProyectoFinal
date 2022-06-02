@@ -131,7 +131,12 @@ const Signup = ({ navigation }) => {
             />
           </View>
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>{i18n.t("password")}</Text>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
+              <Text style={styles.label}>{i18n.t("password")}</Text>
+              <Text style={styles.label2}>{i18n.t("passwordRequirement")}</Text>
+            </View>
             <AuthInput
               secure
               value={formPass}
@@ -203,6 +208,11 @@ const styles = StyleSheet.create({
   },
   label: {
     color: COLORS.white,
+    marginBottom: SIZES.padding - 5,
+    ...FONTS.bodyBold,
+  },
+  label2: {
+    color: COLORS.gray,
     marginBottom: SIZES.padding - 5,
     ...FONTS.bodyBold,
   },
