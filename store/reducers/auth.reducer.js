@@ -1,4 +1,5 @@
 import {
+  ADD_IMAGE,
   CHECK_FORM,
   CLEAR_ERROR,
   OFFLINE_LOGIN,
@@ -154,6 +155,9 @@ const AuthReducer = (state = initialState, action) => {
         displayName: action.payload.displayName,
         theme: action.payload.theme,
       };
+    case ADD_IMAGE:
+      state.formFields.image = action.payload.image;
+      return { ...state };
     default:
       return state;
   }

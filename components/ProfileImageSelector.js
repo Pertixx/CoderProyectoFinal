@@ -13,7 +13,7 @@ import { setText, showToaster } from "../store/actions/toaster.action";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Entypo } from "@expo/vector-icons";
-import { addImage } from "../store/actions/createRecipe.action";
+import { addImage } from "../store/actions/auth.action";
 import i18n from "i18n-js";
 
 const ProfileImageSelector = ({ form }) => {
@@ -80,7 +80,7 @@ const ProfileImageSelector = ({ form }) => {
   const verifyPermissions = async () => {
     const status = await ImagePicker.requestCameraPermissionsAsync();
 
-    if (status !== "granted") {
+    if (status.status !== "granted") {
       dispatch(setText(i18n.t("permissionsError")));
       dispatch(showToaster());
 
@@ -99,7 +99,9 @@ const ProfileImageSelector = ({ form }) => {
       quality: 1,
     });
 
-    dispatch(addImage(image.uri));
+    if (!image.cancelled) {
+      dispatch(addImage(image.uri));
+    }
   };
 
   return (

@@ -1,3 +1,5 @@
+import * as FileSystem from "expo-file-system";
+
 import {
   API_URL,
   URL_AUTH_SIGNIN,
@@ -20,6 +22,7 @@ export const SET_ERROR = "SET_ERROR";
 export const CLEAR_ERROR = "CLEAR_ERROR";
 export const OFFLINE_LOGIN = "OFFLINE_LOGIN";
 export const SET_ID = "SET_ID";
+export const ADD_IMAGE = "ADD_IMAGE";
 
 const createUserDataBase = (userId, name, image) => {
   set(ref(db, "users/" + userId), {
@@ -120,6 +123,25 @@ export const signIn = (email, password) => {
         displayName: data.displayName,
       });
     }
+  };
+};
+
+export const addImage = (image) => {
+  return async (dispatch) => {
+    const fileName = image.split("/").pop();
+    const Path = FileSystem.documentDirectory + fileName;
+
+    try {
+      FileSystem.moveAsync({
+        from: image,
+        to: Path,
+      });
+    } catch (error) {
+      console.log(error.message);
+      throw error;
+    }
+
+    dispatch({ type: ADD_IMAGE, payload: { image: Path } });
   };
 };
 

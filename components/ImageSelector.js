@@ -78,7 +78,7 @@ const ImageSelector = () => {
   const verifyPermissions = async () => {
     const status = await ImagePicker.requestCameraPermissionsAsync();
 
-    if (status !== "granted") {
+    if (status.status !== "granted") {
       dispatch(setText(i18n.t("permissionsError")));
       dispatch(showToaster());
 
@@ -97,7 +97,9 @@ const ImageSelector = () => {
       quality: 1,
     });
 
-    dispatch(addImage(image.uri));
+    if (!image.cancelled) {
+      dispatch(addImage(image.uri));
+    }
   };
 
   return (
