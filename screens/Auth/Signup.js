@@ -91,7 +91,9 @@ const Signup = ({ navigation }) => {
 
   const renderImageSelector = () => {
     return (
-      <View style={{ paddingHorizontal: SIZES.padding }}>
+      <View
+        style={{ paddingHorizontal: SIZES.padding, marginTop: SIZES.padding }}
+      >
         <Text style={styles.label}>{i18n.t("profileImageSelect")}</Text>
         <ProfileImageSelector form={form} />
       </View>
@@ -105,6 +107,7 @@ const Signup = ({ navigation }) => {
     >
       {renderHeader()}
       <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
+        {renderImageSelector()}
         <View
           style={{
             marginVertical: SIZES.padding,
@@ -146,7 +149,6 @@ const Signup = ({ navigation }) => {
             />
           </View>
         </View>
-        {renderImageSelector()}
         <View style={styles.footerContainer}>
           <CustomButton
             text={i18n.t("createAccount")}

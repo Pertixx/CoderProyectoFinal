@@ -176,9 +176,9 @@ export const logOut = (id) => {
   };
 };
 
-export const updateName = (name) => ({
+export const updateName = (name, form) => ({
   type: UPDATE_NAME,
-  payload: name,
+  payload: { name: name, form: form },
 });
 
 export const updateEmail = (email, form) => ({

@@ -25,10 +25,10 @@ const initialState = {
     formPass: false,
     formImage: false,
   },
-  formValid: null,
+  formValid: false,
   formLogInFields: { formEmail: "", formPass: "" },
   formLogInValidation: { formEmail: false, formPass: false },
-  formLogInValid: null,
+  formLogInValid: false,
   error: null,
 };
 
@@ -65,7 +65,7 @@ const AuthReducer = (state = initialState, action) => {
     case CLEAR_ERROR:
       return { ...state, error: initialState.error };
     case UPDATE_NAME:
-      state.formFields.formName = action.payload;
+      state.formFields.formName = action.payload.name;
       return {
         ...state,
       };
