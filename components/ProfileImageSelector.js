@@ -81,6 +81,7 @@ const ProfileImageSelector = ({ form }) => {
     const status = await ImagePicker.requestCameraPermissionsAsync();
 
     if (status.status !== "granted") {
+      console.log(status);
       dispatch(setText(i18n.t("permissionsError")));
       dispatch(showToaster());
 
@@ -90,7 +91,7 @@ const ProfileImageSelector = ({ form }) => {
   };
 
   const handleTakeImage = async () => {
-    const isCameraOk = verifyPermissions();
+    const isCameraOk = await verifyPermissions();
     if (!isCameraOk) return;
 
     const image = await ImagePicker.launchCameraAsync({

@@ -88,7 +88,7 @@ const ImageSelector = () => {
   };
 
   const handleTakeImage = async () => {
-    const isCameraOk = verifyPermissions();
+    const isCameraOk = await verifyPermissions();
     if (!isCameraOk) return;
 
     const image = await ImagePicker.launchCameraAsync({
